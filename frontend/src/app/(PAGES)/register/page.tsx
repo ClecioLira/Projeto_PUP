@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "Plante uma Planta | Cadastrar",
 };
 
-
 export default function Register() {
   return (
     <section className="container">
@@ -16,9 +15,23 @@ export default function Register() {
       </header>
 
       <form className="form-container">
-        <TextField required id="outlined" label="Nome" type="text" color="success" />
+        <TextField
+          required
+          id="outlined"
+          autoComplete="off"
+          label="Nome"
+          type="text"
+          color="success"
+        />
 
-        <TextField required id="outlined" label="E-mail" type="email" color="success" />
+        <TextField
+          required
+          id="outlined"
+          autoComplete="off"
+          label="E-mail"
+          type="email"
+          color="success"
+        />
 
         <TextField
           required

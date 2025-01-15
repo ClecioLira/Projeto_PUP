@@ -15,7 +15,14 @@ export default function Login() {
       </header>
 
       <form className="form-container">
-        <TextField required id="outlined" type="email" label="E-mail" color="success" />
+        <TextField
+          required
+          id="outlined"
+          autoComplete="off"
+          type="email"
+          label="E-mail"
+          color="success"
+        />
 
         <TextField
           required
