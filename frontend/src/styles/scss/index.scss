@@ -1,0 +1,20 @@
+@import '../../components/Navbar/Navbar', 
+'../../components/Footer/Footer',
+'../../app/\(PAGES\)/login/Login';
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+$primary-color: #093028;
+$secondary-color: #237a57;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+}
