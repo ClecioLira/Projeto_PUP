@@ -1,8 +1,9 @@
 @import '../../components/Navbar/Navbar', 
-'../../components/Footer/Footer',
-'../../app/\(PAGES\)/login/Login',
- '../../app/\(PAGES\)/register/Register';
+'../../components/Footer/Footer';
 
+ $primary-color: #093028;
+ $secondary-color: #237a57;
+ 
 * {
     padding: 0;
     margin: 0;
@@ -10,8 +11,9 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-$primary-color: #093028;
-$secondary-color: #237a57;
+table {
+    margin-top: 1rem;
+}
 
 .container {
     display: flex;
@@ -22,12 +24,16 @@ $secondary-color: #237a57;
     margin: 0 auto;
 }
 
-.container h1 {
+.container header {
+    padding: 0 2rem;
+}
+
+.container header h1 {
     margin-top: 2rem;
     color: $primary-color;
 }
 
-.container p {
+.container header small {
     color: $primary-color;
 }
 

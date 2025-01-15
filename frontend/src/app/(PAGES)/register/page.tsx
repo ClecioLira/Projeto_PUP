@@ -1,12 +1,19 @@
 import { Button, TextField } from "@mui/material";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Plante uma Planta | Cadastrar",
+};
+
+
 export default function Register() {
   return (
     <section className="container">
-      <div>
+      <header>
         <h1>Cadastro</h1>
         <small>Cadastre sua conta para comprar suas novas plantas.</small>
-      </div>
+      </header>
 
       <form className="form-container">
         <TextField required id="outlined" label="Nome" type="text" color="success" />

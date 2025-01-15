@@ -1,15 +1,21 @@
 import { Button, TextField } from "@mui/material";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Plante uma Planta | Entrar",
+};
+
 export default function Login() {
   return (
     <section className="container">
-      <div>
+      <header>
         <h1>Entrar</h1>
         <small>Entre em sua conta para comprar suas novas plantas.</small>
-      </div>
+      </header>
 
       <form className="form-container">
-        <TextField required id="outlined" label="E-mail" color="success" />
+        <TextField required id="outlined" type="email" label="E-mail" color="success" />
 
         <TextField
           required
