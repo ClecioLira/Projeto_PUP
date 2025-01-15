@@ -39,5 +39,15 @@ export async function deleteCategory(id: string) {
     method: "DELETE",
   });
 
-  return res.json();
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(errorText);
+  }
+
+  try {
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    throw new Error('Failed to parse response as JSON');
+  }
 }

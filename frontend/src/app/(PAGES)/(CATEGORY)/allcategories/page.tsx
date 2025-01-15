@@ -3,14 +3,13 @@
 import * as React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import TableComponent from "@/components/Table/Table";
 
 import { useState, useEffect } from "react";
 import { getCategories } from "../../../../services/Category.Service";
 
-import TableComponent from "@/components/Table/Table";
-
 interface Category {
-  id: number;
+  id: string;
   name: string;
 }
 
@@ -22,8 +21,8 @@ export default function AllCategories() {
   useEffect(() => {
     async function fetchAllCategories() {
       try {
-        const categories = await getCategories();
-        setCategories(categories);
+        const categoriesData = await getCategories();
+        setCategories(categoriesData);
       } catch (error) {
         setError(true);
       } finally {
@@ -31,7 +30,7 @@ export default function AllCategories() {
       }
     }
     fetchAllCategories();
-  }, []);
+  }, [categories]);
 
   if (loading) {
     return (

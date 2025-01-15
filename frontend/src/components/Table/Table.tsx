@@ -7,16 +7,23 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 
+import ButtonDelete from "../ButtonDelete/ButtonDelete";
+import { deleteCategory } from "@/services/Category.Service";
+
 interface Category {
-  id: number;
+  id: string;
   name: string;
 }
 
 interface TableComponentProps {
-    categories: Category[];
+  categories: Category[];
 }
 
-export default function TableComponent({categories}: TableComponentProps) {
+export default function TableComponent({ categories }: TableComponentProps) {
+  const handleDelete = async (categoryId: string) => {
+    await deleteCategory(categoryId);
+  };
+
   return (
     <section className="container">
       <table>
@@ -44,7 +51,7 @@ export default function TableComponent({categories}: TableComponentProps) {
                   </TableCell>
 
                   <TableCell align="right">
-                    <Button color="error">Apagar</Button>
+                    <ButtonDelete handleDelete={() => handleDelete(category.id)}/>
                   </TableCell>
                 </TableRow>
               ))}
