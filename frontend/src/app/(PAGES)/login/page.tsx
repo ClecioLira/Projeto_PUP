@@ -2,16 +2,19 @@ import { Button, TextField } from "@mui/material";
 
 export default function Login() {
   return (
-    <section className="login">
-      <form className="container">
-        <TextField required id="outlined" label="E-mail" />
+    <section className="container">
+      <form className="login">
+        <TextField required id="outlined" label="E-mail" color="success"/>
+
         <TextField
+          required
           id="outlined-password-input"
           label="Senha"
           type="password"
           autoComplete="current-password"
-          required
+          color="success"
         />
+
         <Button
           type="submit"
           className="btn-enter"
