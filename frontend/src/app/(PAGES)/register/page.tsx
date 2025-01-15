@@ -1,15 +1,17 @@
 import { Button, TextField } from "@mui/material";
 
-export default function Login() {
+export default function Register() {
   return (
     <section className="container">
       <div>
-        <h1>Entrar</h1>
-        <small>Entre em sua conta para comprar suas novas plantas.</small>
+        <h1>Cadastro</h1>
+        <small>Cadastre sua conta para comprar suas novas plantas.</small>
       </div>
 
       <form className="form-container">
-        <TextField required id="outlined" label="E-mail" color="success" />
+        <TextField required id="outlined" label="Nome" type="text" color="success" />
+
+        <TextField required id="outlined" label="E-mail" type="email" color="success" />
 
         <TextField
           required

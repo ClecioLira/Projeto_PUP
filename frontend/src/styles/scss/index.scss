@@ -1,6 +1,7 @@
 @import '../../components/Navbar/Navbar', 
 '../../components/Footer/Footer',
-'../../app/\(PAGES\)/login/Login';
+'../../app/\(PAGES\)/login/Login',
+ '../../app/\(PAGES\)/register/Register';
 
 * {
     padding: 0;
@@ -19,4 +20,22 @@ $secondary-color: #237a57;
     justify-content: center;
     max-width: 600px;
     margin: 0 auto;
+}
+
+.container h1 {
+    margin-top: 2rem;
+    color: $primary-color;
+}
+
+.container p {
+    color: $primary-color;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0 1rem;
 }

@@ -70,15 +70,6 @@ footer {
   width: 100%;
 }
 
-.login {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  margin-top: 5rem;
-  padding: 0 1rem;
-}
-
 * {
   padding: 0;
   margin: 0;
@@ -93,4 +84,22 @@ footer {
   justify-content: center;
   max-width: 600px;
   margin: 0 auto;
+}
+
+.container h1 {
+  margin-top: 2rem;
+  color: #093028;
+}
+
+.container p {
+  color: #093028;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0 1rem;
 }/*# sourceMappingURL=index.css.map */

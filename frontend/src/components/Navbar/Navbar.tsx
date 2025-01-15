@@ -27,7 +27,9 @@ export default function Navbar() {
                 <ListItemText primary="Início" />
               </Link>
 
-              <ListItemText primary="Cadastrar" />
+              <Link href="/register">
+                <ListItemText primary="Cadastrar" />
+              </Link>
 
               <Link href="/login">
                 <ListItemText primary="Entrar" />
@@ -48,7 +50,9 @@ export default function Navbar() {
       </ul>
 
       <div className="btns">
-        <Button className="btn">Cadastrar</Button>
+        <Link href="/register">
+          <Button className="btn">Cadastrar</Button>
+        </Link>
 
         <Link href="/login">
           <Button className="btn">Entrar</Button>
