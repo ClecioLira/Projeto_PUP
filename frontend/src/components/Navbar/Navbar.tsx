@@ -42,7 +42,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav>
+    <nav className="navbar">
       <Link href="/" className="logo">
         <h2>Plante uma Planta</h2>
       </Link>

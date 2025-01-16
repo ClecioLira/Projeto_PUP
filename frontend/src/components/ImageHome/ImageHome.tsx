@@ -7,8 +7,7 @@ export default function ImageHome() {
       <Image
         src={banner}
         alt="Banner"
-        layout="fill"
-        objectFit="cover"
+        fill
         quality={100}
         priority
       />

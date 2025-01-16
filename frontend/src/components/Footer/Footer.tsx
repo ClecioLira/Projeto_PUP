@@ -12,7 +12,7 @@ function Copyright() {
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="footer">
       <Copyright />
     </footer>
   );

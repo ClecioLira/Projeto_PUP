@@ -1,7 +1,7 @@
-@import '../../components/Navbar/Navbar', 
-'../../components/Footer/Footer',
-'../../components/ImageHome/ImageHome',
-'../../components/CardCategory/CardCategory';
+@import './Navbar', 
+'./Footer',
+'./ImageHome',
+'./CardCategory';
 
  $primary-color: #093028;
  $secondary-color: #237a57;
@@ -24,19 +24,19 @@ table {
     justify-content: center;
     max-width: 800px;
     margin: 0 auto;
-}
 
-.container header {
-    padding: 0 2rem;
-}
+    & header {
+        padding: 0 2rem;
+    }
 
-.container header h1 {
-    margin-top: 2rem;
-    color: $primary-color;
-}
+    & header h1 {
+        margin-top: 2rem;
+        color: $primary-color;
+    }
 
-.container header small {
-    color: $primary-color;
+    & header small {
+        color: $primary-color;
+    }
 }
 
 .form-container {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../styles/scss/index.css";
+import "../assets/styles/scss/index.scss";
 
 export const metadata: Metadata = {
   title: "Plante uma Planta",
