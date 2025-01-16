@@ -1,9 +1,10 @@
 import styles from "./page.module.css";
+import ImageHome from "@/components/ImageHome/ImageHome";
 
 export default function Home() {
   return (
-    <div>
-      <p>Clecio lira</p>
-    </div>
+    <main>
+      <ImageHome />
+    </main>
   );
 }
