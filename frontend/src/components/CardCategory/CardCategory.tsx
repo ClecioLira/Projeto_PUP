@@ -57,23 +57,26 @@ export default function CardCategory() {
       <h2>Categorias</h2>
 
       <div className="list-cards-categories">
-        {categories.map((category) => (
-          <Card sx={{ maxWidth: 150 }} key={category.id}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                className="img-category-fixed"
-                image={category.image}
-                alt={category.name}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="body2" component="div">
-                  {category.name}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        ))}
+        {categories
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((category) => (
+            <Card sx={{ maxWidth: 150 }} key={category.id}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  className="img-category-fixed"
+                  image={category.image}
+                  alt={category.name}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="body2" component="div">
+                    {category.name}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))
+          .sort()}
       </div>
     </div>
   );

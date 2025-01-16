@@ -49,7 +49,7 @@ export default function AllCategories() {
 
   return (
     <section className="container">
-      <TableComponent categories={categories}></TableComponent>
+      <TableComponent categories={categories} onDelete={(categoryId: string) => {}} />
     </section>
   );
 }

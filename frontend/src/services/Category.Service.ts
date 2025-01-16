@@ -1,4 +1,6 @@
-const URL = "http://localhost:3000/categories";
+import { deletePlantsByCategory } from "./Plant.Service";
+
+const URL_CATEGORY = "http://localhost:3000/categories";
 
 export async function createCategory({
   name,
@@ -7,7 +9,7 @@ export async function createCategory({
   name: string;
   image: string;
 }) {
-  const res = await fetch(URL, {
+  const res = await fetch(URL_CATEGORY, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,12 +21,15 @@ export async function createCategory({
 }
 
 export async function getCategories() {
-  const res = await fetch(URL);
+  const res = await fetch(URL_CATEGORY);
   return res.json();
 }
 
 export async function getCategoryById(id: string) {
-  const res = await fetch(`${URL}/${id}`);
+  const res = await fetch(`${URL_CATEGORY}/${id}`);
+  if (!res.ok) {
+    throw new Error(`Category with ID ${id} not found`);
+  }
   return res.json();
 }
 
@@ -32,7 +37,7 @@ export async function updateCategory(
   id: string,
   { name, image }: { name: string; image: string }
 ) {
-  const res = await fetch(`${URL}/${id}`, {
+  const res = await fetch(`${URL_CATEGORY}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -43,20 +48,10 @@ export async function updateCategory(
   return res.json();
 }
 
-export async function deleteCategory(id: string) {
-  const res = await fetch(`${URL}/${id}`, {
+export async function deleteCategory(id: string): Promise<void> {
+  await deletePlantsByCategory(id);
+
+  await fetch(`${URL_CATEGORY}/${id}`, {
     method: "DELETE",
   });
-
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(errorText);
-  }
-
-  try {
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    throw new Error("Failed to parse response as JSON");
-  }
 }

@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 
 import ButtonDelete from "../ButtonDelete/ButtonDelete";
 import { deleteCategory } from "@/services/Category.Service";
+import Link from "next/link";
 
 interface Category {
   id: string;
@@ -18,11 +19,20 @@ interface Category {
 
 interface TableComponentProps {
   categories: Category[];
+  onDelete: (categoryId: string) => void;
 }
 
-export default function TableComponent({ categories }: TableComponentProps) {
+export default function TableComponent({
+  categories,
+  onDelete,
+}: TableComponentProps) {
   const handleDelete = async (categoryId: string) => {
-    await deleteCategory(categoryId);
+    try {
+      await deleteCategory(categoryId);
+      onDelete(categoryId);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -33,29 +43,42 @@ export default function TableComponent({ categories }: TableComponentProps) {
             <TableHead>
               <TableRow>
                 <TableCell>Nome da Categoria</TableCell>
+
+                <TableCell>
+                  <Link href="/createcategory">
+                    <Button color="success">Criar Nova Categoria</Button>
+                  </Link>
+                </TableCell>
+
                 <TableCell></TableCell>
                 <TableCell></TableCell>
+
               </TableRow>
             </TableHead>
             <TableBody>
-              {categories.map((category) => (
-                <TableRow
-                  key={category.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {category.name}
-                  </TableCell>
+              {categories
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((category) => (
+                  <TableRow
+                    key={category.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {category.name}
+                    </TableCell>
 
-                  <TableCell align="right">
-                    <Button>Editar</Button>
-                  </TableCell>
+                    <TableCell align="right">
+                      <Button>Editar</Button>
+                    </TableCell>
 
-                  <TableCell align="right">
-                    <ButtonDelete handleDelete={() => handleDelete(category.id)}/>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    <TableCell align="right">
+                      <ButtonDelete
+                        categoryId={category.id}
+                        onDelete={() => handleDelete(category.id)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

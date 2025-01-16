@@ -3,13 +3,25 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import { deleteCategory } from "@/services/Category.Service";
 
 interface ButtonDeleteProps {
-  handleDelete: () => void;
+  categoryId: string;
+  onDelete: () => void;
 }
 
-export default function ButtonDelete({ handleDelete }: ButtonDeleteProps) {
+export default function ButtonDelete({ categoryId, onDelete }: ButtonDeleteProps) {
   const [open, setOpen] = React.useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await deleteCategory(categoryId);
+      setOpen(false);
+      onDelete();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
