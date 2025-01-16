@@ -9,6 +9,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import { useState, useEffect } from "react";
 import { getCategories } from "@/services/Category.Service";
+import { Alert } from "@mui/material";
 
 interface Category {
   id: string;
@@ -17,12 +18,12 @@ interface Category {
 }
 
 interface SelectCategoryProps {
-    selectedCategory: string;
+  selectedCategory: string;
   onSelectCategory: (value: string) => void;
 }
 
 export default function SelectCategory({
-    selectedCategory,
+  selectedCategory,
   onSelectCategory,
 }: SelectCategoryProps) {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -49,29 +50,30 @@ export default function SelectCategory({
   };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="select-category-label" color="success">
-          Categoria
-        </InputLabel>
-        <Select
-          labelId="select-category-label"
-          id="select-category"
-          color="success"
-          value={selectedCategory}
-          onChange={handleChange}
-          input={<OutlinedInput label="Categoria" />}
-        >
-          <MenuItem value="">
-            <em>Selecione uma categoria</em>
+    <FormControl sx={{ m: 1, width: 300 }} className="select-category">
+      <InputLabel id="select-category-label" color="success">
+        Categoria
+      </InputLabel>
+      <Select
+        required
+        labelId="select-category-label"
+        id="select-category"
+        color="success"
+        value={selectedCategory}
+        onChange={handleChange}
+        input={<OutlinedInput label="Categoria" />}
+      >
+        <MenuItem value="">
+          <em>Selecione uma categoria</em>
+        </MenuItem>
+        {categories.map((category) => (
+          <MenuItem key={category.id} value={category.id}>
+            {category.name}
           </MenuItem>
-          {categories.map((category) => (
-            <MenuItem key={category.id} value={category.id}>
-              {category.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+        ))}
+      </Select>
+
+      {error && <Alert severity="error">Categoria Inválida.</Alert>}
+    </FormControl>
   );
 }

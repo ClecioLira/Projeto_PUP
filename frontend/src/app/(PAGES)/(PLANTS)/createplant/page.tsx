@@ -4,6 +4,7 @@ import { Alert, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { createPlant } from "@/services/Plant.Service";
 import SelectCategory from "@/components/SelectCategory/SelectCategory";
+import Link from "next/link";
 
 export default function CreatePlant() {
   const [name, setName] = useState("");
@@ -16,11 +17,6 @@ export default function CreatePlant() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!category) {
-      setError(true);
-      return;
-    }
-
     setSuccess(false);
     setError(false);
 
@@ -77,7 +73,10 @@ export default function CreatePlant() {
           multiline
         />
 
-        <SelectCategory selectedCategory={category} onSelectCategory={(value) => setCategory(value)}/>
+        <SelectCategory
+          selectedCategory={category}
+          onSelectCategory={(value) => setCategory(value)}
+        />
 
         <Button
           type="submit"
@@ -89,12 +88,23 @@ export default function CreatePlant() {
           {loading && <span>Aguarde...</span>}
         </Button>
 
+        <Link href="/allcategories">
+          <Button
+            type="submit"
+            className="btn-enter"
+            variant="outlined"
+            color="success"
+          >
+            Voltar
+          </Button>
+        </Link>
+
         {success && (
-          <Alert severity="success">Categoria criada com sucesso.</Alert>
+          <Alert severity="success">Planta criada com sucesso.</Alert>
         )}
         {error && (
           <Alert severity="error">
-            Erro ao criar categoria, tente novamente mais tarde.
+            Erro ao criar planta, tente novamente mais tarde.
           </Alert>
         )}
       </form>
