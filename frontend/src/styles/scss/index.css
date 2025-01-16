@@ -7,6 +7,11 @@ nav {
   color: #fff;
 }
 
+nav .logo {
+  color: white;
+  text-decoration: none;
+}
+
 nav .list {
   display: flex;
   list-style: none;
@@ -92,6 +97,34 @@ footer {
     height: 25vh;
   }
 }
+.list-cards-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.card-categories h2 {
+  margin: 2rem 0;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.5rem;
+  color: #093028;
+  letter-spacing: 0.5rem;
+}
+
+.img-category-fixed {
+  width: 150px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
 * {
   padding: 0;
   margin: 0;

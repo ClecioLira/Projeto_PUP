@@ -13,6 +13,7 @@ import { deleteCategory } from "@/services/Category.Service";
 interface Category {
   id: string;
   name: string;
+  image: string;
 }
 
 interface TableComponentProps {

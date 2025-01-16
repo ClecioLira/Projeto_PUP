@@ -43,7 +43,9 @@ export default function Navbar() {
 
   return (
     <nav>
-      <h2>Plante uma Planta</h2>
+      <Link href="/" className="logo">
+        <h2>Plante uma Planta</h2>
+      </Link>
 
       <ul className="list">
         <Link href="/">Início</Link>

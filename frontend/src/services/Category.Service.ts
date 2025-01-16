@@ -1,12 +1,18 @@
-const URL = "http://localhost:3000/categories"
+const URL = "http://localhost:3000/categories";
 
-export async function createCategory({ name }: { name: string }) {
+export async function createCategory({
+  name,
+  image,
+}: {
+  name: string;
+  image: string;
+}) {
   const res = await fetch(URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, plants: [] }),
+    body: JSON.stringify({ name, image, plants: [] }),
   });
 
   return res.json();
@@ -22,13 +28,16 @@ export async function getCategoryById(id: string) {
   return res.json();
 }
 
-export async function updateCategory(id: string, { name }: { name: string }) {
+export async function updateCategory(
+  id: string,
+  { name, image }: { name: string; image: string }
+) {
   const res = await fetch(`${URL}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify({ name, image }),
   });
 
   return res.json();
@@ -48,6 +57,6 @@ export async function deleteCategory(id: string) {
     const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error('Failed to parse response as JSON');
+    throw new Error("Failed to parse response as JSON");
   }
 }

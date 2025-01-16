@@ -6,6 +6,7 @@ import { createCategory } from "../../../../services/Category.Service";
 
 export default function CreateCategory() {
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ export default function CreateCategory() {
 
     try {
       setLoading(true);
-      await createCategory({ name });
+      await createCategory({ name, image });
       setSuccess(true);
     } catch (error) {
       setError(true);
@@ -26,6 +27,7 @@ export default function CreateCategory() {
     }
 
     setName("");
+    setImage("")
   };
 
   return (
@@ -43,6 +45,16 @@ export default function CreateCategory() {
           color="success"
           value={name}
           onChange={(e) => setName(e.target.value)}
+        />
+
+        <TextField
+          required
+          id="outlined"
+          label="URL da Imagem"
+          type="text"
+          color="success"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
         />
 
         <Button
