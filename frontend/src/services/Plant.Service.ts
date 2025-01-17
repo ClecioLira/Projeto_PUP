@@ -79,6 +79,27 @@ export async function updatePlant(
 
 export async function deletePlant(id: string) {
   await fetch(`${URL_PLANT}/${id}`, { method: "DELETE" });
+
+  const categoriesRes = await fetch(URL_CATEGORY);
+  const categories = await categoriesRes.json();
+
+  for (const category of categories) {
+    if (!Array.isArray(category.plants)) {
+      category.plants = [];
+    }
+    const plantIndex = category.plants.findIndex((plant: any) => plant.id === id);
+    if (plantIndex !== -1) {
+      category.plants.splice(plantIndex, 1);
+      await fetch(`${URL_CATEGORY}/${category.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
+      });
+      break;
+    }
+  }
 }
 
 export async function deletePlantsByCategory(

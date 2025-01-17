@@ -1,51 +1,66 @@
 "use client";
 
 import { Alert, Button, TextField } from "@mui/material";
-import { useState } from "react";
-import { createPlant } from "@/services/Plant.Service";
-import SelectCategory from "@/components/SelectCategory/SelectCategory";
+import { useEffect, useState } from "react";
+import { updateCategory, getCategoryById } from "@/services/Category.Service";
 import Link from "next/link";
+import { useRouter, useParams } from "next/navigation";
 
-export default function CreatePlant() {
+export default function EditCategory() {
+  const router = useRouter();
+  const { id } = useParams();
+
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      if (typeof id === "string") {
+        try {
+          const category = await getCategoryById(id);
+          setName(category.name);
+          setImage(category.image);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    fetchCategory();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSuccess(false);
     setError(false);
 
-    try {
-      setLoading(true);
-      await createPlant({ name, image, description, category });
-      setSuccess(true);
-      setName("");
-      setImage("");
-      setDescription("");
-      setCategory("");
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
+    if (typeof id === "string") {
+      try {
+        setLoading(true);
+        await updateCategory(id, { name, image });
+        setSuccess(true);
+        router.push("/allcategories");
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <section className="container">
       <header>
-        <h1>Criar Planta</h1>
+        <h1>Criar categoria</h1>
       </header>
 
       <form className="form-container" onSubmit={handleSubmit}>
         <TextField
           required
           id="outlined"
-          label="Nome da Planta"
+          label="Nome da Categoria"
           type="text"
           color="success"
           value={name}
@@ -62,33 +77,17 @@ export default function CreatePlant() {
           onChange={(e) => setImage(e.target.value)}
         />
 
-        <TextField
-          required
-          id="outlined-textarea"
-          label="Descrição da Planta"
-          placeholder="Placeholder"
-          color="success"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          multiline
-        />
-
-        <SelectCategory
-          selectedCategory={category}
-          onSelectCategory={(value) => setCategory(value)}
-        />
-
         <Button
           type="submit"
           className="btn-enter"
           color="success"
           variant="outlined"
         >
-          {!loading && <span>Criar</span>}
+          {!loading && <span>Editar</span>}
           {loading && <span>Aguarde...</span>}
         </Button>
 
-        <Link href="/allplants">
+        <Link href="/allcategories">
           <Button
             type="submit"
             className="btn-enter"
@@ -100,11 +99,11 @@ export default function CreatePlant() {
         </Link>
 
         {success && (
-          <Alert severity="success">Planta criada com sucesso.</Alert>
+          <Alert severity="success">Categoria criada com sucesso.</Alert>
         )}
         {error && (
           <Alert severity="error">
-            Erro ao criar planta, tente novamente mais tarde.
+            Erro ao criar categoria, tente novamente mais tarde.
           </Alert>
         )}
       </form>

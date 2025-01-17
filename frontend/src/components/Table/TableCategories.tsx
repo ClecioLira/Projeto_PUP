@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 
-import ButtonDelete from "../ButtonDelete/ButtonDelete";
+import ButtonDelete from "../ButtonDelete/ButtonDeleteCategory";
 import { deleteCategory } from "@/services/Category.Service";
 import Link from "next/link";
 
@@ -22,7 +22,7 @@ interface TableComponentProps {
   onDelete: (categoryId: string) => void;
 }
 
-export default function TableComponent({
+export default function TableCategories({
   categories,
   onDelete,
 }: TableComponentProps) {
@@ -52,7 +52,6 @@ export default function TableComponent({
 
                 <TableCell></TableCell>
                 <TableCell></TableCell>
-
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,7 +67,9 @@ export default function TableComponent({
                     </TableCell>
 
                     <TableCell align="right">
-                      <Button>Editar</Button>
+                      <Link href={`/editcategory/${category.id}`}>
+                        <Button>Editar</Button>
+                      </Link>
                     </TableCell>
 
                     <TableCell align="right">

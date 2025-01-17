@@ -1,4 +1,4 @@
-import CardCategory from "@/components/CardCategory/CardCategory";
+import CardCategory from "@/components/Card/CardCategory";
 import ImageHome from "@/components/ImageHome/ImageHome";
 
 export default function Home() {

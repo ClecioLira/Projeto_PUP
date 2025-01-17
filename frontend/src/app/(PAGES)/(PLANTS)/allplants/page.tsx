@@ -5,33 +5,35 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 import { useState, useEffect } from "react";
-import { getCategories } from "../../../../services/Category.Service";
-import TableCategories from "@/components/Table/TableCategories";
+import { getPlants } from "@/services/Plant.Service";
+import TablePlantsComponent from "@/components/Table/TablePlants";
 
-interface Category {
+interface Plants {
   id: string;
   name: string;
   image: string;
+  description: string;
+  category: string;
 }
 
-export default function AllCategories() {
-  const [categories, setCategories] = useState<Category[]>([]);
+export default function AllPlants() {
+  const [plants, setPlants] = useState<Plants[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllCategories() {
+    async function fetchAllPlants() {
       try {
-        const categoriesData = await getCategories();
-        setCategories(categoriesData);
+        const plantsData = await getPlants();
+        setPlants(plantsData);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchAllCategories();
-  }, [categories]);
+    fetchAllPlants();
+  }, [plants]);
 
   if (loading) {
     return (
@@ -44,12 +46,12 @@ export default function AllCategories() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as categorias</p>;
+    return <p>Erro ao carregar as plantas</p>;
   }
 
   return (
     <section className="container">
-      <TableCategories categories={categories} onDelete={(categoryId: string) => {}} />
+      <TablePlantsComponent setPlants={setPlants} plants={plants}/>
     </section>
   );
 }
