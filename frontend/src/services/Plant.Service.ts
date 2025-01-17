@@ -6,11 +6,13 @@ const URL_CATEGORY = "http://localhost:3000/categories";
 export async function createPlant({
   name,
   image,
+  price,
   description,
   category,
 }: {
   name: string;
   image: string;
+  price: string;
   description: string;
   category: string;
 }) {
@@ -19,7 +21,7 @@ export async function createPlant({
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, image, description, category }),
+    body: JSON.stringify({ name, image, price, description, category }),
   });
 
   const plant = await res.json();
@@ -62,16 +64,23 @@ export async function updatePlant(
   {
     name,
     image,
+    price,
     description,
     category,
-  }: { name: string; image: string; description: string; category: string }
+  }: {
+    name: string;
+    image: string;
+    price: string;
+    description: string;
+    category: string;
+  }
 ) {
   const res = await fetch(`${URL_PLANT}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, image, description, category }),
+    body: JSON.stringify({ name, image, price, description, category }),
   });
 
   return res.json();
@@ -87,7 +96,9 @@ export async function deletePlant(id: string) {
     if (!Array.isArray(category.plants)) {
       category.plants = [];
     }
-    const plantIndex = category.plants.findIndex((plant: any) => plant.id === id);
+    const plantIndex = category.plants.findIndex(
+      (plant: any) => plant.id === id
+    );
     if (plantIndex !== -1) {
       category.plants.splice(plantIndex, 1);
       await fetch(`${URL_CATEGORY}/${category.id}`, {

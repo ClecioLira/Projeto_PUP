@@ -153,9 +153,8 @@ table {
   margin-top: 2rem;
   padding: 0 1rem;
 }
-.form-container .select-category {
-  margin-left: 0;
-  width: 100%;
+.form-container .form-container-div {
+  display: flex;
 }
 
 .progress {

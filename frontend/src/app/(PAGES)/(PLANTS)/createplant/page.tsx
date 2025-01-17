@@ -1,6 +1,14 @@
 "use client";
 
-import { Alert, Button, TextField } from "@mui/material";
+import {
+  Alert,
+  Button,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
 import { useState } from "react";
 import { createPlant } from "@/services/Plant.Service";
 import SelectCategory from "@/components/SelectCategory/SelectCategory";
@@ -9,6 +17,7 @@ import Link from "next/link";
 export default function CreatePlant() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [success, setSuccess] = useState(false);
@@ -22,10 +31,11 @@ export default function CreatePlant() {
 
     try {
       setLoading(true);
-      await createPlant({ name, image, description, category });
+      await createPlant({ name, image, price, description, category });
       setSuccess(true);
       setName("");
       setImage("");
+      setPrice("");
       setDescription("");
       setCategory("");
     } catch (error) {
@@ -66,17 +76,34 @@ export default function CreatePlant() {
           required
           id="outlined-textarea"
           label="Descrição da Planta"
-          placeholder="Placeholder"
           color="success"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           multiline
         />
 
-        <SelectCategory
-          selectedCategory={category}
-          onSelectCategory={(value) => setCategory(value)}
-        />
+        <div className="form-container-div">
+          <FormControl fullWidth sx={{ m: 1 }}>
+            <InputLabel htmlFor="outlined-adornment-amount" color="success">
+              Preço
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-amount"
+              startAdornment={
+                <InputAdornment position="start">R$</InputAdornment>
+              }
+              label="Amount"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              color="success"
+            />
+          </FormControl>
+
+          <SelectCategory
+            selectedCategory={category}
+            onSelectCategory={(value) => setCategory(value)}
+          />
+        </div>
 
         <Button
           type="submit"

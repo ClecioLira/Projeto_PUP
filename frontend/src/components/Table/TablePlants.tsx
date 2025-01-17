@@ -93,7 +93,7 @@ export default function TablePlantsComponent({ plants, setPlants }: { plants: Pl
                     </TableCell>
 
                     <TableCell align="right">
-                      <Link href={`/editcategory/${plant.id}`}>
+                      <Link href={`/editplant/${plant.id}`}>
                         <Button>Editar</Button>
                       </Link>
                     </TableCell>

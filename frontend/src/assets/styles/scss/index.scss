@@ -47,9 +47,8 @@ table {
     margin-top: 2rem;
     padding: 0 1rem;
 
-    & .select-category {
-        margin-left: 0;
-        width: 100%;
+    & .form-container-div {
+        display: flex;
     }
 }
 
