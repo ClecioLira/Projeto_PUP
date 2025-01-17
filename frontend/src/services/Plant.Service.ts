@@ -86,6 +86,23 @@ export async function updatePlant(
   return res.json();
 }
 
+export async function updatePlantsByCategory(
+  categoryId: string
+): Promise<void> {
+  const res = await fetch(URL_PLANT);
+  const plants = await res.json();
+
+  const plantsToDelete = plants.filter(
+    (plant: any) => plant.category === categoryId
+  );
+
+  for (const plant of plantsToDelete) {
+    await fetch(`${URL_PLANT}/${plant.id}`, {
+      method: "PUT",
+    });
+  }
+}
+
 export async function deletePlant(id: string) {
   await fetch(`${URL_PLANT}/${id}`, { method: "DELETE" });
 

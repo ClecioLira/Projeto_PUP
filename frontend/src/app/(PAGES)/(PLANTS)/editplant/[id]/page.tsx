@@ -28,6 +28,21 @@ export default function EditPlant() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handlePriceChange = (e: any) => {
+    let value = e.target.value;
+
+    // Remove caracteres não numéricos
+    value = value.replace(/\D/g, "");
+
+    // Formata como número com separadores de milhares e decimais, sem o símbolo da moeda
+    const formattedValue = new Intl.NumberFormat("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value / 100);
+
+    setPrice(formattedValue);
+  };
+
   useEffect(() => {
     const fetchPlant = async () => {
       if (typeof id === "string") {
@@ -112,9 +127,9 @@ export default function EditPlant() {
               startAdornment={
                 <InputAdornment position="start">R$</InputAdornment>
               }
-              label="Amount"
+              label="Preço"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={handlePriceChange}
               color="success"
             />
           </FormControl>

@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 
 import { useState, useEffect } from "react";
 import { getCategories } from "../../services/Category.Service";
+import Link from "next/link";
 
 interface Category {
   id: string;
@@ -60,21 +61,23 @@ export default function CardCategory() {
         {categories
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((category) => (
-            <Card sx={{ maxWidth: 150 }} key={category.id}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  className="img-category-fixed"
-                  image={category.image}
-                  alt={category.name}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="body2" component="div">
-                    {category.name}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            <Link href={`/category/${category.id}`}>
+              <Card sx={{ maxWidth: 150 }} key={category.id}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    className="img-category-fixed"
+                    image={category.image}
+                    alt={category.name}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="body2" component="div">
+                      {category.name}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Link>
           ))
           .sort()}
       </div>
