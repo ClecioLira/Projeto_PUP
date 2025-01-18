@@ -31,10 +31,8 @@ export default function EditPlant() {
   const handlePriceChange = (e: any) => {
     let value = e.target.value;
 
-    // Remove caracteres não numéricos
     value = value.replace(/\D/g, "");
 
-    // Formata como número com separadores de milhares e decimais, sem o símbolo da moeda
     const formattedValue = new Intl.NumberFormat("pt-BR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
