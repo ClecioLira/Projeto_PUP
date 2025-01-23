@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
+import Cart from "../Cart/Cart";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -69,6 +70,8 @@ export default function Navbar() {
           {DrawerList}
         </Drawer>
       </div>
+
+      <Cart />
     </nav>
   );
 }
