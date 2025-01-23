@@ -11,33 +11,35 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 import { useState, useEffect } from "react";
-import { getCategories } from "../../services/Category.Service";
 import Link from "next/link";
+import { getPlants } from "@/services/Plant.Service";
+import { Button } from "@mui/material";
 
-interface Category {
+interface Plant {
   id: string;
   name: string;
   image: string;
+  price: string;
 }
 
-export default function CardCategory() {
-  const [categories, setCategories] = useState<Category[]>([]);
+export default function BestSelling() {
+  const [plants, setPlants] = useState<Plant[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllCategories() {
+    async function fetchAllBestSelling() {
       try {
-        const categoriesData = await getCategories();
-        setCategories(categoriesData);
+        const plantsData = await getPlants();
+        setPlants(plantsData);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchAllCategories();
-  }, [categories]);
+    fetchAllBestSelling();
+  }, [plants]);
 
   if (loading) {
     return (
@@ -50,30 +52,34 @@ export default function CardCategory() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as categorias</p>;
+    return <p>Erro ao carregar as mais vendidas.</p>;
   }
 
   return (
-    <div className="card-categories">
-      <h2>Categorias</h2>
+    <div className="card-selling">
+      <h2>Mais Vendidas</h2>
 
-      <div className="list-cards-categories">
-        {categories
+      <div className="list-cards-selling">
+        {plants
           .sort((a, b) => a.name.localeCompare(b.name))
-          .map((category) => (
-            <Link key={category.id} href={`/category/${category.id}`}>
+          .map((plant) => (
+            <Link key={plant.id} href={`/category/${plant.id}`}>
               <Card sx={{ maxWidth: 150 }}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    className="img-category-fixed"
-                    image={category.image}
-                    alt={category.name}
+                    className="img-selling-fixed"
+                    image={plant.image}
+                    alt={plant.name}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="body2" component="div">
-                      {category.name}
+                      {plant.name}
                     </Typography>
+                    <Typography gutterBottom variant="body2" component="div">
+                      R$ {plant.price}
+                    </Typography>
+                    <Button variant="contained" color="success">Comprar</Button>
                   </CardContent>
                 </CardActionArea>
               </Card>
