@@ -3,7 +3,9 @@
 import {
   Alert,
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   InputAdornment,
   InputLabel,
   OutlinedInput,
@@ -20,6 +22,9 @@ export default function CreatePlant() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [bestSelling, setBestSelling] = useState(false);
+  const [trend, setTrend] = useState(false);
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,7 +43,6 @@ export default function CreatePlant() {
 
     setPrice(formattedValue);
   };
-    
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,13 +51,23 @@ export default function CreatePlant() {
 
     try {
       setLoading(true);
-      await createPlant({ name, image, price, description, category });
+      await createPlant({
+        name,
+        image,
+        price,
+        description,
+        category,
+        bestSelling,
+        trend,
+      });
       setSuccess(true);
       setName("");
       setImage("");
       setPrice("");
       setDescription("");
       setCategory("");
+      setBestSelling(false);
+      setTrend(false);
     } catch (error) {
       setError(true);
     } finally {
@@ -118,6 +132,30 @@ export default function CreatePlant() {
           <SelectCategory
             selectedCategory={category}
             onSelectCategory={(value) => setCategory(value)}
+          />
+        </div>
+
+        <div className="form-container-div">
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="success"
+                value={bestSelling}
+                onChange={(e) => setBestSelling(e.target.checked)}
+              />
+            }
+            label="Mais Vendidos"
+          />
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="success"
+                value={trend}
+                onChange={(e) => setTrend(e.target.checked)}
+              />
+            }
+            label="Trend"
           />
         </div>
 

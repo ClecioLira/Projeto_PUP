@@ -1,4 +1,4 @@
-import { deletePlantsByCategory, updatePlantsByCategory } from "./Plant.Service";
+import { deletePlantsByCategory } from "./Plant.Service";
 
 const URL_CATEGORY = "http://localhost:3000/categories";
 
@@ -37,8 +37,6 @@ export async function updateCategory(
   id: string,
   { name, image }: { name: string; image: string }
 ) {
-  await updatePlantsByCategory(id);
-
   const res = await fetch(`${URL_CATEGORY}/${id}`, {
     method: "PUT",
     headers: {

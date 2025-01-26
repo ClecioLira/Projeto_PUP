@@ -9,19 +9,31 @@ export async function createPlant({
   price,
   description,
   category,
+  bestSelling,
+  trend,
 }: {
   name: string;
   image: string;
   price: string;
   description: string;
   category: string;
+  bestSelling?: boolean;
+  trend?: boolean;
 }) {
   const res = await fetch(URL_PLANT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, image, price, description, category }),
+    body: JSON.stringify({
+      name,
+      image,
+      price,
+      description,
+      category,
+      bestSelling,
+      trend,
+    }),
   });
 
   const plant = await res.json();
@@ -32,7 +44,7 @@ export async function createPlant({
   return plant;
 }
 
-async function addPlantToCategory(categoryId: string, plantId: string) {
+export async function addPlantToCategory(categoryId: string, plantId: string) {
   try {
     const category = await getCategoryById(categoryId);
     category.plants.push(plantId);
@@ -67,12 +79,16 @@ export async function updatePlant(
     price,
     description,
     category,
+    bestSelling,
+    trend,
   }: {
     name: string;
     image: string;
     price: string;
     description: string;
     category: string;
+    bestSelling?: boolean;
+    trend?: boolean;
   }
 ) {
   const res = await fetch(`${URL_PLANT}/${id}`, {
@@ -80,7 +96,15 @@ export async function updatePlant(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, image, price, description, category }),
+    body: JSON.stringify({
+      name,
+      image,
+      price,
+      description,
+      category,
+      bestSelling,
+      trend,
+    }),
   });
 
   return res.json();

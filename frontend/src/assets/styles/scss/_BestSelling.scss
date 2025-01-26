@@ -21,11 +21,20 @@
         margin-top: 1rem;
         text-align: center;
 
+        & .content {
+            padding: 1rem 0;
+        }
+
         & .img-selling-fixed {
             width: 150px;
             height: 100px;
             object-fit: cover;
             object-position: center;
+        }
+
+        :hover {
+            transform: scale(1.02);
+            transition: 0.4s ease;
         }
     }
 }

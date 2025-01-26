@@ -20,6 +20,7 @@ interface Plant {
   name: string;
   image: string;
   price: string;
+  bestSelling: boolean;
 }
 
 export default function BestSelling() {
@@ -61,7 +62,7 @@ export default function BestSelling() {
 
       <div className="list-cards-selling">
         {plants
-          .sort((a, b) => a.name.localeCompare(b.name))
+          .filter((plant) => plant.bestSelling)
           .map((plant) => (
             <Link key={plant.id} href={`/category/${plant.id}`}>
               <Card sx={{ maxWidth: 150 }}>
@@ -72,14 +73,17 @@ export default function BestSelling() {
                     image={plant.image}
                     alt={plant.name}
                   />
-                  <CardContent>
+                  <CardContent className="content">
                     <Typography gutterBottom variant="body2" component="div">
                       {plant.name}
                     </Typography>
                     <Typography gutterBottom variant="body2" component="div">
                       R$ {plant.price}
                     </Typography>
-                    <Button variant="contained" color="success">Comprar</Button>
+
+                    <Button className="btn-buy" variant="contained" color="success">
+                      Comprar
+                    </Button>
                   </CardContent>
                 </CardActionArea>
               </Card>
