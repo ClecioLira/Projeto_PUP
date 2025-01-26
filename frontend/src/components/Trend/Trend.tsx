@@ -20,10 +20,10 @@ interface Plant {
   name: string;
   image: string;
   price: string;
-  bestSelling: boolean;
+  trend: boolean;
 }
 
-export default function BestSelling() {
+export default function Trend() {
   const [plants, setPlants] = useState<Plant[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -53,16 +53,16 @@ export default function BestSelling() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as mais vendidas.</p>;
+    return <p>Erro ao carregar as trends.</p>;
   }
 
   return (
     <div className="card-selling">
-      <h2>Mais Vendidas</h2>
+      <h2>Trends</h2>
 
       <div className="list-cards-selling">
         {plants
-          .filter((plant) => plant.bestSelling)
+          .filter((plant) => plant.trend)
           .map((plant) => (
             <Link key={plant.id} href={`/category/${plant.id}`}>
               <Card sx={{ maxWidth: 150 }}>

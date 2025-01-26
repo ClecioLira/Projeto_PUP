@@ -37,7 +37,7 @@ export default function CardCategory() {
       }
     }
     fetchAllCategories();
-  }, [categories]);
+  }, []);
 
   if (loading) {
     return (

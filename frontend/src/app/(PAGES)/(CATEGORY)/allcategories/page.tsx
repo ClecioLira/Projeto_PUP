@@ -31,7 +31,7 @@ export default function AllCategories() {
       }
     }
     fetchAllCategories();
-  }, [categories]);
+  }, []);
 
   if (loading) {
     return (

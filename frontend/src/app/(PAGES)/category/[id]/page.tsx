@@ -36,8 +36,7 @@ export default function Plants() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-
-  console.log(id);
+  
   useEffect(() => {
     async function fetchAllCategories() {
       try {

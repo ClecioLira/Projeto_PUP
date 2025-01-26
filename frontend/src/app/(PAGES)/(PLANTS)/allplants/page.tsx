@@ -34,7 +34,7 @@ export default function AllPlants() {
       }
     }
     fetchAllPlants();
-  }, [plants]);
+  }, []);
 
   if (loading) {
     return (
