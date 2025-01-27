@@ -24,6 +24,7 @@ export default function EditPlant() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
+  const [newPrice, setNewPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [bestSelling, setBestSelling] = useState(false);
@@ -46,6 +47,19 @@ export default function EditPlant() {
     setPrice(formattedValue);
   };
 
+  const handleNewPriceChange = (e: any) => {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, "");
+
+    const formattedValue = new Intl.NumberFormat("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value / 100);
+
+    setNewPrice(formattedValue);
+  };
+
   useEffect(() => {
     const fetchPlant = async () => {
       if (typeof id === "string") {
@@ -54,6 +68,7 @@ export default function EditPlant() {
           setName(plant.name);
           setImage(plant.image);
           setPrice(plant.price);
+          setNewPrice(plant.newPrice);
           setDescription(plant.description);
           setCategory(plant.category);
           setBestSelling(plant.bestSelling);
@@ -78,6 +93,7 @@ export default function EditPlant() {
           name,
           image,
           price,
+          newPrice,
           description,
           category,
           bestSelling,
@@ -143,6 +159,22 @@ export default function EditPlant() {
               label="Preço"
               value={price}
               onChange={handlePriceChange}
+              color="success"
+            />
+          </FormControl>
+
+          <FormControl fullWidth sx={{ m: 1 }}>
+            <InputLabel htmlFor="outlined-adornment-amount" color="success">
+              Preço Promocional
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-amount"
+              startAdornment={
+                <InputAdornment position="start">R$</InputAdornment>
+              }
+              label="Preço Promocional"
+              value={newPrice}
+              onChange={handleNewPriceChange}
               color="success"
             />
           </FormControl>

@@ -37,7 +37,6 @@ export default function TableCategories({
 
   return (
     <section className="container">
-      <table>
         <TableContainer>
           <Table sx={{ maxWidth: 600 }} aria-label="simple table">
             <TableHead>
@@ -83,7 +82,6 @@ export default function TableCategories({
             </TableBody>
           </Table>
         </TableContainer>
-      </table>
     </section>
   );
 }

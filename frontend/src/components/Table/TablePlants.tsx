@@ -59,7 +59,6 @@ export default function TablePlantsComponent({ plants, setPlants }: { plants: Pl
 
   return (
     <section className="container">
-      <table>
         <TableContainer>
           <Table sx={{ maxWidth: 600 }} aria-label="simple table">
             <TableHead>
@@ -114,7 +113,6 @@ export default function TablePlantsComponent({ plants, setPlants }: { plants: Pl
             </TableBody>
           </Table>
         </TableContainer>
-      </table>
     </section>
   );
 }

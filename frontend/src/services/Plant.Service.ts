@@ -77,6 +77,7 @@ export async function updatePlant(
     name,
     image,
     price,
+    newPrice,
     description,
     category,
     bestSelling,
@@ -85,6 +86,7 @@ export async function updatePlant(
     name: string;
     image: string;
     price: string;
+    newPrice?: string;
     description: string;
     category: string;
     bestSelling?: boolean;
@@ -100,6 +102,7 @@ export async function updatePlant(
       name,
       image,
       price,
+      newPrice,
       description,
       category,
       bestSelling,
