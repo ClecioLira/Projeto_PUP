@@ -62,7 +62,7 @@ export default function Vases() {
       <div className="list-cards">
         {vases
           .map((vase) => (
-            <Link key={vase.id} href={`/vases/${vase.id}`}>
+            <Link key={vase.id} href={`/vasedetail/${vase.id}`}>
               <Card sx={{ maxWidth: 150 }}>
                 <CardActionArea>
                   <CardMedia

@@ -64,7 +64,7 @@ export default function Trend() {
         {plants
           .filter((plant) => plant.trend)
           .map((plant) => (
-            <Link key={plant.id} href={`/category/${plant.id}`}>
+            <Link key={plant.id} href={`/plantdetail/${plant.id}`}>
               <Card sx={{ maxWidth: 150 }}>
                 <CardActionArea>
                   <CardMedia

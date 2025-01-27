@@ -65,7 +65,7 @@ export default function Promo() {
         {plants
           .filter((plant) => plant.newPrice)
           .map((plant) => (
-            <Link key={plant.id} href={`/category/${plant.id}`}>
+            <Link key={plant.id} href={`/plantdetail/${plant.id}`}>
               <Card sx={{ maxWidth: 150 }}>
                 <CardActionArea>
                   <CardMedia

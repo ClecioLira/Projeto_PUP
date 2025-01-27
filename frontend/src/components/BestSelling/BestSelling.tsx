@@ -65,7 +65,7 @@ export default function BestSelling() {
         {plants
           .filter((plant) => plant.bestSelling)
           .map((plant) => (
-            <Link key={plant.id} href={`/category/${plant.id}`}>
+            <Link key={plant.id} href={`/plantdetail/${plant.id}`}>
               <Card sx={{ maxWidth: 150 }}>
                 <CardActionArea>
                   <CardMedia
