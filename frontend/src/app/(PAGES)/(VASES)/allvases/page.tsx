@@ -5,32 +5,32 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 import { useState, useEffect } from "react";
-import { getCategories } from "../../../../services/Category.Service";
-import TableCategories from "@/components/Table/TableCategories";
+import { getVases } from "@/services/Vase.Service";
+import TableVases from "@/components/Table/TableVases";
 
-interface Category {
+interface Vase {
   id: string;
   name: string;
   image: string;
 }
 
-export default function AllCategories() {
-  const [categories, setCategories] = useState<Category[]>([]);
+export default function AllVases() {
+  const [vases, setVases] = useState<Vase[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllCategories() {
+    async function fetchAllVases() {
       try {
-        const categoriesData = await getCategories();
-        setCategories(categoriesData);
+        const vasesData = await getVases();
+        setVases(vasesData);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchAllCategories();
+    fetchAllVases();
   }, []);
 
   if (loading) {
@@ -44,12 +44,12 @@ export default function AllCategories() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as categorias</p>;
+    return <p>Erro ao carregar os vasos</p>;
   }
 
   return (
     <section className="container">
-      <TableCategories categories={categories} setCategories={setCategories} />
+      <TableVases vases={vases} setVases={setVases} />
     </section>
   );
 }

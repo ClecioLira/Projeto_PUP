@@ -17,19 +17,17 @@ interface Category {
   image: string;
 }
 
-interface TableComponentProps {
-  categories: Category[];
-  onDelete: (categoryId: string) => void;
-}
-
 export default function TableCategories({
   categories,
-  onDelete,
-}: TableComponentProps) {
-  const handleDelete = async (categoryId: string) => {
+  setCategories,
+}: {
+  categories: Category[];
+  setCategories: (categories: Category[]) => void;
+}) {
+  const handleDeleteCategory = async (categoryId: string) => {
     try {
       await deleteCategory(categoryId);
-      onDelete(categoryId);
+      setCategories(categories.filter((category) => category.id !== categoryId));
     } catch (error) {
       console.error(error);
     }
@@ -37,51 +35,51 @@ export default function TableCategories({
 
   return (
     <section className="container">
-        <TableContainer>
-          <Table sx={{ maxWidth: 600 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Nome da Categoria</TableCell>
+      <TableContainer>
+        <Table sx={{ maxWidth: 600 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Nome da Categoria</TableCell>
 
-                <TableCell>
-                  <Link href="/createcategory">
-                    <Button color="success">Criar Nova Categoria</Button>
-                  </Link>
-                </TableCell>
+              <TableCell>
+                <Link href="/createcategory">
+                  <Button color="success">Criar Nova Categoria</Button>
+                </Link>
+              </TableCell>
 
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {categories
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((category) => (
-                  <TableRow
-                    key={category.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {category.name}
-                    </TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {categories
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((category) => (
+                <TableRow
+                  key={category.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {category.name}
+                  </TableCell>
 
-                    <TableCell align="right">
-                      <Link href={`/editcategory/${category.id}`}>
-                        <Button>Editar</Button>
-                      </Link>
-                    </TableCell>
+                  <TableCell align="right">
+                    <Link href={`/editcategory/${category.id}`}>
+                      <Button>Editar</Button>
+                    </Link>
+                  </TableCell>
 
-                    <TableCell align="right">
-                      <ButtonDelete
-                        categoryId={category.id}
-                        onDelete={() => handleDelete(category.id)}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                  <TableCell align="right">
+                    <ButtonDelete
+                      categoryId={category.id}
+                      onDelete={() => handleDeleteCategory(category.id)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </section>
   );
 }
