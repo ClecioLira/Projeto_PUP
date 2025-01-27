@@ -1,77 +1,38 @@
-"use client";
-
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import { Button } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
-import Cart from "../Cart/Cart";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
-  const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <div className="drawer-list">
-              <Link href="/">
-                <ListItemText primary="Início" />
-              </Link>
-
-              <Link href="/register">
-                <ListItemText primary="Cadastrar" />
-              </Link>
-
-              <Link href="/login">
-                <ListItemText primary="Entrar" />
-              </Link>
-            </div>
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
-  );
-
   return (
-    <nav className="navbar">
-      <Link href="/" className="logo">
-        <h2>Plante uma Planta</h2>
+    <nav className="flex items-center justify-between px-6 py-4 text-white bg-gradient-to-r from-green-500 to-green-900 ">
+      <Link href="/" className="text-xl font-bold hover:text-green-900 transition">
+        <span>Plante uma Planta</span>
       </Link>
 
-      <ul className="list">
-        <Link href="/">Início</Link>
-      </ul>
-
-      <div className="btns">
-        <Link href="/register">
-          <Button className="btn">Cadastrar</Button>
-        </Link>
-
-        <Link href="/login">
-          <Button className="btn">Entrar</Button>
+      <div className="hidden md:flex md:items-center">
+        <Link href="/" className="hover:text-green-500 transition">
+          Início
         </Link>
       </div>
 
-      <div className="drawer">
-        <Button onClick={toggleDrawer(true)}>
-          <span>Menu</span>
-        </Button>
-        <Drawer open={open} anchor="right" onClose={toggleDrawer(false)}>
-          {DrawerList}
-        </Drawer>
-      </div>
+      <div className="hidden space-x-4 md:flex items-center">
+        <Link
+          href="/register"
+          className="hover:bg-green-500 transition rounded-md"
+        >
+          <Button>
+            <span className="text-white">Cadastrar</span>
+          </Button>
+        </Link>
 
-      <Cart />
+        <Link
+          href="/login"
+          className="hover:bg-green-500 transition rounded-md"
+        >
+          <Button>
+            <span className="text-white">Entrar</span>
+          </Button>
+        </Link>
+      </div>
     </nav>
   );
 }
