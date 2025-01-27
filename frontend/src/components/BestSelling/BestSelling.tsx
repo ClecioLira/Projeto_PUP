@@ -20,6 +20,7 @@ interface Plant {
   name: string;
   image: string;
   price: string;
+  newPrice: string;
   bestSelling: boolean;
 }
 
@@ -73,15 +74,21 @@ export default function BestSelling() {
                     image={plant.image}
                     alt={plant.name}
                   />
-                  <CardContent className="content">
-                    <Typography gutterBottom variant="body2" component="div">
-                      {plant.name}
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="div">
-                      R$ {plant.price}
-                    </Typography>
+                  <CardContent>
+                    <div className="content">
+                      <Typography gutterBottom fontWeight="600" variant="body2" component="div">
+                        <span>{plant.name}</span>
+                      </Typography>
+                      <Typography gutterBottom variant="body2" component="div">
+                        R$ {plant.price}
+                      </Typography>
+                    </div>
 
-                    <Button className="btn-buy" variant="contained" color="success">
+                    <Button
+                      className="btn-buy"
+                      variant="contained"
+                      color="success"
+                    >
                       Comprar
                     </Button>
                   </CardContent>

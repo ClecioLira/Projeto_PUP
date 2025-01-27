@@ -75,7 +75,7 @@ export default function Promo() {
                     alt={plant.name}
                   />
                   <CardContent className="content">
-                    <Typography gutterBottom variant="body2" component="div">
+                    <Typography gutterBottom variant="body2" fontWeight="600" component="div">
                       {plant.name}
                     </Typography>
                     <Typography className="old-price" gutterBottom variant="body2" component="div">

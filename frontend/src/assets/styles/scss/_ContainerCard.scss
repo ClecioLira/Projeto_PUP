@@ -24,14 +24,18 @@
         text-align: center;
 
         & .content {
-            padding: 1rem 0;
+            text-align: left;
+            word-break: break-all;
+            margin-bottom: 1rem;
         }
 
         & .img-card-fixed {
             width: 150px;
-            height: 100px;
+            height: 150px;
             object-fit: cover;
             object-position: center;
+            padding: 0.5rem;
+            border-radius: 1rem;
         }
 
         :hover {
