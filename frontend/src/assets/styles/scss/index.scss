@@ -18,6 +18,11 @@ table {
     margin-top: 1rem;
 }
 
+.old-price {
+    color: red;
+    text-decoration: line-through;
+}
+
 .container {
     display: flex;
     flex-direction: column;
