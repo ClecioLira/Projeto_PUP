@@ -3,6 +3,7 @@ import CardCategory from "@/components/Card/CardCategory";
 import ImageHome from "@/components/ImageHome/ImageHome";
 import Promo from "@/components/Promo/Promo";
 import Trend from "@/components/Trend/Trend";
+import Vases from "@/components/Vases/Vases";
 
 export default function Home() {
   return (
@@ -23,6 +24,10 @@ export default function Home() {
 
       <section className="container">
         <Promo/>
+      </section>
+
+      <section className="container">
+        <Vases/>
       </section>
     </main>
   );
