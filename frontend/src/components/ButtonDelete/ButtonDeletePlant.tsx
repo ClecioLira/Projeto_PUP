@@ -31,7 +31,7 @@ export default function ButtonDeletePlant({ handleDelete }: ButtonDeletePlantPro
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Tem certeza que deseja apagar essa categoria?"}
+            {"Tem certeza que deseja apagar essa planta?"}
           </DialogTitle>
           <DialogActions>
   

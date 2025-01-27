@@ -8,7 +8,7 @@ interface ButtonDeleteProps {
   handleDelete: () => void;
 }
 
-export default function ButtonDelete({ handleDelete }: ButtonDeleteProps) {
+export default function ButtonDeleteVase({ handleDelete }: ButtonDeleteProps) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -31,7 +31,7 @@ export default function ButtonDelete({ handleDelete }: ButtonDeleteProps) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Tem certeza que deseja apagar essa categoria?"}
+          {"Tem certeza que deseja apagar esse vaso?"}
         </DialogTitle>
         <DialogActions>
 

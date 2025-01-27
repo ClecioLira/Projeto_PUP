@@ -7,9 +7,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 
-import ButtonDelete from "../ButtonDelete/ButtonDeleteCategory";
 import { deleteVase } from "@/services/Vase.Service";
 import Link from "next/link";
+import ButtonDeleteVase from "../ButtonDelete/ButtonDeleteVase";
 
 interface Vase {
   id: string;
@@ -67,9 +67,8 @@ export default function TableVases({
                     </TableCell>
 
                     <TableCell align="right">
-                      <ButtonDelete
-                        categoryId={vase.id}
-                        onDelete={() => handleDeleteVase(vase.id)}
+                      <ButtonDeleteVase
+                        handleDelete={() => handleDeleteVase(vase.id)}
                       />
                     </TableCell>
                   </TableRow>

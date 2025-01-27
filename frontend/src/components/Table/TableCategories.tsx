@@ -71,8 +71,7 @@ export default function TableCategories({
 
                   <TableCell align="right">
                     <ButtonDelete
-                      categoryId={category.id}
-                      onDelete={() => handleDeleteCategory(category.id)}
+                      handleDelete={() => handleDeleteCategory(category.id)}
                     />
                   </TableCell>
                 </TableRow>

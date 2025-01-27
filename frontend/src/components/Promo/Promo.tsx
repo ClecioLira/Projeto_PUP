@@ -74,18 +74,34 @@ export default function Promo() {
                     image={plant.image}
                     alt={plant.name}
                   />
-                  <CardContent className="content">
-                    <Typography gutterBottom variant="body2" fontWeight="600" component="div">
-                      {plant.name}
-                    </Typography>
-                    <Typography className="old-price" gutterBottom variant="body2" component="div">
-                      R$ {plant.price}
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="div">
-                      R$ {plant.newPrice}
-                    </Typography>
+                  <CardContent>
+                    <div className="content">
+                      <Typography
+                        gutterBottom
+                        variant="body2"
+                        fontWeight="600"
+                        component="div"
+                      >
+                        {plant.name}
+                      </Typography>
+                      <Typography
+                        className="old-price"
+                        gutterBottom
+                        variant="body2"
+                        component="div"
+                      >
+                        R$ {plant.price}
+                      </Typography>
+                      <Typography gutterBottom variant="body2" component="div">
+                        R$ {plant.newPrice}
+                      </Typography>
+                    </div>
 
-                    <Button className="btn-buy" variant="contained" color="success">
+                    <Button
+                      className="btn-buy"
+                      variant="contained"
+                      color="success"
+                    >
                       Comprar
                     </Button>
                   </CardContent>
