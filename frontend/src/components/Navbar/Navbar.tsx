@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import Link from "next/link";
+import DrawerNavbar from "./Drawer";
 
 export default function Navbar() {
   return (
@@ -32,6 +33,10 @@ export default function Navbar() {
             <span className="text-white">Entrar</span>
           </Button>
         </Link>
+      </div>
+
+      <div className="md:hidden mt-2">
+        <DrawerNavbar/>
       </div>
     </nav>
   );
