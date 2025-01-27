@@ -88,7 +88,7 @@ export default function CreatePlant() {
           label="Nome da Planta"
           type="text"
           color="success"
-          value={name}
+          value={name || ''}
           onChange={(e) => setName(e.target.value)}
         />
 
@@ -98,7 +98,7 @@ export default function CreatePlant() {
           label="URL da Imagem"
           type="text"
           color="success"
-          value={image}
+          value={image || ''}
           onChange={(e) => setImage(e.target.value)}
         />
 
@@ -107,7 +107,7 @@ export default function CreatePlant() {
           id="outlined-textarea"
           label="Descrição da Planta"
           color="success"
-          value={description}
+          value={description || ''}
           onChange={(e) => setDescription(e.target.value)}
           multiline
         />
@@ -123,14 +123,14 @@ export default function CreatePlant() {
                 <InputAdornment position="start">R$</InputAdornment>
               }
               label="Preço"
-              value={price}
+              value={price || ''}
               onChange={handlePriceChange}
               color="success"
             />
           </FormControl>
 
           <SelectCategory
-            selectedCategory={category}
+            selectedCategory={category || ''}
             onSelectCategory={(value) => setCategory(value)}
           />
         </div>
@@ -140,7 +140,7 @@ export default function CreatePlant() {
             control={
               <Checkbox
                 color="success"
-                value={bestSelling}
+                value={bestSelling || ''}
                 onChange={(e) => setBestSelling(e.target.checked)}
               />
             }
@@ -151,7 +151,7 @@ export default function CreatePlant() {
             control={
               <Checkbox
                 color="success"
-                value={trend}
+                value={trend || ''}
                 onChange={(e) => setTrend(e.target.checked)}
               />
             }

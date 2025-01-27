@@ -57,10 +57,10 @@ export default function BestSelling() {
   }
 
   return (
-    <div className="card-selling">
+    <div className="container-card">
       <h2>Mais Vendidas</h2>
 
-      <div className="list-cards-selling">
+      <div className="list-cards">
         {plants
           .filter((plant) => plant.bestSelling)
           .map((plant) => (
@@ -69,7 +69,7 @@ export default function BestSelling() {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    className="img-selling-fixed"
+                    className="img-card-fixed"
                     image={plant.image}
                     alt={plant.name}
                   />

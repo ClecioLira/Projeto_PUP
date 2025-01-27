@@ -1,4 +1,4 @@
-.card-selling {
+.container-card {
     margin: 2rem 0 1rem;
 
     & h2 {
@@ -15,7 +15,7 @@
         text-decoration: none;
     }
 
-    & .list-cards-selling {
+    & .list-cards {
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
@@ -23,11 +23,16 @@
         margin-top: 1rem;
         text-align: center;
 
+        & .old-price {
+            color: red;
+            text-decoration: line-through;
+        }
+
         & .content {
             padding: 1rem 0;
         }
 
-        & .img-selling-fixed {
+        & .img-card-fixed {
             width: 150px;
             height: 100px;
             object-fit: cover;

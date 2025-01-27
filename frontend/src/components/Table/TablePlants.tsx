@@ -65,7 +65,6 @@ export default function TablePlantsComponent({ plants, setPlants }: { plants: Pl
               <TableRow>
                 <TableCell>Nome da Planta</TableCell>
                 <TableCell>Categoria</TableCell>
-                <TableCell>Preço</TableCell>
 
                 <TableCell>
                   <Link href="/createplant">
@@ -91,10 +90,6 @@ export default function TablePlantsComponent({ plants, setPlants }: { plants: Pl
 
                     <TableCell component="th" scope="row">
                       {filterCategory(plant.category)}
-                    </TableCell>
-
-                    <TableCell component="th" scope="row">
-                      {plant.price}
                     </TableCell>
 
                     <TableCell align="right">

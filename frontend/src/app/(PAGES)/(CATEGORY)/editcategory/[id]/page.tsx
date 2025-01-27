@@ -63,7 +63,7 @@ export default function EditCategory() {
           label="Nome da Categoria"
           type="text"
           color="success"
-          value={name}
+          value={name || ''}
           onChange={(e) => setName(e.target.value)}
         />
 
@@ -73,7 +73,7 @@ export default function EditCategory() {
           label="URL da Imagem"
           type="text"
           color="success"
-          value={image}
+          value={image || ''}
           onChange={(e) => setImage(e.target.value)}
         />
 

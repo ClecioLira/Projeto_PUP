@@ -20,16 +20,17 @@ interface Plant {
   name: string;
   image: string;
   price: string;
+  newPrice: string;
   trend: boolean;
 }
 
-export default function Trend() {
+export default function Promo() {
   const [plants, setPlants] = useState<Plant[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllTrend() {
+    async function fetchAllBestSelling() {
       try {
         const plantsData = await getPlants();
         setPlants(plantsData);
@@ -39,7 +40,7 @@ export default function Trend() {
         setLoading(false);
       }
     }
-    fetchAllTrend();
+    fetchAllBestSelling();
   }, []);
 
   if (loading) {
@@ -58,11 +59,11 @@ export default function Trend() {
 
   return (
     <div className="container-card">
-      <h2>Trends</h2>
+      <h2>Promoção</h2>
 
       <div className="list-cards">
         {plants
-          .filter((plant) => plant.trend)
+          .filter((plant) => plant.newPrice)
           .map((plant) => (
             <Link key={plant.id} href={`/category/${plant.id}`}>
               <Card sx={{ maxWidth: 150 }}>
@@ -77,8 +78,11 @@ export default function Trend() {
                     <Typography gutterBottom variant="body2" component="div">
                       {plant.name}
                     </Typography>
-                    <Typography gutterBottom variant="body2" component="div">
+                    <Typography className="old-price" gutterBottom variant="body2" component="div">
                       R$ {plant.price}
+                    </Typography>
+                    <Typography gutterBottom variant="body2" component="div">
+                      R$ {plant.newPrice}
                     </Typography>
 
                     <Button className="btn-buy" variant="contained" color="success">
