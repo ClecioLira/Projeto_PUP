@@ -12,3 +12,8 @@
 body {
     background-color: #F0FDF4 !important;
 }
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  color: #066127;
+}
