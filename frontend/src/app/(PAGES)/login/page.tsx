@@ -21,7 +21,7 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="h-screen bg-gradient-to-r from-green-500 to-green-900">
+    <main className="h-screen bg-green-50">
       <div className="flex justify-center pt-10">
         <Card
           style={{
