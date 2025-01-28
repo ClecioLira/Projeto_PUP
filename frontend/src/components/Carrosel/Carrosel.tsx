@@ -90,7 +90,7 @@ const CategoriesCarousel = () => {
                 />
 
                 <Link
-                  href={`/category/${category.id}`}
+                  href={`/products/${category.id}`}
                   className="flex justify-center mt-2 w-full"
                 >
                   <Button
