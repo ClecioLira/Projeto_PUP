@@ -17,85 +17,59 @@ import { FaRegTrashCan } from "react-icons/fa6";
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { getPlants } from "@/services/Plant";
-import { getCategories } from "@/services/Category";
-import { deletePlant } from "@/services/Plant";
+import { getVases } from "@/services/Vase";
+import { deleteVase } from "@/services/Vase";
 import { DialogContent, DialogContentText } from "@mui/material";
 
-interface Plants {
+interface Vase {
   id: string;
   name: string;
   image: string;
-  price: string;
-  description: string;
-  category: string;
 }
 
-interface Category {
-  id: string;
-  name: string;
-}
-
-export default function AllPlants() {
-  const [plants, setPlants] = useState<Plants[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+export default function AllVases() {
+  const [vases, setVases] = useState<Vase[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  async function fetchAllPlants() {
-    try {
-      const plantsData = await getPlants();
-      setPlants(plantsData);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }
   useEffect(() => {
-    fetchAllPlants();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
+    async function fetchAllVases() {
       try {
-        const categoryData = await getCategories();
-        setCategories(categoryData);
+        const vasesData = await getVases();
+        setVases(vasesData);
       } catch (error) {
-        console.error(error);
+        setError(true);
+      } finally {
+        setLoading(false);
       }
-    };
-    fetchData();
+    }
+    fetchAllVases();
   }, []);
-
-  const filterCategory = (categoryId: string) => {
-    return categories.find((category) => category.id === categoryId)?.name;
-  };
 
   const [open, setOpen] = useState(false);
-  const [plantToDelete, setPlantToDelete] = useState<string | null>(null); // ID da planta a ser deletada
+  const [vaseToDelete, setVaseToDelete] = useState<string | null>(null);
 
-  const handleClickOpen = (plantId: string) => {
-    setPlantToDelete(plantId); // Define a planta para ser apagada
-    setOpen(true); // Abre o diálogo
+  const handleClickOpen = (vaseId: string) => {
+    setVaseToDelete(vaseId);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setPlantToDelete(null); // Reseta o estado da planta
-    setOpen(false); // Fecha o diálogo
+    setVaseToDelete(null);
+    setOpen(false);
   };
 
-  const handleDeletePlant = async () => {
-    if (!plantToDelete) return; // Garante que há uma planta definida para apagar
+  const handleDeleteVase = async () => {
+    if (!vaseToDelete) return;
     try {
-      await deletePlant(plantToDelete);
-      setPlants((prevData) =>
-        prevData.filter((item) => item.id !== plantToDelete)
+      await deleteVase(vaseToDelete);
+      setVases((prevData) =>
+        prevData.filter((item) => item.id !== vaseToDelete)
       );
     } catch (error) {
       console.error(error);
     } finally {
-      handleClose(); // Fecha o diálogo
+      handleClose();
     }
   };
 
@@ -110,7 +84,7 @@ export default function AllPlants() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as plantas</p>;
+    return <p>Erro ao carregar os vasos</p>;
   }
 
   return (
@@ -129,14 +103,11 @@ export default function AllPlants() {
           >
             <TableHead>
               <TableRow>
-                <TableCell>Nome da Planta</TableCell>
-                <TableCell className="hidden md:table-cell">
-                  Nome da Categoria
-                </TableCell>
+                <TableCell>Nome do Vaso</TableCell>
 
                 <TableCell>
-                  <Link href="/createplant">
-                    <Button color="success">Criar Nova Planta</Button>
+                  <Link href="/createvase">
+                    <Button color="success">Criar Novo Vaso</Button>
                   </Link>
                 </TableCell>
 
@@ -145,26 +116,16 @@ export default function AllPlants() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {plants
+              {vases
                 .sort((a, b) => a.name.localeCompare(b.name))
-                .map((plant) => (
-                  <TableRow key={plant.id}>
+                .map((vase) => (
+                  <TableRow key={vase.id}>
                     <TableCell component="th" scope="row">
-                      <span>{plant.name}</span>
-                    </TableCell>
-
-                    <TableCell
-                      className="hidden md:table-cell"
-                      component="th"
-                      scope="row"
-                    >
-                      <span className="break-all">
-                        {filterCategory(plant.category)}{" "}
-                      </span>
+                      <span>{vase.name}</span>
                     </TableCell>
 
                     <TableCell align="right">
-                      <Link href={`/editplant/${plant.id}`}>
+                      <Link href={`/editvase/${vase.id}`}>
                         <Button color="success" variant="contained">
                           <span className="hidden md:block pr-2">Editar</span>
                           <FaRegEdit />
@@ -177,7 +138,7 @@ export default function AllPlants() {
                         <Button
                           variant="contained"
                           color="error"
-                          onClick={() => handleClickOpen(plant.id)} // Passa o ID da planta ao abrir o diálogo
+                          onClick={() => handleClickOpen(vase.id)}
                         >
                           <span className="hidden md:block pr-2">Apagar</span>
                           <FaRegTrashCan />
@@ -189,7 +150,7 @@ export default function AllPlants() {
                         >
                           <DialogContent>
                             <DialogContentText>
-                              Tem certeza que deseja apagar esta planta?
+                              Tem certeza que deseja apagar este vaso?
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>
@@ -202,7 +163,7 @@ export default function AllPlants() {
                             </Button>
                             <Button
                               color="error"
-                              onClick={handleDeletePlant} // Agora usa a planta definida no estado
+                              onClick={handleDeleteVase}
                             >
                               Apagar
                             </Button>

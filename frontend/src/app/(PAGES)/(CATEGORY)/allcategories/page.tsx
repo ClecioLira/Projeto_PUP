@@ -48,20 +48,29 @@ export default function AllCategories() {
   }, []);
 
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
+
+  const handleClickOpen = (categoryId: string) => {
+    setCategoryToDelete(categoryId);
     setOpen(true);
   };
+
   const handleClose = () => {
+    setCategoryToDelete(null);
     setOpen(false);
   };
-  const handleDelete = async (categoryId: string) => {
+
+  const handleDeleteCategory = async () => {
+    if (!categoryToDelete) return;
     try {
-      await deleteCategory(categoryId);
-      setCategories(
-        categories.filter((category) => category.id !== categoryId)
+      await deleteCategory(categoryToDelete);
+      setCategories((prevData) =>
+        prevData.filter((item) => item.id !== categoryToDelete)
       );
     } catch (error) {
       console.error(error);
+    } finally {
+      handleClose();
     }
   };
 
@@ -130,7 +139,7 @@ export default function AllCategories() {
                         <Button
                           variant="contained"
                           color="error"
-                          onClick={handleClickOpen}
+                          onClick={() => handleClickOpen(category.id)}
                         >
                           <span className="hidden md:block pr-2">Apagar</span>
                           <FaRegTrashCan />
@@ -155,11 +164,7 @@ export default function AllCategories() {
                             </Button>
                             <Button
                               color="error"
-                              onClick={() => {
-                                handleClose();
-                                handleDelete(category.id);
-                              }}
-                              autoFocus
+                              onClick={handleDeleteCategory} 
                             >
                               Apagar
                             </Button>
