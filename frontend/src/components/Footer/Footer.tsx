@@ -8,7 +8,7 @@ function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: "white", mt: 1 }}>
       {"Copyright © "}
-      <Link color="text.secondary" href="https://mui.com/">
+      <Link className="hover:underline" href="https://mui.com/" target="_blank">
         Clécio Lira
       </Link>
       &nbsp;
@@ -20,25 +20,32 @@ function Copyright() {
 export default function Footer() {
   return (
     <section className="bg-gradient-to-r p-4 from-green-500 to-green-900 w-full text-white">
-      <div className="flex justify-around">
-        <h5 className="font-semibold text-2xl">Plante uma Planta</h5>
+      <h5 className="font-semibold text-2xl pb-8 text-center">Plante uma Planta</h5>
+      <div className="flex justify-around flex-wrap">
         <div>
-          <ul>
+          <ul className="flex flex-col gap-2">
+            <p className="font-semibold">Links Rápidos</p>
             <li>
-              <Link href={""}>Sobre</Link>
+              <Link href={""} className="hover:underline">
+                Sobre
+              </Link>
             </li>
             <li>
-              <Link href={""}>Contatos</Link>
+              <Link href={""} className="hover:underline">
+                Contatos
+              </Link>
             </li>
             <li>
-              <Link href={""}>Politica de privacidade</Link>
+              <Link href={""} className="hover:underline">
+                Politica de privacidade
+              </Link>
             </li>
           </ul>
         </div>
-        <div className="flex gap-4">
-          <FaFacebook />
-          <AiFillInstagram />
-          <FaSquareXTwitter />
+        <div className="flex flex-col gap-4 items-center justify-center">
+          <FaFacebook size={30} className="hover:scale-105 transition cursor-pointer"/>
+          <AiFillInstagram size={35} className="hover:scale-105 transition cursor-pointer"/>
+          <FaSquareXTwitter size={30} className="hover:scale-105 transition cursor-pointer"/>
         </div>
       </div>
       <div className="text-center pt-4">

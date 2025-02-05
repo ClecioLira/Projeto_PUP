@@ -24,14 +24,15 @@ export default function MasonryImageList() {
         Celebre a vida com quem você ama
       </h2>
 
-      <Box className="w-xs">
+      <Box>
         <ImageList variant="masonry" cols={3} gap={8}>
           {itemData.map((item) => (
             <ImageListItem key={item.title}>
               <Image
                 src={item.img}
                 alt={item.title}
-                className="shadow-md shadow-gray-500"
+                width={300}
+                className="shadow-md shadow-gray-500 object-cover"
               />
             </ImageListItem>
           ))}
