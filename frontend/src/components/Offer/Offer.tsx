@@ -19,16 +19,15 @@ interface Plant {
   image: string;
   price: string;
   newPrice: string;
-  bestSelling: boolean;
 }
 
-export default function BestSelling() {
+export default function Offer() {
   const [plants, setPlants] = useState<Plant[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllBestSelling() {
+    async function fetchAllOffer() {
       try {
         const plantsData = await getPlants();
         setPlants(plantsData);
@@ -38,7 +37,7 @@ export default function BestSelling() {
         setLoading(false);
       }
     }
-    fetchAllBestSelling();
+    fetchAllOffer();
   }, []);
 
   if (loading) {
@@ -58,12 +57,12 @@ export default function BestSelling() {
   return (
     <div className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
-        Mais Vendidas
+        Ofertas
       </h2>
 
       <div className="flex flex-wrap justify-center gap-6 w-full mx-auto md:w-10/12 lg:w-10/12 xl:w-8/12 2xl:w-6/12">
         {plants
-          .filter((plant) => plant.bestSelling)
+          .filter((plant) => plant.newPrice)
           .map((plant) => (
             <Link key={plant.id} href={`/plantdetail/${plant.id}`}>
               <Card
@@ -87,8 +86,11 @@ export default function BestSelling() {
                     <span>{plant.name}</span>
                   </Typography>
 
-                  <Typography gutterBottom variant="body2" component="div">
+                  <Typography gutterBottom variant="body2" component="div" className="line-through text-red-600">
                     R$ {plant.price}
+                  </Typography>
+                  <Typography gutterBottom variant="body2" component="div">
+                    R$ {plant.newPrice}
                   </Typography>
 
                 </CardContent>

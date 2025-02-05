@@ -19,16 +19,16 @@ interface Plant {
   image: string;
   price: string;
   newPrice: string;
-  bestSelling: boolean;
+  trend: boolean;
 }
 
-export default function BestSelling() {
+export default function Trend() {
   const [plants, setPlants] = useState<Plant[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllBestSelling() {
+    async function fetchAllTrend() {
       try {
         const plantsData = await getPlants();
         setPlants(plantsData);
@@ -38,7 +38,7 @@ export default function BestSelling() {
         setLoading(false);
       }
     }
-    fetchAllBestSelling();
+    fetchAllTrend();
   }, []);
 
   if (loading) {
@@ -58,12 +58,12 @@ export default function BestSelling() {
   return (
     <div className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
-        Mais Vendidas
+        Trend
       </h2>
 
       <div className="flex flex-wrap justify-center gap-6 w-full mx-auto md:w-10/12 lg:w-10/12 xl:w-8/12 2xl:w-6/12">
         {plants
-          .filter((plant) => plant.bestSelling)
+          .filter((plant) => plant.trend)
           .map((plant) => (
             <Link key={plant.id} href={`/plantdetail/${plant.id}`}>
               <Card
