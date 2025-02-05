@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Banner from "@/components/Banner/Banner";
+import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Plante uma Planta",
@@ -21,6 +22,9 @@ export default function RootLayout({
           <Banner/>
         </header>
         {children}
+        <footer>
+          <Footer/>
+        </footer>
       </body>
     </html>
   );

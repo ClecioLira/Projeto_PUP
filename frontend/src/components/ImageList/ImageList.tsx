@@ -3,9 +3,22 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
+import image1 from "@/assets/images/1.jpeg"
+import image2 from "@/assets/images/2.jpeg"
+import image3 from "@/assets/images/3.jpeg"
+import image5 from "@/assets/images/5.jpeg"
+import image6 from "@/assets/images/6.jpeg"
+import image7 from "@/assets/images/7.jpeg"
+import image8 from "@/assets/images/8.jpeg"
+import image9 from "@/assets/images/9.jpeg"
+import image10 from "@/assets/images/10.jpeg"
+import image11 from "@/assets/images/11.jpeg"
+import image12 from "@/assets/images/12.jpeg"
+import Image from "next/image";
+
 export default function MasonryImageList() {
   return (
-    <section className="flex flex-col p-4 mt-8 items-center justify-center">
+    <section className="flex flex-col p-4 my-8 items-center justify-center">
 
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Celebre a vida com quem você ama
@@ -14,10 +27,9 @@ export default function MasonryImageList() {
       <Box className="w-xs">
         <ImageList variant="masonry" cols={3} gap={8}>
           {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item.img}?w=248&fit=crop&auto=format`}
+            <ImageListItem key={item.title}>
+              <Image
+                src={item.img}
                 alt={item.title}
                 className="shadow-md shadow-gray-500"
               />
@@ -31,51 +43,47 @@ export default function MasonryImageList() {
 
 const itemData = [
   {
-    img: "https://images.pexels.com/photos/2234418/pexels-photo-2234418.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: image1,
     title: "1",
   },
   {
-    img: "https://images.pexels.com/photos/28939053/pexels-photo-28939053.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: image2,
     title: "2",
   },
   {
-    img: "https://images.pexels.com/photos/6667976/pexels-photo-6667976.jpeg?auto=compress&cs=tinysrgb&w=60013651479-597eb2da0ad6",
+    img: image3,
     title: "3",
   },
   {
-    img: "https://images.pexels.com/photos/6012807/pexels-photo-6012807.jpeg?auto=compress&cs=tinysrgb&w=600",
-    title: "4",
-  },
-  {
-    img: "https://images.pexels.com/photos/3077837/pexels-photo-3077837.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: image5,
     title: "5",
   },
   {
-    img: "https://images.pexels.com/photos/1469880/pexels-photo-1469880.jpeg?auto=compress&cs=tinysrgb&w=600",
+    img: image6,
     title: "6",
   },
   {
-    img: "https://images.pexels.com/photos/10732551/pexels-photo-10732551.jpeg?auto=compress&cs=tinysrgb&w=300",
+    img: image7,
     title: "7",
   },
   {
-    img: "https://images.pexels.com/photos/28939052/pexels-photo-28939052/free-photo-of-crianca-sentada-perto-de-um-lago-alpino-em-meio-a-uma-paisagem-de-outono.jpeg?auto=compress&cs=tinysrgb&w=300",
+    img: image8,
     title: "8",
   },
   {
-    img: "https://images.pexels.com/photos/3708444/pexels-photo-3708444.jpeg?auto=compress&cs=tinysrgb&w=300",
+    img: image9,
     title: "9",
   },
   {
-    img: "https://images.pexels.com/photos/5962201/pexels-photo-5962201.jpeg?auto=compress&cs=tinysrgb&w=300",
+    img: image10,
     title: "10",
   },
   {
-    img: "https://images.pexels.com/photos/10431312/pexels-photo-10431312.jpeg?auto=compress&cs=tinysrgb&w=300",
+    img: image11,
     title: "11",
   },
   {
-    img: "https://images.pexels.com/photos/14043063/pexels-photo-14043063.jpeg?auto=compress&cs=tinysrgb&w=300",
+    img: image12,
     title: "12",
   },
 ];
