@@ -51,7 +51,7 @@ export default function Offer() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as mais vendidas.</p>;
+    return <p>Erro ao carregar as ofertas.</p>;
   }
 
   return (

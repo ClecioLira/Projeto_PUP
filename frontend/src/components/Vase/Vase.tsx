@@ -11,34 +11,32 @@ import { Button, CardActions } from "@mui/material";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getPlants } from "@/services/Plant";
+import { getVases } from "@/services/Vase";
 
-interface Plant {
+interface Vase {
   id: string;
   name: string;
   image: string;
   price: string;
-  newPrice: string;
-  trend: boolean;
 }
 
-export default function Trend() {
-  const [plants, setPlants] = useState<Plant[]>([]);
+export default function Vases() {
+  const [vases, setVases] = useState<Vase[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllTrend() {
+    async function fetchAllVase() {
       try {
-        const plantsData = await getPlants();
-        setPlants(plantsData);
+        const vasesData = await getVases();
+        setVases(vasesData);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchAllTrend();
+    fetchAllVase();
   }, []);
 
   if (loading) {
@@ -52,28 +50,27 @@ export default function Trend() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as trends.</p>;
+    return <p>Erro ao carregar os vasos.</p>;
   }
 
   return (
     <div className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
-        Trend
+        Vasos
       </h2>
 
       <div className="flex flex-wrap justify-center gap-6 w-full mx-auto md:w-10/12 lg:w-10/12 xl:w-8/12 2xl:w-6/12">
-        {plants
-          .filter((plant) => plant.trend)
-          .map((plant) => (
-            <Link key={plant.id} href={`/plantdetail/${plant.id}`}>
+        {vases
+          .map((vase) => (
+            <Link key={vase.id} href={`/vasedetail/${vase.id}`}>
               <Card
                 sx={{ maxWidth: 190 }}
                 className="rounded-md shadow-md shadow-gray-500 p-2 hover:scale-105 transition"
               >
                 <CardMedia
                   component="img"
-                  image={plant.image}
-                  alt={plant.name}
+                  image={vase.image}
+                  alt={vase.name}
                   style={{ height: 200, width: 200 }}
                   className="rounded-md"
                 />
@@ -84,11 +81,11 @@ export default function Trend() {
                     variant="body2"
                     component="div"
                   >
-                    <span>{plant.name}</span>
+                    <span>{vase.name}</span>
                   </Typography>
 
                   <Typography gutterBottom variant="body2" component="div">
-                    R$ {plant.price}
+                    R$ {vase.price}
                   </Typography>
 
                 </CardContent>
