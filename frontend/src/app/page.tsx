@@ -8,7 +8,7 @@ import Vases from "@/components/Vase/Vase";
 
 export default function Home() {
   return (
-    <div className="bg-green-50">
+    <main className="bg-green-50">
       <CategoriesCarousel/>
       <BestSelling/>
       <Trend/>
@@ -16,6 +16,6 @@ export default function Home() {
       <Vases/>
       <CustomizeGarden/>
       <MasonryImageList/>
-    </div>
+    </main>
   );
 }

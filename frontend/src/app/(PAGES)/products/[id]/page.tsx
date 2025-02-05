@@ -75,12 +75,12 @@ export default function Plants() {
   }
 
   return (
-    <div className="flex flex-col justify-center text-center">
+    <main className="flex flex-col justify-center text-center">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Plantas {categories[0]?.name}
       </h2>
 
-      <div className="flex flex-wrap gap-4 justify-center text-center">
+      <div className="flex flex-wrap gap-4 justify-center text-center mb-8">
         {categories &&
           categories.map((category) =>
             category.plants.map((plant) => (
@@ -103,7 +103,7 @@ export default function Plants() {
                       {plant.newPrice}
                     </Typography>
 
-                    <Link href={``}>
+                    <Link href={`/plantdetail/${plant.id}`}>
                       <Button variant="contained" color="success">
                         Comprar
                       </Button>
@@ -114,6 +114,6 @@ export default function Plants() {
             ))
           )}
       </div>
-    </div>
+    </main>
   );
 }
