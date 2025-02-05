@@ -56,7 +56,7 @@ export default function Trend() {
   }
 
   return (
-    <div className="flex flex-col mt-4 items-center justify-center">
+    <section className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Trend
       </h2>
@@ -104,6 +104,6 @@ export default function Trend() {
           ))
           .sort()}
       </div>
-    </div>
+    </section>
   );
 }

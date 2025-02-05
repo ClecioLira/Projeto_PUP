@@ -55,7 +55,7 @@ export default function Offer() {
   }
 
   return (
-    <div className="flex flex-col mt-4 items-center justify-center">
+    <section className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Ofertas
       </h2>
@@ -106,6 +106,6 @@ export default function Offer() {
           ))
           .sort()}
       </div>
-    </div>
+    </section>
   );
 }

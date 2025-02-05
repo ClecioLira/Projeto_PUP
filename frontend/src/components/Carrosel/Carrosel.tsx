@@ -59,7 +59,7 @@ const CategoriesCarousel = () => {
   }
 
   return (
-    <div className="w-full mx-auto md:w-10/12 lg:w-10/12 xl:w-8/12 2xl:w-6/12">
+    <section className="w-full mx-auto md:w-10/12 lg:w-10/12 xl:w-8/12 2xl:w-6/12">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Categorias
       </h2>
@@ -106,7 +106,7 @@ const CategoriesCarousel = () => {
           ))}
         </Swiper>
       </div>
-    </div>
+    </section>
   );
 };
 

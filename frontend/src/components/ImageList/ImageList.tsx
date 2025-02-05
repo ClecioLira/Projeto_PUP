@@ -5,7 +5,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 
 export default function MasonryImageList() {
   return (
-    <div className="flex flex-col p-4 mt-8 items-center justify-center">
+    <section className="flex flex-col p-4 mt-8 items-center justify-center">
 
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Celebre a vida com quem você ama
@@ -19,14 +19,13 @@ export default function MasonryImageList() {
                 srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                 src={`${item.img}?w=248&fit=crop&auto=format`}
                 alt={item.title}
-                loading="lazy"
                 className="shadow-md shadow-gray-500"
               />
             </ImageListItem>
           ))}
         </ImageList>
       </Box>
-    </div>
+    </section>
   );
 }
 

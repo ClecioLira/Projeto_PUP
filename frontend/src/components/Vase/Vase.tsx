@@ -54,7 +54,7 @@ export default function Vases() {
   }
 
   return (
-    <div className="flex flex-col mt-4 items-center justify-center">
+    <section className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Vasos
       </h2>
@@ -101,6 +101,6 @@ export default function Vases() {
           ))
           .sort()}
       </div>
-    </div>
+    </section>
   );
 }
