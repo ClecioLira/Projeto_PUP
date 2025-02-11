@@ -2,19 +2,17 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getPlantById } from "@/services/Plant";
+import { getVaseById } from "@/services/Vase";
 import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { CiSearch } from "react-icons/ci";
 import CarroselInDetail from "@/components/Carrosel/CarroselInDetail";
 
-interface Plant {
+interface Vase {
   id: string;
   name: string;
   image: string;
   price: string;
-  newPrice: string;
   description: string;
-  category: string;
 }
 
 interface Cep {
@@ -25,20 +23,20 @@ interface Cep {
   estado: string;
 }
 
-export default function PlantDetail() {
+export default function VaseDetail() {
   const { id } = useParams();
-  const [plant, setPlant] = useState<Plant>();
+  const [vase, setVase] = useState<Vase>();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cep, setCep] = useState("");
   const [resultCep, setResultCep] = useState<Cep>();
 
   useEffect(() => {
-    const fetchPlant = async () => {
+    const fetchVase = async () => {
       try {
         if (typeof id === "string") {
-          const plantData = await getPlantById(id);
-          setPlant(plantData);
+          const vaseData = await getVaseById(id);
+          setVase(vaseData);
         }
       } catch (error) {
         console.log(error);
@@ -48,7 +46,7 @@ export default function PlantDetail() {
       }
     };
 
-    fetchPlant();
+    fetchVase();
   }, [id]);
 
   const handleCep = async (e: React.FormEvent) => {
@@ -77,7 +75,7 @@ export default function PlantDetail() {
     return (
       <div className="flex items-center justify-center bg-red-50 h-screen">
         <p className="text-red-600 font-semibold text-xl">
-          Ocorreu um erro ao carregar a planta. Tente novamente mais tarde.
+          Ocorreu um erro ao carregar o vaso. Tente novamente mais tarde.
         </p>
       </div>
     );
@@ -89,17 +87,17 @@ export default function PlantDetail() {
         <div className="flex flex-col md:flex-row justify-center md:gap-4 w-4/5">
           <div className="flex-1">
             <img
-              src={`${plant?.image}`}
-              alt={`${plant?.name}`}
+              src={`${vase?.image}`}
+              alt={`${vase?.name}`}
               className="rounded-md shadow-md shadow-gray-500"
             />
           </div>
           <div className="flex-1">
-            <h2 className="font-semibold text-2xl mb-2">{plant?.name}</h2>
+            <h2 className="font-semibold text-2xl mb-2">{vase?.name}</h2>
 
-            <p>R$ {plant?.price}</p>
+            <p>R$ {vase?.price}</p>
 
-            <p>{plant?.description}</p>
+            <p>{vase?.description}</p>
 
             <div className="mt-4 flex gap-2">
               <TextField

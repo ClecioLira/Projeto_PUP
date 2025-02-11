@@ -19,7 +19,7 @@ function Copyright() {
 
 export default function Footer() {
   return (
-    <section className="bg-gradient-to-r p-4 from-green-500 to-green-900 w-full text-white">
+    <section className="bg-gradient-to-r relative bottom-0 p-4 from-green-500 to-green-900 w-full text-white">
       <h5 className="font-semibold text-2xl pb-8 text-center">Plante uma Planta</h5>
       <div className="flex justify-around flex-wrap">
         <div>
