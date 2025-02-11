@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Banner from "@/components/Banner/Banner";
 import Footer from "@/components/Footer/Footer";
+import Asidebar from "@/components/Asidebar/Asidebar";
 
 export const metadata: Metadata = {
   title: "Plante uma Planta",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`antialiased`}>
         <header>
+          <Asidebar/>
           <Navbar />
           <Banner/>
         </header>
