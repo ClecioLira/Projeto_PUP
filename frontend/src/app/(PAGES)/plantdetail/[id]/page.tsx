@@ -28,7 +28,7 @@ interface Cep {
 
 export default function PlantDetail() {
   const { id } = useParams();
-  const [plant, setPlant] = useState<Plant>();
+  const [plant, setPlant] = useState<Plant | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cep, setCep] = useState("");
@@ -56,7 +56,9 @@ export default function PlantDetail() {
   const handleAddProduct = (e: any) => {
     e.preventDefault();
 
-    addProduct(plant);
+    if (plant) {
+      addProduct({ ...plant, quantity: 1 });
+    }
   };
 
   const handleCep = async (e: React.FormEvent) => {
@@ -130,7 +132,7 @@ export default function PlantDetail() {
 
             <div>
               {resultCep ? (
-                <div className="text-gray-600 border rounded-md border-gray-500 p-4 mt-2">
+                <div className="text-gray-600 border rounded-md border-gray-400 p-4 mt-2">
                   <p>
                     {resultCep.estado} - {resultCep.uf}
                   </p>

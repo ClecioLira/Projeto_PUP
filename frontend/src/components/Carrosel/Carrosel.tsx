@@ -92,11 +92,11 @@ const CategoriesCarousel = () => {
                 <Button
                   variant="contained"
                   color="success"
-                  style={{ width: "100%" }}
+                  style={{ width: "100%", marginTop: "0.5rem" }}
                 >
                   <Link
                     href={`/products/${category.id}`}
-                    className="flex justify-center mt-2 w-full"
+                    className="flex justify-center w-full"
                   >
                     {category.name}
                   </Link>

@@ -12,11 +12,17 @@ import { IoMdClose } from "react-icons/io";
 import { useProductStore } from "@/store/cart";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useState } from "react";
+import Link from "next/link";
 
 const Asidebar = () => {
   const [open, setOpen] = useState(false);
-  const { products, removeProduct, incrementQuantity, decrementQuantity, calculateTotal} =
-    useProductStore();
+  const {
+    products,
+    removeProduct,
+    incrementQuantity,
+    decrementQuantity,
+    calculateTotal,
+  } = useProductStore();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -35,7 +41,7 @@ const Asidebar = () => {
         >
           <div>
             <p className="absolute uppercase tracking-widest">Carrinho</p>
-            
+
             <button className="absolute right-4" onClick={toggleDrawer(false)}>
               <IoMdClose size={"24px"} color="gray" />
             </button>
@@ -97,8 +103,10 @@ const Asidebar = () => {
               </Card>
             ))}
 
-            <div className="text-black my-2">
-              <p>Valor total: <strong>R${calculateTotal().toFixed(2)}</strong></p>
+            <div className="text-black mt-8 mb-2">
+              <p>
+                Valor total: <strong>R${calculateTotal().toFixed(2)}</strong>
+              </p>
             </div>
 
             <Button
@@ -107,7 +115,7 @@ const Asidebar = () => {
               className="w-full text-center"
               onClick={toggleDrawer(false)}
             >
-              Finalizar Compra
+              <Link href={"/bag"}>Finalizar Compra</Link>
             </Button>
           </div>
         </ListItem>
@@ -120,7 +128,7 @@ const Asidebar = () => {
       <div className="text-transparent">.</div>
 
       <Button onClick={toggleDrawer(true)} style={{ color: "#fff" }}>
-        <IoMdCart size="1.3rem" /> <span>{products.length}</span>
+        <IoMdCart /> <span>{products.length}</span>
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
