@@ -85,7 +85,7 @@ const Bag = () => {
         </TableContainer>
       </section>
 
-      <section className="flex justify-between gap-4">
+      <section className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
           <Cep />
         </div>

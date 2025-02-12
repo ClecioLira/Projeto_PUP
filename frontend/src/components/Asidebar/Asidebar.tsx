@@ -40,17 +40,21 @@ const Asidebar = () => {
           }}
         >
           <div>
-            <p className="absolute uppercase tracking-widest">Carrinho</p>
+            <div className="flex items-center justify-between">
+              <p className="uppercase tracking-widest">Carrinho</p>
 
-            <button className="absolute right-4" onClick={toggleDrawer(false)}>
-              <IoMdClose size={"24px"} color="gray" />
-            </button>
+              <button
+                onClick={toggleDrawer(false)}
+              >
+                <IoMdClose size={"24px"} color="gray" />
+              </button>
+            </div>
 
             {products.map((product) => (
               <Card
                 key={product.id}
                 sx={{ maxWidth: 200 }}
-                className="rounded-md shadow-md shadow-gray-500 p-2 mt-10 mb-4"
+                className="rounded-md shadow-md shadow-gray-500 p-2 mt-4 mb-4"
               >
                 <CardMedia
                   component="img"
@@ -118,7 +122,7 @@ const Asidebar = () => {
   );
 
   return (
-    <div className="fixed right-10 rounded-full bottom-10 z-50 flex items-center justify-center text-white bg-gradient-to-r from-green-500 to-green-900 h-20 w-20 shadow-md shadow-gray-500 transition hover:scale-105">
+    <div className="fixed right-10 rounded-full bottom-10 z-50 flex items-center justify-center text-white bg-gradient-to-r from-green-500 to-green-900 h-16 w-16 sm:h-20 sm:w-20 shadow-md shadow-gray-500 transition hover:scale-105">
       <Button onClick={toggleDrawer(true)} style={{ color: "#fff" }}>
         <IoMdCart size={"24px"} /> <span>{products.length}</span>
       </Button>
