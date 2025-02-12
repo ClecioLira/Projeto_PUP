@@ -4,7 +4,7 @@ import DrawerNavbar from "./Drawer";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between px-6 pb-4 text-white bg-gradient-to-r from-green-500 to-green-900">
+    <nav className="flex items-center justify-between px-6 py-4 text-white bg-gradient-to-r from-green-500 to-green-900">
       <Link href="/" className="text-xl font-bold hover:text-green-900 transition">
         <span>Plante uma Planta</span>
       </Link>

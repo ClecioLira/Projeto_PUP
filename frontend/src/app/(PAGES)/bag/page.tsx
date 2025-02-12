@@ -1,13 +1,16 @@
-'use client'
+"use client";
 import { useProductStore } from "@/store/cart";
 import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import { Button } from "@mui/material";
+import Cep from "@/components/Cep/Cep";
+import CreditCard from "@/components/CreditCard/CreditCard";
 
 const Bag = () => {
   const {
@@ -19,80 +22,89 @@ const Bag = () => {
   } = useProductStore();
 
   return (
-    <div>
-      <div>
-        {products.map((product) => (
-          <Card
-            key={product.id}
-            sx={{ maxWidth: 200 }}
-            className="p-2 mt-8 mb-4"
-          >
-            <CardMedia
-              component="img"
-              image={product.image}
-              alt={product.name}
-              style={{ height: 150, width: 200 }}
-              className="rounded-md"
-            />
-            <CardContent>
-              <Typography
-                gutterBottom
-                fontWeight="600"
-                variant="body2"
-                component="div"
-              >
-                <span>{product.name}</span>
-              </Typography>
-
-              <Typography gutterBottom variant="body2" component="div">
-                R$ {product.price}
-              </Typography>
-            </CardContent>
-
-            <div>
-              <div className="flex justify-between w-full items-center px-4 -mt-4">
-                <button
-                  onClick={() => {
-                    incrementQuantity(product.id);
-                  }}
+    <main className="flex flex-col items-center bg-white py-4">
+      <section className="flex flex-col justify-center items-center lg:w-4/5 xl:w-1/2 border-b border-b-gray-300">
+        <TableContainer sx={{ maxWidth: 800 }}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">Produto</TableCell>
+                <TableCell align="center">Quantidade</TableCell>
+                <TableCell align="center">Preço</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {products.map((product) => (
+                <TableRow
+                  key={product.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <IoIosAddCircle size="24px" color="green" />
-                </button>
+                  <TableCell align="left">
+                    <div className="flex gap-4 flex-col sm:flex-row">
+                      <img
+                        src={`${product.image}`}
+                        alt={`${product.name}`}
+                        width={200}
+                        height={200}
+                        className="rounded-md"
+                      />
+                      <div className="flex flex-col justify-center text-center">
+                        {product.name}
+                        <Button
+                          variant="text"
+                          color="error"
+                          onClick={() => removeProduct(product.id)}
+                        >
+                          <span className="underline">Remover</span>
+                        </Button>
+                      </div>
+                    </div>
+                  </TableCell>
 
-                <p>{product.quantity}</p>
+                  <TableCell>
+                    <div className="flex flex-col sm:flex-row items-center">
+                      <Button onClick={() => incrementQuantity(product.id)}>
+                        <IoIosAddCircle size={"24px"} color="green" />
+                      </Button>
 
-                <button onClick={() => decrementQuantity(product.id)}>
-                  <IoIosRemoveCircle size="24px" color="red" />
-                </button>
-              </div>
-              <Button
-                variant="contained"
-                color="error"
-                size="medium"
-                style={{ width: "100%", marginTop: "0.5rem" }}
-                onClick={() => removeProduct(product.id)}
-              >
-                Remover
-              </Button>
-            </div>
-          </Card>
-        ))}
+                      {product.quantity}
 
-        <div className="text-black mt-8 mb-2">
-          <p>
-            Valor total: <strong>R${calculateTotal().toFixed(2)}</strong>
-          </p>
+                      <Button onClick={() => decrementQuantity(product.id)}>
+                        <IoIosRemoveCircle size={"24px"} color="red" />
+                      </Button>
+                    </div>
+                  </TableCell>
+
+                  <TableCell align="center">
+                    <strong>R${product.price}</strong>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </section>
+
+      <section className="flex justify-between gap-4">
+        <div>
+          <Cep />
         </div>
 
-        <Button
-          variant="outlined"
-          color="success"
-          className="w-full text-center"
-        >
-          Comprar
-        </Button>
-      </div>
-    </div>
+        <div>
+          <CreditCard />
+        </div>
+
+        <div className="text-black mt-3 text-end">
+          <p className="mb-2">
+            Valor total: <strong>R${calculateTotal().toFixed(2)}</strong>
+          </p>
+
+          <Button variant="outlined" color="success" className="text-center">
+            Comprar
+          </Button>
+        </div>
+      </section>
+    </main>
   );
 };
 

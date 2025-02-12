@@ -7,6 +7,7 @@ import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { CiSearch } from "react-icons/ci";
 import CarroselInDetail from "@/components/Carrosel/CarroselInDetail";
 import { useProductStore } from "@/store/cart";
+import Cep from "@/components/Cep/Cep";
 
 interface Plant {
   id: string;
@@ -18,21 +19,11 @@ interface Plant {
   category: string;
 }
 
-interface Cep {
-  logradouro: string;
-  bairro: string;
-  localidade: string;
-  uf: string;
-  estado: string;
-}
-
 export default function PlantDetail() {
   const { id } = useParams();
   const [plant, setPlant] = useState<Plant | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [cep, setCep] = useState("");
-  const [resultCep, setResultCep] = useState<Cep>();
   const { addProduct } = useProductStore();
 
   useEffect(() => {
@@ -58,18 +49,6 @@ export default function PlantDetail() {
 
     if (plant) {
       addProduct({ ...plant, quantity: 1 });
-    }
-  };
-
-  const handleCep = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const dataCep = await res.json();
-      setResultCep(dataCep);
-    } catch (error) {
-      console.error("Erro ao buscar CEP:", error);
     }
   };
 
@@ -111,38 +90,8 @@ export default function PlantDetail() {
 
             <p>{plant?.description}</p>
 
-            <div className="mt-4 flex gap-2">
-              <TextField
-                label="Calcule o CEP"
-                type="text"
-                value={cep}
-                onChange={(e) => setCep(e.target.value)}
-                fullWidth
-                required
-                color="success"
-              />
-              <Button
-                variant="contained"
-                color="success"
-                onClick={(e) => handleCep(e)}
-              >
-                <CiSearch />
-              </Button>
-            </div>
-
             <div>
-              {resultCep ? (
-                <div className="text-gray-600 border rounded-md border-gray-400 p-4 mt-2">
-                  <p>
-                    {resultCep.estado} - {resultCep.uf}
-                  </p>
-                  <p>{resultCep.localidade}</p>
-                  <p>{resultCep.bairro}</p>
-                  <p>{resultCep.logradouro}</p>
-                </div>
-              ) : (
-                ""
-              )}
+              <Cep />
             </div>
 
             <Button

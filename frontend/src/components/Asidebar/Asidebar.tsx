@@ -36,7 +36,7 @@ const Asidebar = () => {
             display: "flex",
             flexDirection: "column",
             gap: "2rem",
-            marginTop: "rem",
+            paddingBottom: "3rem",
           }}
         >
           <div>
@@ -50,7 +50,7 @@ const Asidebar = () => {
               <Card
                 key={product.id}
                 sx={{ maxWidth: 200 }}
-                className="rounded-md shadow-md shadow-gray-500 p-2 mt-8 mb-4"
+                className="rounded-md shadow-md shadow-gray-500 p-2 mt-10 mb-4"
               >
                 <CardMedia
                   component="img"
@@ -103,16 +103,10 @@ const Asidebar = () => {
               </Card>
             ))}
 
-            <div className="text-black mt-8 mb-2">
-              <p>
-                Valor total: <strong>R${calculateTotal().toFixed(2)}</strong>
-              </p>
-            </div>
-
             <Button
-              variant="outlined"
+              variant="contained"
               color="success"
-              className="w-full text-center"
+              className="w-full text-center mt-4"
               onClick={toggleDrawer(false)}
             >
               <Link href={"/bag"}>Finalizar Compra</Link>
@@ -124,11 +118,9 @@ const Asidebar = () => {
   );
 
   return (
-    <div className="flex items-center justify-between text-white bg-gradient-to-r from-green-500 to-green-900">
-      <div className="text-transparent">.</div>
-
+    <div className="fixed right-10 rounded-full bottom-10 z-50 flex items-center justify-center text-white bg-gradient-to-r from-green-500 to-green-900 h-20 w-20 shadow-md shadow-gray-500 transition hover:scale-105">
       <Button onClick={toggleDrawer(true)} style={{ color: "#fff" }}>
-        <IoMdCart /> <span>{products.length}</span>
+        <IoMdCart size={"24px"} /> <span>{products.length}</span>
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}

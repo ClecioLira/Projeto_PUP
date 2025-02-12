@@ -19,13 +19,16 @@ export default function RootLayout({
     <html lang="pt-br">
       <body className={`antialiased`}>
         <header>
-          <Asidebar/>
           <Navbar />
-          <Banner/>
+          <Banner />
         </header>
-        {children}
+
+        <main>
+          <Asidebar />
+          {children}
+        </main>
         <footer>
-          <Footer/>
+          <Footer />
         </footer>
       </body>
     </html>
