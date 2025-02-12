@@ -3,8 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getPlantById } from "@/services/Plant";
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
-import { CiSearch } from "react-icons/ci";
+import { Box, Button, CircularProgress } from "@mui/material";
 import CarroselInDetail from "@/components/Carrosel/CarroselInDetail";
 import { useProductStore } from "@/store/cart";
 import Cep from "@/components/Cep/Cep";

@@ -3,9 +3,10 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getVaseById } from "@/services/Vase";
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
-import { CiSearch } from "react-icons/ci";
+import { Box, Button, CircularProgress } from "@mui/material";
 import CarroselInDetail from "@/components/Carrosel/CarroselInDetail";
+import Cep from "@/components/Cep/Cep";
+import { useProductStore } from "@/store/cart";
 
 interface Vase {
   id: string;
@@ -15,21 +16,12 @@ interface Vase {
   description: string;
 }
 
-interface Cep {
-  logradouro: string;
-  bairro: string;
-  localidade: string;
-  uf: string;
-  estado: string;
-}
-
 export default function VaseDetail() {
   const { id } = useParams();
-  const [vase, setVase] = useState<Vase>();
+  const [vase, setVase] = useState<Vase | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [cep, setCep] = useState("");
-  const [resultCep, setResultCep] = useState<Cep>();
+  const { addProduct } = useProductStore();
 
   useEffect(() => {
     const fetchVase = async () => {
@@ -49,15 +41,11 @@ export default function VaseDetail() {
     fetchVase();
   }, [id]);
 
-  const handleCep = async (e: React.FormEvent) => {
+  const handleAddProduct = (e: any) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const dataCep = await res.json();
-      setResultCep(dataCep);
-    } catch (error) {
-      console.error("Erro ao buscar CEP:", error);
+    if (vase) {
+      addProduct({ ...vase, quantity: 1 });
     }
   };
 
@@ -99,38 +87,8 @@ export default function VaseDetail() {
 
             <p>{vase?.description}</p>
 
-            <div className="mt-4 flex gap-2">
-              <TextField
-                label="Calcule o CEP"
-                type="text"
-                value={cep}
-                onChange={(e) => setCep(e.target.value)}
-                fullWidth
-                required
-                color="success"
-              />
-              <Button
-                variant="contained"
-                color="success"
-                onClick={(e) => handleCep(e)}
-              >
-                <CiSearch />
-              </Button>
-            </div>
-
             <div>
-              {resultCep ? (
-                <div className="text-gray-600 border rounded-md border-gray-500 p-4 mt-2">
-                  <p>
-                    {resultCep.estado} - {resultCep.uf}
-                  </p>
-                  <p>{resultCep.localidade}</p>
-                  <p>{resultCep.bairro}</p>
-                  <p>{resultCep.logradouro}</p>
-                </div>
-              ) : (
-                ""
-              )}
+              <Cep />
             </div>
 
             <Button
@@ -138,6 +96,7 @@ export default function VaseDetail() {
               color="success"
               style={{ marginTop: "1rem" }}
               fullWidth
+              onClick={handleAddProduct}
             >
               Adicionar ao Carrinho
             </Button>
