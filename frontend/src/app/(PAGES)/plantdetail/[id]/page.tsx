@@ -6,6 +6,7 @@ import { getPlantById } from "@/services/Plant";
 import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { CiSearch } from "react-icons/ci";
 import CarroselInDetail from "@/components/Carrosel/CarroselInDetail";
+import { useProductStore } from "@/store/cart";
 
 interface Plant {
   id: string;
@@ -32,6 +33,7 @@ export default function PlantDetail() {
   const [loading, setLoading] = useState(true);
   const [cep, setCep] = useState("");
   const [resultCep, setResultCep] = useState<Cep>();
+  const { addProduct } = useProductStore();
 
   useEffect(() => {
     const fetchPlant = async () => {
@@ -50,6 +52,12 @@ export default function PlantDetail() {
 
     fetchPlant();
   }, [id]);
+
+  const handleAddProduct = (e: any) => {
+    e.preventDefault();
+
+    addProduct(plant);
+  };
 
   const handleCep = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,6 +148,7 @@ export default function PlantDetail() {
               color="success"
               style={{ marginTop: "1rem" }}
               fullWidth
+              onClick={handleAddProduct}
             >
               Adicionar ao Carrinho
             </Button>

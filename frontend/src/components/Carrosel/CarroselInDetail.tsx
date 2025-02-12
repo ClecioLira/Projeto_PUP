@@ -112,24 +112,19 @@ export default function CarroselInDetail() {
                     gutterBottom
                     variant="body2"
                     component="div"
-                    className="pb-2"
                   >
                     R$ {plant.price}
                   </Typography>
-
-                  <Button
-                    variant="contained"
-                    color="success"
-                    fullWidth
-                  >
-                    <Link
-                      href={`/plantdetail/${plant.id}`}
-                    >
-                      Comprar
-                    </Link>
-                  </Button>
                 </CardContent>
               </CardActionArea>
+              
+              <div className="p-2 -mt-4">
+                <Button variant="contained" color="success" fullWidth>
+                  <Link href={`/plantdetail/${plant.id}`} passHref>
+                    Comprar
+                  </Link>
+                </Button>
+              </div>
             </Card>
           </SwiperSlide>
         ))}

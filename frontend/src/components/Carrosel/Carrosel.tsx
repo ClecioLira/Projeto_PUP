@@ -89,18 +89,18 @@ const CategoriesCarousel = () => {
                   className="w-full h-40 object-cover rounded-md"
                 />
 
-                <Link
-                  href={`/products/${category.id}`}
-                  className="flex justify-center mt-2 w-full"
+                <Button
+                  variant="contained"
+                  color="success"
+                  style={{ width: "100%" }}
                 >
-                  <Button
-                    variant="contained"
-                    color="success"
-                    style={{ width: "100%" }}
+                  <Link
+                    href={`/products/${category.id}`}
+                    className="flex justify-center mt-2 w-full"
                   >
                     {category.name}
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
             </SwiperSlide>
           ))}

@@ -5,46 +5,111 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Link from "next/link";
-import { Divider } from "@mui/material";
+import { IoIosAddCircle } from "react-icons/io";
+import { IoIosRemoveCircle } from "react-icons/io";
 import { IoMdCart } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
+import { useProductStore } from "@/store/cart";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { useState } from "react";
 
 const Asidebar = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const { products, removeProduct, incrementQuantity, decrementQuantity, calculateTotal} =
+    useProductStore();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
   const DrawerList = (
-    <Box
-      sx={{ width: 250, color: "green" }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-    >
+    <Box sx={{ width: 250, color: "green" }} role="presentation">
       <List>
         <ListItem
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "1rem",
-            marginTop: "3rem",
+            gap: "2rem",
+            marginTop: "rem",
           }}
         >
-          <ListItemText>
-            <Link href="/">Início</Link>
-          </ListItemText>
+          <div>
+            <p className="absolute uppercase tracking-widest">Carrinho</p>
+            
+            <button className="absolute right-4" onClick={toggleDrawer(false)}>
+              <IoMdClose size={"24px"} color="gray" />
+            </button>
 
-          <Divider></Divider>
+            {products.map((product) => (
+              <Card
+                key={product.id}
+                sx={{ maxWidth: 200 }}
+                className="rounded-md shadow-md shadow-gray-500 p-2 mt-8 mb-4"
+              >
+                <CardMedia
+                  component="img"
+                  image={product.image}
+                  alt={product.name}
+                  style={{ height: 150, width: 200 }}
+                  className="rounded-md"
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    fontWeight="600"
+                    variant="body2"
+                    component="div"
+                  >
+                    <span>{product.name}</span>
+                  </Typography>
 
-          <ListItemButton>
-            <Link href="/register">Cadastrar</Link>
-          </ListItemButton>
-          <ListItemButton>
-            <Link href="/login">Entrar</Link>
-          </ListItemButton>
+                  <Typography gutterBottom variant="body2" component="div">
+                    R$ {product.price}
+                  </Typography>
+                </CardContent>
+
+                <div>
+                  <div className="flex justify-between w-full items-center px-4 -mt-4">
+                    <button
+                      onClick={() => {
+                        incrementQuantity(product.id);
+                      }}
+                    >
+                      <IoIosAddCircle size="24px" color="green" />
+                    </button>
+
+                    <p>{product.quantity}</p>
+
+                    <button onClick={() => decrementQuantity(product.id)}>
+                      <IoIosRemoveCircle size="24px" color="red" />
+                    </button>
+                  </div>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="medium"
+                    style={{ width: "100%", marginTop: "0.5rem" }}
+                    onClick={() => removeProduct(product.id)}
+                  >
+                    Remover
+                  </Button>
+                </div>
+              </Card>
+            ))}
+
+            <div className="text-black my-2">
+              <p>Valor total: <strong>R${calculateTotal().toFixed(2)}</strong></p>
+            </div>
+
+            <Button
+              variant="outlined"
+              color="success"
+              className="w-full text-center"
+              onClick={toggleDrawer(false)}
+            >
+              Finalizar Compra
+            </Button>
+          </div>
         </ListItem>
       </List>
     </Box>
@@ -55,7 +120,7 @@ const Asidebar = () => {
       <div className="text-transparent">.</div>
 
       <Button onClick={toggleDrawer(true)} style={{ color: "#fff" }}>
-        <IoMdCart size="1.3rem" />
+        <IoMdCart size="1.3rem" /> <span>{products.length}</span>
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
