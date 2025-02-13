@@ -1,7 +1,7 @@
 import { getCategoryById } from "./Category";
 
-const URL_PLANT = "../../api/server";
-const URL_CATEGORY = "../../api/server";
+const URL_PLANT = "http://localhost:4000/plants";
+const URL_CATEGORY = "http://localhost:4000/categories";
 
 export async function createPlant({
   name,
