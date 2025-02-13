@@ -70,7 +70,7 @@ export default function CarroselInDetail() {
   }
 
   return (
-    <div className="flex flex-col justify-center mt-10 p-4">
+    <section className="flex flex-col justify-center mt-10 p-4">
       <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
         Outros Modelos
       </h2>
@@ -129,6 +129,6 @@ export default function CarroselInDetail() {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </section>
   );
 }

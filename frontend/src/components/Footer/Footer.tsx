@@ -20,11 +20,16 @@ function Copyright() {
 export default function Footer() {
   return (
     <section className="bg-gradient-to-r relative bottom-0 p-4 from-green-500 to-green-900 w-full text-white">
-      <h5 className="font-semibold text-2xl pb-8 text-center">Plante uma Planta</h5>
+      <h5 className="font-semibold text-2xl pb-8 text-center">
+        Plante uma Planta
+      </h5>
       <div className="flex justify-around flex-wrap">
         <div>
           <ul className="flex flex-col gap-2">
-            <p className="font-semibold">Links Rápidos</p>
+            <li>
+              <p className="font-semibold">Links Rápidos</p>
+            </li>
+
             <li>
               <Link href={""} className="hover:underline">
                 Sobre
@@ -43,9 +48,18 @@ export default function Footer() {
           </ul>
         </div>
         <div className="flex flex-col gap-4 items-center justify-center">
-          <FaFacebook size={30} className="hover:scale-105 transition cursor-pointer"/>
-          <AiFillInstagram size={35} className="hover:scale-105 transition cursor-pointer"/>
-          <FaSquareXTwitter size={30} className="hover:scale-105 transition cursor-pointer"/>
+          <FaFacebook
+            size={30}
+            className="hover:scale-105 transition cursor-pointer"
+          />
+          <AiFillInstagram
+            size={35}
+            className="hover:scale-105 transition cursor-pointer"
+          />
+          <FaSquareXTwitter
+            size={30}
+            className="hover:scale-105 transition cursor-pointer"
+          />
         </div>
       </div>
       <div className="text-center pt-4">

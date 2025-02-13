@@ -28,7 +28,7 @@ const Cep = () => {
   };
 
   return (
-    <div>
+    <section>
       <div className="mt-4 flex gap-2">
         <TextField
           label="Calcule o CEP"
@@ -62,7 +62,7 @@ const Cep = () => {
           ""
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

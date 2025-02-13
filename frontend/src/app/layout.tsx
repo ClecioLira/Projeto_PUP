@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`antialiased`}>
+      <body className={`antialiased`} suppressHydrationWarning>
         <Script
           src="https://website-widgets.pages.dev/dist/sienna.min.js"
           strategy="beforeInteractive"

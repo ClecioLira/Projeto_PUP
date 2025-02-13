@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 type Product = {
   id: string;
   name: string;
-  image: string;
+  image: string; // Idealmente, deve ser uma URL da imagem, não base64
   price: string;
   quantity: number;
 };
@@ -32,14 +32,19 @@ export const useProductStore = create<ProductStore>()(
           let updatedProducts;
           if (existingProduct) {
             updatedProducts = state.products.map((p) =>
-              p.id === product.id
-                ? { ...p, quantity: p.quantity + 1 }
-                : p
+              p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
             );
           } else {
+            // Salvando apenas as propriedades essenciais para reduzir o tamanho
             updatedProducts = [
               ...state.products,
-              { ...product, quantity: 1 },
+              {
+                id: product.id,
+                name: product.name,
+                image: typeof product.image === "string" ? product.image : "",
+                price: product.price,
+                quantity: 1,
+              },
             ];
           }
           return { products: updatedProducts };
@@ -47,17 +52,13 @@ export const useProductStore = create<ProductStore>()(
 
       removeProduct: (id) =>
         set((state) => ({
-          products: state.products.filter(
-            (product) => product.id !== id
-          ),
+          products: state.products.filter((product) => product.id !== id),
         })),
 
       incrementQuantity: (id) =>
         set((state) => ({
           products: state.products.map((p) =>
-            p.id === id
-              ? { ...p, quantity: p.quantity + 1 }
-              : p
+            p.id === id ? { ...p, quantity: p.quantity + 1 } : p
           ),
         })),
 
@@ -79,7 +80,19 @@ export const useProductStore = create<ProductStore>()(
       },
     }),
     {
-      name: "products-storage", // Nome do localStorage
+      name: "products-storage", // Nome da chave onde os dados são salvos no localStorage
+      // Partialize os dados para armazenar apenas as propriedades essenciais
+      partialize: (state) => ({
+        products: state.products.map(
+          ({ id, name, image, price, quantity }) => ({
+            id,
+            name,
+            image,
+            price,
+            quantity,
+          })
+        ),
+      }),
     }
   )
 );
