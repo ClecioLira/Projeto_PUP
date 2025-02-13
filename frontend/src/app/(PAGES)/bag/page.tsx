@@ -22,7 +22,7 @@ const Bag = () => {
   } = useProductStore();
 
   return (
-    <main className="flex flex-col xl:flex-row items-center xl:items-start bg-white py-4">
+    <main className="flex flex-col xl:flex-row items-center justify-center gap-4 xl:items-start bg-white py-4">
       <section className="flex flex-col justify-center items-center lg:w-4/5 xl:w-1/2 border-b border-b-gray-300">
         <TableContainer sx={{ maxWidth: 800 }}>
           <Table aria-label="simple table">
@@ -85,7 +85,7 @@ const Bag = () => {
         </TableContainer>
       </section>
 
-      <section className="flex flex-col sm:flex-row justify-between gap-4">
+      <section className="flex flex-col justify-between gap-4">
         <div>
           <Cep />
         </div>
