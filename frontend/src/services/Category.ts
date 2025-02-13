@@ -1,6 +1,6 @@
 import { deletePlantsByCategory } from "./Plant";
 
-const URL_CATEGORY = "http://localhost:3000/categories";
+const URL_CATEGORY = "../../api/server";
 
 export async function createCategory({
   name,

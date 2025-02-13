@@ -1,4 +1,4 @@
-const URL_VASE = "http://localhost:3000/vases";
+const URL_VASE = "../../api/server";
 
 export async function createVase({
   name,
