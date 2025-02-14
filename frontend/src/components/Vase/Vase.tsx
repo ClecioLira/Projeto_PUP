@@ -41,7 +41,7 @@ export default function Vases() {
 
   if (loading) {
     return (
-      <div className="progress">
+      <div className="flex items-center justify-center bg-green-50 h-screen">
         <Box sx={{ display: "flex" }}>
           <CircularProgress size="5rem" color="success" />
         </Box>

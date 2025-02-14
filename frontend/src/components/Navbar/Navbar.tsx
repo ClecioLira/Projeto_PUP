@@ -9,9 +9,13 @@ export default function Navbar() {
         <span>Plante uma Planta</span>
       </Link>
 
-      <div className="hidden md:flex md:items-center">
+      <div className="hidden md:flex md:items-center gap-4">
         <Link href="/" className="hover:text-green-500 transition">
           Início
+        </Link>
+
+        <Link href="/about" className="hover:text-green-500 transition">
+          Sobre
         </Link>
       </div>
 

@@ -88,8 +88,8 @@ export default function AllVases() {
   }
 
   return (
-    <section className="h-screen bg-green-50">
-      <div className="flex justify-center pt-10">
+    <section className="bg-green-50">
+      <div className="flex justify-center py-10">
         <TableContainer
           style={{
             display: "flex",

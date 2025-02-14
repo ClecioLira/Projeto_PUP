@@ -21,7 +21,6 @@ const Asidebar = () => {
     removeProduct,
     incrementQuantity,
     decrementQuantity,
-    calculateTotal,
   } = useProductStore();
 
   const toggleDrawer = (newOpen: boolean) => () => {

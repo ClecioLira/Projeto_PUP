@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 
 interface Category {
-  id: string;
+  uid: number;
   name: string;
   image: string;
   plants: [
@@ -43,7 +43,7 @@ export default function Plants() {
       try {
         const categoriesData = await getCategories();
         setCategories(
-          categoriesData.filter((category: Category) => category.id === id)
+          categoriesData.filter((category: Category) => category.uid === Number(id))
         );
       } catch (error) {
         setError(true);
@@ -75,8 +75,8 @@ export default function Plants() {
   }
 
   return (
-    <main className="flex flex-col justify-center text-center">
-      <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6">
+    <main className="flex flex-col justify-center text-center pb-14">
+      <h2 className="text-2xl uppercase tracking-widest underline underline-offset-8 text-green-900 text-center my-6 pb-4">
         Plantas {categories[0]?.name}
       </h2>
 

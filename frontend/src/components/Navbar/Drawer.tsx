@@ -22,6 +22,7 @@ export default function DrawerNavbar() {
       <List>
         <ListItem style={{display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '3rem'}}>
           <ListItemText><Link href="/">Início</Link></ListItemText>
+          <ListItemText><Link href="/about">Sobre</Link></ListItemText>
 
           <Divider></Divider>
 
