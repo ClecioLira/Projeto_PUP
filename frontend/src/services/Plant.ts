@@ -1,7 +1,7 @@
 import { getCategoryById } from "./Category";
 
-const URL_PLANT = "http://localhost:4000/plants";
-const URL_CATEGORY = "http://localhost:4000/categories";
+const URL_PLANT = "https://fake-api-pup.onrender.com/plants";
+const URL_CATEGORY = "https://fake-api-pup.onrender.com/categories";
 
 export async function createPlant({
   name,

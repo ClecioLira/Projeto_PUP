@@ -1,6 +1,6 @@
 import { deletePlantsByCategory } from "./Plant";
 
-const URL_CATEGORY = "http://localhost:4000/categories";
+const URL_CATEGORY = "https://fake-api-pup.onrender.com/categories";
 
 export async function createCategory({
   name,

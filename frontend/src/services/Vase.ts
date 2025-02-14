@@ -1,4 +1,4 @@
-const URL_VASE = "http://localhost:4000/vases";
+const URL_VASE = "https://fake-api-pup.onrender.com/vases";
 
 export async function createVase({
   name,
