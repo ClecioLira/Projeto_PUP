@@ -8,7 +8,7 @@ function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: "white", mt: 1 }}>
       {"Copyright © "}
-      <Link className="hover:underline" href="https://mui.com/" target="_blank">
+      <Link className="hover:underline" href="https://www.linkedin.com/in/cleciolira/" target="_blank">
         Clécio Lira
       </Link>
       &nbsp;
