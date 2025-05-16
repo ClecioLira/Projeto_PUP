@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { updateCategory, getCategoryById } from "@/services/Category";
+import { updateCategory, getCategory } from "@/services/Category";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 
@@ -17,7 +17,8 @@ export default function EditCategory() {
   const router = useRouter();
   const { id } = useParams();
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File>();
+  const [preview, setPreview] = useState("");
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -27,16 +28,17 @@ export default function EditCategory() {
     const fetchCategory = async () => {
       if (typeof id === "string") {
         try {
-          const category = await getCategoryById(id);
+          const category = await getCategory(id);
           setName(category.name);
-          setImage(category.image);
+          setPreview(category.imageUrl);
+          console.log(category);
         } catch (error) {
           console.error(error);
         }
       }
     };
     fetchCategory();
-  }, []);
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,18 +48,31 @@ export default function EditCategory() {
     if (typeof id === "string") {
       try {
         setLoading(true);
-        await updateCategory(id, { name, image });
-        setSuccess(true);
+
+        const formData = new FormData();
+        formData.append("name", name);
+        if (image) {
+          formData.append("image", image);
+        }
+
+        if (image) {
+          await updateCategory({ id, name, image });
+          setSuccess(true);
+        } else {
+          setError(true);
+        }
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
+
+    router.push("/allcategories");
   };
 
   return (
-    <section className="h-screen pt-10 bg-green-50">
+    <section className="pt-10 pb-20 bg-green-50">
       <div className="flex justify-center pt-10">
         <Card
           style={{
@@ -69,52 +84,60 @@ export default function EditCategory() {
           }}
         >
           <CardContent>
-            <Typography style={{marginBottom: '1rem'}} variant="h5" component="h1" align="center" gutterBottom>
+            <Typography
+              style={{ marginBottom: "1rem" }}
+              variant="h5"
+              component="h1"
+              align="center"
+              gutterBottom
+            >
               Editar Categoria
             </Typography>
 
             <form
-              className="form-container"
               onSubmit={handleSubmit}
               style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
             >
               <TextField
                 required
-                id="outlined"
                 label="Nome da Categoria"
                 type="text"
                 color="success"
-                value={name || ""}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
 
+              {/* Preview da imagem atual */}
+              {preview && (
+                <img
+                  src={preview}
+                  alt="Preview da imagem atual"
+                  style={{
+                    height: "300px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                  }}
+                />
+              )}
+
               <TextField
                 required
-                id="outlined"
-                label="URL da Imagem"
-                type="text"
+                type="file"
                 color="success"
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files && target.files[0]) {
+                    setImage(target.files[0]);
+                  }
+                }}
               />
 
-              <Button
-                type="submit"
-                className="btn-enter"
-                color="success"
-                variant="outlined"
-              >
-                {!loading && <span>Editar</span>}
-                {loading && <span>Aguarde...</span>}
+              <Button type="submit" color="success" variant="outlined">
+                {!loading ? "Editar" : "Aguarde..."}
               </Button>
 
               <Link href="/allcategories">
-                <Button
-                  type="submit"
-                  className="btn-enter"
-                  variant="outlined"
-                  color="success"
-                >
+                <Button variant="outlined" color="success">
                   Voltar
                 </Button>
               </Link>

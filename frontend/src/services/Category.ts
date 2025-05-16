@@ -1,57 +1,65 @@
-import { deletePlantsByCategory } from "./Plant";
-
-const URL_CATEGORY = "https://fake-api-pup.onrender.com/categories";
+const URL_CATEGORY = "https://fake-api-pup.onrender.com/api/categories";
 
 export async function createCategory({
   name,
   image,
 }: {
   name: string;
-  image: string;
+  image: File;
 }) {
-  const res = await fetch(URL_CATEGORY, {
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("image", image);
+
+  const res = await fetch(URL_CATEGORY!, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, image, plants: [] }),
+    body: formData,
   });
 
   return res.json();
 }
 
 export async function getCategories() {
-  const res = await fetch(URL_CATEGORY);
-  return res.json();
-}
-
-export async function getCategoryById(id: string) {
-  const res = await fetch(`${URL_CATEGORY}/${id}`);
-  if (!res.ok) {
-    throw new Error(`Category with ID ${id} not found`);
-  }
-  return res.json();
-}
-
-export async function updateCategory(
-  id: string,
-  { name, image }: { name: string; image: string }
-) {
-  const res = await fetch(`${URL_CATEGORY}/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, image }),
+  const res = await fetch(URL_CATEGORY, {
+    method: "GET",
   });
 
   return res.json();
 }
 
-export async function deleteCategory(id: string): Promise<void> {
-  await deletePlantsByCategory(id);
+export async function getCategory(id: string) {
+  const res = await fetch(`${URL_CATEGORY!}/${id}`, {
+    method: "GET",
+  });
 
-  await fetch(`${URL_CATEGORY}/${id}`, {
+  return res.json();
+}
+
+export async function updateCategory({
+  id,
+  name,
+  image,
+}: {
+  id: string;
+  name: string;
+  image: File;
+}) {
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("image", image);
+
+  const res = await fetch(`${URL_CATEGORY!}/${id}`, {
+    method: "PUT",
+    body: formData,
+  });
+
+  return res.json();
+}
+
+export async function deleteCategory(id: string) {
+  const res = await fetch(`${URL_CATEGORY!}/${id}`, {
     method: "DELETE",
   });
+
+  return res.json();
 }

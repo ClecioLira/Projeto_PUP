@@ -23,9 +23,9 @@ import { getCategories } from "@/services/Category";
 import { DialogContent, DialogContentText } from "@mui/material";
 
 interface Category {
-  id: string;
+  _id: string;
   name: string;
-  image: string;
+  image: File;
 }
 
 export default function AllCategories() {
@@ -65,7 +65,7 @@ export default function AllCategories() {
     try {
       await deleteCategory(categoryToDelete);
       setCategories((prevData) =>
-        prevData.filter((item) => item.id !== categoryToDelete)
+        prevData.filter((item) => item._id !== categoryToDelete)
       );
     } catch (error) {
       console.error(error);
@@ -89,7 +89,7 @@ export default function AllCategories() {
   }
 
   return (
-    <section className="bg-green-50">
+    <section className="bg-green-50 pb-28">
       <div className="flex justify-center py-10">
         <TableContainer
           style={{
@@ -120,13 +120,13 @@ export default function AllCategories() {
               {categories
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((category) => (
-                  <TableRow key={category.id}>
+                  <TableRow key={category._id}>
                     <TableCell component="th" scope="row">
                       <span className="break-all">{category.name}</span>
                     </TableCell>
 
                     <TableCell align="right">
-                      <Link href={`/editcategory/${category.id}`}>
+                      <Link href={`/editcategory/${category._id}`}>
                         <Button color="success" variant="contained">
                           <span className="hidden md:block pr-2">Editar</span>
                           <FaRegEdit />
@@ -139,37 +139,11 @@ export default function AllCategories() {
                         <Button
                           variant="contained"
                           color="error"
-                          onClick={() => handleClickOpen(category.id)}
+                          onClick={() => handleClickOpen(category._id)}
                         >
                           <span className="hidden md:block pr-2">Apagar</span>
                           <FaRegTrashCan />
                         </Button>
-                        <Dialog
-                          open={open}
-                          onClose={handleClose}
-                          aria-labelledby="responsive-dialog-title"
-                        >
-                          <DialogContent>
-                            <DialogContentText>
-                              Tem certeza que deseja apagar esta categoria?
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button
-                              style={{ color: "#000" }}
-                              autoFocus
-                              onClick={handleClose}
-                            >
-                              Cancelar
-                            </Button>
-                            <Button
-                              color="error"
-                              onClick={handleDeleteCategory} 
-                            >
-                              Apagar
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
                       </React.Fragment>
                     </TableCell>
                   </TableRow>
@@ -177,6 +151,25 @@ export default function AllCategories() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogContent>
+            <DialogContentText>
+              Tem certeza que deseja apagar esta categoria?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button style={{ color: "#000" }} autoFocus onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button color="error" onClick={handleDeleteCategory}>
+              Apagar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </section>
   );

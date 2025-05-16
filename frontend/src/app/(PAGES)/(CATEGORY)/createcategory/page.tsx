@@ -11,10 +11,12 @@ import {
 import { useState } from "react";
 import { createCategory } from "@/services/Category";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const CreateCategory = () => {
+  const router = useRouter();
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -25,8 +27,18 @@ const CreateCategory = () => {
     setSuccess(false);
     setError(false);
 
+    if (!image) {
+      setError(true);
+      return;
+    }
+
     try {
       setLoading(true);
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("image", image);
+
       await createCategory({ name, image });
       setSuccess(true);
     } catch (error) {
@@ -35,12 +47,11 @@ const CreateCategory = () => {
       setLoading(false);
     }
 
-    setName("");
-    setImage("");
+    router.push("/allcategories");
   };
 
   return (
-    <section className="h-screen pt-10 bg-green-50">
+    <section className="pt-10 pb-20 bg-green-50">
       <div className="flex justify-center pt-10">
         <Card
           style={{
@@ -52,7 +63,13 @@ const CreateCategory = () => {
           }}
         >
           <CardContent>
-            <Typography style={{marginBottom: '1rem'}} variant="h5" component="h1" align="center" gutterBottom>
+            <Typography
+              style={{ marginBottom: "1rem" }}
+              variant="h5"
+              component="h1"
+              align="center"
+              gutterBottom
+            >
               Criar Categoria
             </Typography>
 
@@ -62,41 +79,31 @@ const CreateCategory = () => {
             >
               <TextField
                 required
-                id="outlined"
                 label="Nome da Categoria"
                 type="text"
                 color="success"
-                value={name || ""}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
 
               <TextField
                 required
-                id="outlined"
-                label="URL da Imagem"
-                type="text"
+                type="file"
                 color="success"
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files && target.files[0]) {
+                    setImage(target.files[0]);
+                  }
+                }}
               />
 
-              <Button
-                type="submit"
-                className="btn-enter"
-                color="success"
-                variant="outlined"
-              >
-                {!loading && <span>Criar</span>}
-                {loading && <span>Aguarde...</span>}
+              <Button type="submit" color="success" variant="outlined">
+                {!loading ? "Criar" : "Aguarde..."}
               </Button>
 
               <Link href="/allcategories">
-                <Button
-                  type="submit"
-                  className="btn-enter"
-                  variant="outlined"
-                  color="success"
-                >
+                <Button variant="outlined" color="success">
                   Voltar
                 </Button>
               </Link>
