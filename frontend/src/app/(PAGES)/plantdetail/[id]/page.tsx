@@ -49,8 +49,8 @@ export default function PlantDetail() {
     if (plant) {
       addProduct({
         ...plant, quantity: 1,
-        id: "",
-        image: ""
+        _id: "",
+        imageUrl: ""
       });
     }
   };
