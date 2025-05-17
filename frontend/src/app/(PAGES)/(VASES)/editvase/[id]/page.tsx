@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { updateVase, getVaseById } from "@/services/Vase";
+import { updateVase, getVase } from "@/services/Vase";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 
@@ -21,7 +21,8 @@ export default function EditVase() {
   const router = useRouter();
   const { id } = useParams();
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File>();
+  const [preview, setPreview] = useState("");
   const [success, setSuccess] = useState(false);
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -48,7 +49,7 @@ export default function EditVase() {
     const fetchVase = async () => {
       if (typeof id === "string") {
         try {
-          const vase = await getVaseById(id);
+          const vase = await getVase(id);
           setName(vase.name);
           setImage(vase.image);
           setPrice(vase.price);
@@ -59,7 +60,7 @@ export default function EditVase() {
       }
     };
     fetchVase();
-  }, []);
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,13 +70,22 @@ export default function EditVase() {
     if (typeof id === "string") {
       try {
         setLoading(true);
-        await updateVase(id, { name, image, price, description });
-        setSuccess(true);
-        router.push("/allvases");
+        const formData = new FormData();
+        formData.append("name", name);
+        if (image) {
+          formData.append("image", image);
+        }
+        formData.append("price", price);
+        formData.append("description", description);
+        if (image) {
+          await updateVase({ id, name, image, price, description });
+          setSuccess(true);
+        }
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
+        router.push("/allvases");
       }
     }
   };
@@ -118,14 +128,28 @@ export default function EditVase() {
                 onChange={(e) => setName(e.target.value)}
               />
 
+              {preview && (
+                <img
+                  src={preview}
+                  alt="Preview da imagem atual"
+                  style={{
+                    height: "300px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                  }}
+                />
+              )}
+
               <TextField
                 required
-                id="outlined"
-                label="URL da Imagem"
-                type="text"
+                type="file"
                 color="success"
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files && target.files[0]) {
+                    setImage(target.files[0]);
+                  }
+                }}
               />
 
               <TextField

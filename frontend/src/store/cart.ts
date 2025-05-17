@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type Product = {
-  id: string;
+  _id: string;
   name: string;
-  image: string; // Idealmente, deve ser uma URL da imagem, não base64
+  imageUrl: string; // Idealmente, deve ser uma URL da imagem, não base64
   price: string;
   quantity: number;
 };
@@ -27,21 +27,22 @@ export const useProductStore = create<ProductStore>()(
       addProduct: (product) =>
         set((state) => {
           const existingProduct = state.products.find(
-            (p) => p.id === product.id
+            (p) => p._id === product._id
           );
           let updatedProducts;
           if (existingProduct) {
             updatedProducts = state.products.map((p) =>
-              p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+              p._id === product._id ? { ...p, quantity: p.quantity + 1 } : p
             );
           } else {
             // Salvando apenas as propriedades essenciais para reduzir o tamanho
             updatedProducts = [
               ...state.products,
               {
-                id: product.id,
+                _id: product._id,
                 name: product.name,
-                image: typeof product.image === "string" ? product.image : "",
+                imageUrl:
+                  typeof product.imageUrl === "string" ? product.imageUrl : "",
                 price: product.price,
                 quantity: 1,
               },
@@ -52,20 +53,20 @@ export const useProductStore = create<ProductStore>()(
 
       removeProduct: (id) =>
         set((state) => ({
-          products: state.products.filter((product) => product.id !== id),
+          products: state.products.filter((product) => product._id !== id),
         })),
 
       incrementQuantity: (id) =>
         set((state) => ({
           products: state.products.map((p) =>
-            p.id === id ? { ...p, quantity: p.quantity + 1 } : p
+            p._id === id ? { ...p, quantity: p.quantity + 1 } : p
           ),
         })),
 
       decrementQuantity: (id) =>
         set((state) => ({
           products: state.products.map((p) =>
-            p.id === id && p.quantity > 1
+            p._id === id && p.quantity > 1
               ? { ...p, quantity: p.quantity - 1 }
               : p
           ),
@@ -84,10 +85,10 @@ export const useProductStore = create<ProductStore>()(
       // Partialize os dados para armazenar apenas as propriedades essenciais
       partialize: (state) => ({
         products: state.products.map(
-          ({ id, name, image, price, quantity }) => ({
-            id,
+          ({ _id, name, imageUrl, price, quantity }) => ({
+            _id,
             name,
-            image,
+            imageUrl,
             price,
             quantity,
           })

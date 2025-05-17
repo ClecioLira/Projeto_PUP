@@ -14,7 +14,7 @@ import Link from "next/link";
 import { getPlants } from "@/services/Plant";
 
 interface Plant {
-  id: string;
+  _id: string;
   name: string;
   imageUrl: string;
   price: string;
@@ -65,7 +65,7 @@ export default function BestSelling() {
         {plants
           .filter((plant) => plant.bestSelling)
           .map((plant) => (
-            <Link key={plant.id} href={`/plantdetail/${plant.id}`}>
+            <Link key={plant._id} href={`/plantdetail/${plant._id}`}>
               <Card
                 sx={{ maxWidth: 190 }}
                 className="rounded-md shadow-md shadow-gray-500 p-2 hover:scale-105 transition"

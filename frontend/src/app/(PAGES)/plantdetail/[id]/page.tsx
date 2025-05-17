@@ -2,16 +2,16 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getPlantById } from "@/services/Plant";
+import { getPlant } from "@/services/Plant";
 import { Box, Button, CircularProgress } from "@mui/material";
 import CarroselInDetail from "@/components/Carrosel/CarroselInDetail";
 import { useProductStore } from "@/store/cart";
 import Cep from "@/components/Cep/Cep";
 
 interface Plant {
-  id: string;
+  _id: string;
   name: string;
-  image: string;
+  imageUrl: string;
   price: string;
   newPrice: string;
   description: string;
@@ -29,7 +29,7 @@ export default function PlantDetail() {
     const fetchPlant = async () => {
       try {
         if (typeof id === "string") {
-          const plantData = await getPlantById(id);
+          const plantData = await getPlant(id);
           setPlant(plantData);
         }
       } catch (error) {
@@ -47,7 +47,11 @@ export default function PlantDetail() {
     e.preventDefault();
 
     if (plant) {
-      addProduct({ ...plant, quantity: 1 });
+      addProduct({
+        ...plant, quantity: 1,
+        id: "",
+        image: ""
+      });
     }
   };
 
@@ -77,7 +81,7 @@ export default function PlantDetail() {
         <div className="flex flex-col md:flex-row justify-center md:gap-4 w-4/5">
           <div className="flex-1">
             <img
-              src={`${plant?.image}`}
+              src={`${plant?.imageUrl}`}
               alt={`${plant?.name}`}
               className="rounded-md shadow-md shadow-gray-500"
             />

@@ -16,10 +16,12 @@ import {
 import { useState } from "react";
 import { createVase } from "@/services/Vase";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CreateVase() {
+  const router = useRouter();
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
 
@@ -47,18 +49,27 @@ export default function CreateVase() {
     setSuccess(false);
     setError(false);
 
+    if (!image) {
+      setError(true);
+      return;
+    }
+
     try {
       setLoading(true);
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("image", image);
+      formData.append("price", price);
+      formData.append("description", description);
+
       await createVase({ name, image, price, description });
       setSuccess(true);
-      setImage("");
-      setPrice("");
-      setDescription("");
-      setName("");
     } catch (error) {
       setError(true);
     } finally {
       setLoading(false);
+      router.push("/allvases");
     }
   };
 
@@ -101,12 +112,14 @@ export default function CreateVase() {
 
               <TextField
                 required
-                id="outlined"
-                label="URL da Imagem"
-                type="text"
+                type="file"
                 color="success"
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files && target.files[0]) {
+                    setImage(target.files[0]);
+                  }
+                }}
               />
 
               <TextField

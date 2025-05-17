@@ -22,9 +22,8 @@ import { deleteVase } from "@/services/Vase";
 import { DialogContent, DialogContentText } from "@mui/material";
 
 interface Vase {
-  id: string;
+  _id: string;
   name: string;
-  image: string;
 }
 
 export default function AllVases() {
@@ -64,7 +63,7 @@ export default function AllVases() {
     try {
       await deleteVase(vaseToDelete);
       setVases((prevData) =>
-        prevData.filter((item) => item.id !== vaseToDelete)
+        prevData.filter((item) => item._id !== vaseToDelete)
       );
     } catch (error) {
       console.error(error);
@@ -88,7 +87,7 @@ export default function AllVases() {
   }
 
   return (
-    <section className="bg-green-50">
+    <section className="bg-green-50 pb-28">
       <div className="flex justify-center py-10">
         <TableContainer
           style={{
@@ -119,13 +118,13 @@ export default function AllVases() {
               {vases
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((vase) => (
-                  <TableRow key={vase.id}>
+                  <TableRow key={vase._id}>
                     <TableCell component="th" scope="row">
                       <span>{vase.name}</span>
                     </TableCell>
 
                     <TableCell align="right">
-                      <Link href={`/editvase/${vase.id}`}>
+                      <Link href={`/editvase/${vase._id}`}>
                         <Button color="success" variant="contained">
                           <span className="hidden md:block pr-2">Editar</span>
                           <FaRegEdit />
@@ -138,37 +137,11 @@ export default function AllVases() {
                         <Button
                           variant="contained"
                           color="error"
-                          onClick={() => handleClickOpen(vase.id)}
+                          onClick={() => handleClickOpen(vase._id)}
                         >
                           <span className="hidden md:block pr-2">Apagar</span>
                           <FaRegTrashCan />
                         </Button>
-                        <Dialog
-                          open={open}
-                          onClose={handleClose}
-                          aria-labelledby="responsive-dialog-title"
-                        >
-                          <DialogContent>
-                            <DialogContentText>
-                              Tem certeza que deseja apagar este vaso?
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button
-                              style={{ color: "#000" }}
-                              autoFocus
-                              onClick={handleClose}
-                            >
-                              Cancelar
-                            </Button>
-                            <Button
-                              color="error"
-                              onClick={handleDeleteVase}
-                            >
-                              Apagar
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
                       </React.Fragment>
                     </TableCell>
                   </TableRow>
@@ -176,6 +149,25 @@ export default function AllVases() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogContent>
+            <DialogContentText>
+              Tem certeza que deseja apagar este vaso?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button style={{ color: "#000" }} autoFocus onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button color="error" onClick={handleDeleteVase}>
+              Apagar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </section>
   );

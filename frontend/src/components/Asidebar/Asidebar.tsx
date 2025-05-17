@@ -16,12 +16,8 @@ import Link from "next/link";
 
 const Asidebar = () => {
   const [open, setOpen] = useState(false);
-  const {
-    products,
-    removeProduct,
-    incrementQuantity,
-    decrementQuantity,
-  } = useProductStore();
+  const { products, removeProduct, incrementQuantity, decrementQuantity } =
+    useProductStore();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -42,22 +38,20 @@ const Asidebar = () => {
             <div className="flex items-center justify-between">
               <p className="uppercase tracking-widest">Carrinho</p>
 
-              <button
-                onClick={toggleDrawer(false)}
-              >
+              <button onClick={toggleDrawer(false)}>
                 <IoMdClose size={"24px"} color="gray" />
               </button>
             </div>
 
             {products.map((product) => (
               <Card
-                key={product.id}
+                key={product._id}
                 sx={{ maxWidth: 200 }}
                 className="rounded-md shadow-md shadow-gray-500 p-2 mt-4 mb-4"
               >
                 <CardMedia
                   component="img"
-                  image={product.image}
+                  image={product.imageUrl}
                   alt={product.name}
                   style={{ height: 150, width: 200 }}
                   className="rounded-md"
@@ -81,7 +75,7 @@ const Asidebar = () => {
                   <div className="flex justify-between w-full items-center px-4 -mt-4">
                     <button
                       onClick={() => {
-                        incrementQuantity(product.id);
+                        incrementQuantity(product._id);
                       }}
                     >
                       <IoIosAddCircle size="24px" color="green" />
@@ -89,7 +83,7 @@ const Asidebar = () => {
 
                     <p>{product.quantity}</p>
 
-                    <button onClick={() => decrementQuantity(product.id)}>
+                    <button onClick={() => decrementQuantity(product._id)}>
                       <IoIosRemoveCircle size="24px" color="red" />
                     </button>
                   </div>
@@ -98,7 +92,7 @@ const Asidebar = () => {
                     color="error"
                     size="medium"
                     style={{ width: "100%", marginTop: "0.5rem" }}
-                    onClick={() => removeProduct(product.id)}
+                    onClick={() => removeProduct(product._id)}
                   >
                     Remover
                   </Button>

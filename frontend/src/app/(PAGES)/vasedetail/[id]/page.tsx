@@ -2,16 +2,16 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getVaseById } from "@/services/Vase";
+import { getVase } from "@/services/Vase";
 import { Box, Button, CircularProgress } from "@mui/material";
 import CarroselInDetail from "@/components/Carrosel/CarroselInDetail";
 import Cep from "@/components/Cep/Cep";
 import { useProductStore } from "@/store/cart";
 
 interface Vase {
-  id: string;
+  _id: string;
   name: string;
-  image: string;
+  imageUrl: string;
   price: string;
   description: string;
 }
@@ -27,7 +27,7 @@ export default function VaseDetail() {
     const fetchVase = async () => {
       try {
         if (typeof id === "string") {
-          const vaseData = await getVaseById(id);
+          const vaseData = await getVase(id);
           setVase(vaseData);
         }
       } catch (error) {
@@ -45,7 +45,11 @@ export default function VaseDetail() {
     e.preventDefault();
 
     if (vase) {
-      addProduct({ ...vase, quantity: 1 });
+      addProduct({
+        ...vase, quantity: 1,
+        id: "",
+        image: ""
+      });
     }
   };
 
@@ -75,7 +79,7 @@ export default function VaseDetail() {
         <div className="flex flex-col md:flex-row justify-center md:gap-4 w-4/5">
           <div className="flex-1">
             <img
-              src={`${vase?.image}`}
+              src={`${vase?.imageUrl}`}
               alt={`${vase?.name}`}
               className="rounded-md shadow-md shadow-gray-500"
             />

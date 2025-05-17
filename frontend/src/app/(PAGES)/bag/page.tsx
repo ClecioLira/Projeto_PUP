@@ -36,13 +36,13 @@ const Bag = () => {
             <TableBody>
               {products.map((product) => (
                 <TableRow
-                  key={product.id}
+                  key={product._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="left">
                     <div className="flex gap-4 flex-col sm:flex-row">
                       <img
-                        src={`${product.image}`}
+                        src={`${product.imageUrl}`}
                         alt={`${product.name}`}
                         width={200}
                         height={200}
@@ -53,7 +53,7 @@ const Bag = () => {
                         <Button
                           variant="text"
                           color="error"
-                          onClick={() => removeProduct(product.id)}
+                          onClick={() => removeProduct(product._id)}
                         >
                           <span className="underline">Remover</span>
                         </Button>
@@ -63,13 +63,13 @@ const Bag = () => {
 
                   <TableCell>
                     <div className="flex flex-col sm:flex-row items-center">
-                      <Button onClick={() => incrementQuantity(product.id)}>
+                      <Button onClick={() => incrementQuantity(product._id)}>
                         <IoIosAddCircle size={"24px"} color="green" />
                       </Button>
 
                       {product.quantity}
 
-                      <Button onClick={() => decrementQuantity(product.id)}>
+                      <Button onClick={() => decrementQuantity(product._id)}>
                         <IoIosRemoveCircle size={"24px"} color="red" />
                       </Button>
                     </div>

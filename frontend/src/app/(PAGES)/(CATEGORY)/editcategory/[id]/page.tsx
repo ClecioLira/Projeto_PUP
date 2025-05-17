@@ -64,10 +64,9 @@ export default function EditCategory() {
         setError(true);
       } finally {
         setLoading(false);
+        router.push("/allcategories");
       }
     }
-
-    router.push("/allcategories");
   };
 
   return (

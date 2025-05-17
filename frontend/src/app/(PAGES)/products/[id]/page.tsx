@@ -16,14 +16,14 @@ import {
 import Link from "next/link";
 
 interface Category {
-  uid: number;
+  _id: number;
   name: string;
-  image: string;
+  imageUrl: string;
   plants: [
     {
-      id: string;
+      _id: string;
       name: string;
-      image: string;
+      imageUrl: string;
       price: string;
       newPrice: string;
       description: string;
@@ -43,7 +43,7 @@ export default function Plants() {
       try {
         const categoriesData = await getCategories();
         setCategories(
-          categoriesData.filter((category: Category) => category.uid === Number(id))
+          categoriesData.filter((category: Category) => category._id === Number(id))
         );
       } catch (error) {
         setError(true);
@@ -84,11 +84,11 @@ export default function Plants() {
         {categories &&
           categories.map((category) =>
             category.plants.map((plant) => (
-              <Card sx={{ maxWidth: 200 }} key={plant.id} className="shadow-md shadow-gray-400 hover:scale-105 transition">
+              <Card sx={{ maxWidth: 200 }} key={plant._id} className="shadow-md shadow-gray-400 hover:scale-105 transition">
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    image={plant.image}
+                    image={plant.imageUrl}
                     alt={plant.name}
                     style={{height: '150px', width: '200px'}}
                   />
@@ -103,7 +103,7 @@ export default function Plants() {
                       {plant.newPrice}
                     </Typography>
 
-                    <Link href={`/plantdetail/${plant.id}`}>
+                    <Link href={`/plantdetail/${plant._id}`}>
                       <Button variant="contained" color="success">
                         Comprar
                       </Button>

@@ -14,7 +14,7 @@ import Link from "next/link";
 import { getVases } from "@/services/Vase";
 
 interface Vase {
-  id: string;
+  _id: string;
   name: string;
   imageUrl: string;
   price: string;
@@ -62,7 +62,7 @@ export default function Vases() {
       <div className="flex flex-wrap justify-center gap-6 w-full mx-auto md:w-10/12 lg:w-10/12 xl:w-8/12 2xl:w-6/12">
         {vases
           .map((vase) => (
-            <Link key={vase.id} href={`/vasedetail/${vase.id}`}>
+            <Link key={vase._id} href={`/vasedetail/${vase._id}`}>
               <Card
                 sx={{ maxWidth: 190 }}
                 className="rounded-md shadow-md shadow-gray-500 p-2 hover:scale-105 transition"

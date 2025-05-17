@@ -21,9 +21,9 @@ import {
 import Link from "next/link";
 
 interface Plant {
-  id: string;
+  _id: string;
   name: string;
-  image: string;
+  imageUrl: string;
   price: string;
   newPrice: string;
 }
@@ -89,18 +89,18 @@ export default function CarroselInDetail() {
       >
         {plants.map((plant: any, index: any) => (
           <SwiperSlide
-            key={`${plant.id}-${index}`}
+            key={`${plant._id}-${index}`}
             className="flex justify-center items-center px-20 md:px-14 mb-4"
           >
             <Card
               sx={{ maxWidth: 200 }}
-              key={plant.id}
+              key={plant._id}
               className="shadow-md shadow-gray-400 hover:scale-105 mt-4 transition"
             >
               <CardActionArea>
                 <CardMedia
                   component="img"
-                  image={plant.image}
+                  image={plant.imageUrl}
                   alt={plant.name}
                   style={{ height: "150px", width: "200px" }}
                 />
@@ -120,7 +120,7 @@ export default function CarroselInDetail() {
               
               <div className="p-2 -mt-4">
                 <Button variant="contained" color="success" fullWidth>
-                  <Link href={`/plantdetail/${plant.id}`} passHref>
+                  <Link href={`/plantdetail/${plant._id}`} passHref>
                     Comprar
                   </Link>
                 </Button>
