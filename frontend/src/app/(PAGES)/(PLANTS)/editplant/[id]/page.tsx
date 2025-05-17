@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { updatePlant, getPlantById } from "@/services/Plant";
+import { updatePlant, getPlant } from "@/services/Plant";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import SelectCategory from "@/components/SelectCategory/SelectCategory";
@@ -26,13 +26,14 @@ export default function EditPlant() {
   const { id } = useParams();
 
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File>();
   const [price, setPrice] = useState("");
   const [newPrice, setNewPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [bestSelling, setBestSelling] = useState(false);
   const [trend, setTrend] = useState(false);
+  const [preview, setPreview] = useState("");
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -68,9 +69,9 @@ export default function EditPlant() {
     const fetchPlant = async () => {
       if (typeof id === "string") {
         try {
-          const plant = await getPlantById(id);
+          const plant = await getPlant(id);
           setName(plant.name);
-          setImage(plant.image);
+          setPreview(plant.image);
           setPrice(plant.price);
           setNewPrice(plant.newPrice);
           setDescription(plant.description);
@@ -83,7 +84,7 @@ export default function EditPlant() {
       }
     };
     fetchPlant();
-  }, []);
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -93,16 +94,32 @@ export default function EditPlant() {
     if (typeof id === "string") {
       try {
         setLoading(true);
-        await updatePlant(id, {
-          name,
-          image,
-          price,
-          newPrice,
-          description,
-          category,
-          bestSelling,
-          trend,
-        });
+
+        const formData = new FormData();
+        formData.append("name", name);
+        if (image) {
+          formData.append("image", image);
+        }
+        formData.append("price", price);
+        formData.append("newPrice", newPrice);
+        formData.append("description", description);
+        formData.append("category", category);
+        formData.append("bestSelling", bestSelling.toString());
+        formData.append("trend", trend.toString());
+
+        if (image) {
+          await updatePlant({
+            id,
+            name,
+            image,
+            price,
+            newPrice,
+            description,
+            category,
+            bestSelling,
+            trend,
+          });
+        }
         setSuccess(true);
         router.push("/allplants");
       } catch (error) {
@@ -150,14 +167,28 @@ export default function EditPlant() {
                 onChange={(e) => setName(e.target.value)}
               />
 
+              {preview && (
+                <img
+                  src={preview}
+                  alt="Preview da imagem atual"
+                  style={{
+                    height: "300px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                  }}
+                />
+              )}
+
               <TextField
                 required
-                id="outlined"
-                label="URL da Imagem"
-                type="text"
+                type="file"
                 color="success"
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files && target.files[0]) {
+                    setImage(target.files[0]);
+                  }
+                }}
               />
 
               <TextField

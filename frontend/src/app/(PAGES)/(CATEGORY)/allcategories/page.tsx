@@ -25,7 +25,6 @@ import { DialogContent, DialogContentText } from "@mui/material";
 interface Category {
   _id: string;
   name: string;
-  image: File;
 }
 
 export default function AllCategories() {

@@ -16,7 +16,7 @@ import { getPlants } from "@/services/Plant";
 interface Plant {
   id: string;
   name: string;
-  image: string;
+  imageUrl: string;
   price: string;
   newPrice: string;
 }
@@ -71,7 +71,7 @@ export default function Offer() {
               >
                 <CardMedia
                   component="img"
-                  image={plant.image}
+                  image={plant.imageUrl}
                   alt={plant.name}
                   style={{ height: 200, width: 200 }}
                   className="rounded-md"

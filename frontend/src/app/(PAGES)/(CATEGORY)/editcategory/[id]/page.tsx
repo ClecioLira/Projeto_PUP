@@ -31,7 +31,6 @@ export default function EditCategory() {
           const category = await getCategory(id);
           setName(category.name);
           setPreview(category.imageUrl);
-          console.log(category);
         } catch (error) {
           console.error(error);
         }

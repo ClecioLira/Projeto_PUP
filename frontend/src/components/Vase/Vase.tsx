@@ -16,7 +16,7 @@ import { getVases } from "@/services/Vase";
 interface Vase {
   id: string;
   name: string;
-  image: string;
+  imageUrl: string;
   price: string;
 }
 
@@ -69,7 +69,7 @@ export default function Vases() {
               >
                 <CardMedia
                   component="img"
-                  image={vase.image}
+                  image={vase.imageUrl}
                   alt={vase.name}
                   style={{ height: 200, width: 200 }}
                   className="rounded-md"

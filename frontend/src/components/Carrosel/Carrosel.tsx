@@ -14,7 +14,7 @@ import Link from "next/link";
 interface Category {
   id: string;
   name: string;
-  image: string;
+  imageUrl: string;
 }
 
 const CategoriesCarousel = () => {
@@ -84,7 +84,7 @@ const CategoriesCarousel = () => {
             >
               <div className="rounded-lg shadow-md shadow-gray-500 overflow-hidden p-2 bg-white">
                 <img
-                  src={category.image}
+                  src={category.imageUrl}
                   alt={`Categoria ${category.name}`}
                   className="w-full h-40 object-cover rounded-md"
                 />

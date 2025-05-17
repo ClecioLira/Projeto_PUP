@@ -45,9 +45,9 @@ const CreateCategory = () => {
       setError(true);
     } finally {
       setLoading(false);
+      router.push("/allcategories");
     }
 
-    router.push("/allcategories");
   };
 
   return (

@@ -19,10 +19,12 @@ import { useState } from "react";
 import { createPlant } from "@/services/Plant";
 import SelectCategory from "@/components/SelectCategory/SelectCategory";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CreatePlant() {
+  const router = useRouter();
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -53,8 +55,22 @@ export default function CreatePlant() {
     setSuccess(false);
     setError(false);
 
+    if (!image) {
+      setError(true);
+      return;
+    }
+
     try {
       setLoading(true);
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("image", image);
+      formData.append("price", price);
+      formData.append("description", description);
+      formData.append("category", category);
+      formData.append("bestSelling", bestSelling.toString());
+      formData.append("trend", trend.toString());
+
       await createPlant({
         name,
         image,
@@ -65,17 +81,11 @@ export default function CreatePlant() {
         trend,
       });
       setSuccess(true);
-      setName("");
-      setImage("");
-      setPrice("");
-      setDescription("");
-      setCategory("");
-      setBestSelling(false);
-      setTrend(false);
     } catch (error) {
       setError(true);
     } finally {
       setLoading(false);
+      router.push("/allplants");
     }
   };
 
@@ -118,12 +128,14 @@ export default function CreatePlant() {
 
               <TextField
                 required
-                id="outlined"
-                label="URL da Imagem"
-                type="text"
+                type="file"
                 color="success"
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files && target.files[0]) {
+                    setImage(target.files[0]);
+                  }
+                }}
               />
 
               <TextField

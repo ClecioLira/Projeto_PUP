@@ -1,7 +1,4 @@
-import { getCategoryById } from "./Category";
-
-const URL_PLANT = "https://fake-api-pup.onrender.com/plants";
-const URL_CATEGORY = "https://fake-api-pup.onrender.com/categories";
+const URL_CATEGORY = "https://fake-api-pup.onrender.com/api/plants";
 
 export async function createPlant({
   name,
@@ -13,146 +10,98 @@ export async function createPlant({
   trend,
 }: {
   name: string;
-  image: string;
+  image: File;
   price: string;
+  description: string;
+  category: string;
+  bestSelling: boolean;
+  trend: boolean;
+}) {
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("image", image);
+  formData.append("price", price);
+  formData.append("description", description);
+  formData.append("category", category);
+  if (bestSelling) {
+    formData.append("bestSelling", bestSelling.toString());
+  }
+  if (trend) {
+    formData.append("trend", trend.toString());
+  }
+  const res = await fetch(URL_CATEGORY, {
+    method: "POST",
+    body: formData,
+  });
+
+  return res.json();
+}
+
+export async function getPlants() {
+  const res = await fetch(URL_CATEGORY, {
+    method: "GET",
+  });
+
+  return res.json();
+}
+
+export async function getPlant(id: string) {
+  const res = await fetch(`${URL_CATEGORY}/${id}`, {
+    method: "GET",
+  });
+
+  return res.json();
+}
+
+export async function updatePlant({
+  id,
+  name,
+  image,
+  price,
+  newPrice,
+  description,
+  category,
+  bestSelling,
+  trend,
+}: {
+  id: string;
+  name: string;
+  image: File;
+  price: string;
+  newPrice?: string;
   description: string;
   category: string;
   bestSelling?: boolean;
   trend?: boolean;
 }) {
-  const res = await fetch(URL_PLANT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name,
-      image,
-      price,
-      description,
-      category,
-      bestSelling,
-      trend,
-    }),
-  });
-
-  const plant = await res.json();
-
-  // Adiciona a planta ao array de plantas da categoria selecionada
-  await addPlantToCategory(category, plant);
-
-  return plant;
-}
-
-export async function addPlantToCategory(categoryId: string, plantId: string) {
-  try {
-    const category = await getCategoryById(categoryId);
-    category.plants.push(plantId);
-
-    await fetch(`${URL_CATEGORY}/${categoryId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(category),
-    });
-  } catch (error) {
-    console.error(error);
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("image", image);
+  formData.append("price", price);
+  if (newPrice) {
+    formData.append("newPrice", newPrice);
   }
-}
-
-export async function getPlants() {
-  const res = await fetch(URL_PLANT);
-  return res.json();
-}
-
-export async function getPlantById(id: string) {
-  const res = await fetch(`${URL_PLANT}/${id}`);
-  return res.json();
-}
-
-export async function updatePlant(
-  id: string,
-  {
-    name,
-    image,
-    price,
-    newPrice,
-    description,
-    category,
-    bestSelling,
-    trend,
-  }: {
-    name: string;
-    image: string;
-    price: string;
-    newPrice?: string;
-    description: string;
-    category: string;
-    bestSelling?: boolean;
-    trend?: boolean;
+  formData.append("description", description);
+  formData.append("category", category);
+  if (bestSelling) {
+    formData.append("bestSelling", bestSelling.toString());
   }
-) {
-  const res = await fetch(`${URL_PLANT}/${id}`, {
+  if (trend) {
+    formData.append("trend", trend.toString());
+  }
+
+  const res = await fetch(`${URL_CATEGORY}/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name,
-      image,
-      price,
-      newPrice,
-      description,
-      category,
-      bestSelling,
-      trend,
-    }),
+    body: formData,
   });
 
   return res.json();
 }
 
 export async function deletePlant(id: string) {
-  await fetch(`${URL_PLANT}/${id}`, { method: "DELETE" });
+  const res = await fetch(`${URL_CATEGORY}/${id}`, {
+    method: "DELETE",
+  });
 
-  const categoriesRes = await fetch(URL_CATEGORY);
-  const categories = await categoriesRes.json();
-
-  for (const category of categories) {
-    if (!Array.isArray(category.plants)) {
-      category.plants = [];
-    }
-    const plantIndex = category.plants.findIndex(
-      (plant: any) => plant.id === id
-    );
-    if (plantIndex !== -1) {
-      category.plants.splice(plantIndex, 1);
-      await fetch(`${URL_CATEGORY}/${category.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(category),
-      });
-      break;
-    }
-  }
-}
-
-export async function deletePlantsByCategory(
-  categoryId: string
-): Promise<void> {
-  const res = await fetch(URL_PLANT);
-  const plants = await res.json();
-
-  const plantsToDelete = plants.filter(
-    (plant: any) => plant.category === categoryId
-  );
-
-  for (const plant of plantsToDelete) {
-    await fetch(`${URL_PLANT}/${plant.id}`, {
-      method: "DELETE",
-    });
-  }
+  return res.json();
 }

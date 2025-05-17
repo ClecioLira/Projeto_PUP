@@ -12,9 +12,8 @@ import { getCategories } from "@/services/Category";
 import { Alert } from "@mui/material";
 
 interface Category {
-  id: string;
+  _id: string;
   name: string;
-  image: string;
 }
 
 interface SelectCategoryProps {
@@ -67,7 +66,7 @@ export default function SelectCategory({
           <em>Selecione uma categoria</em>
         </MenuItem>
         {categories.map((category) => (
-          <MenuItem key={category.id} value={category.id}>
+          <MenuItem key={category._id} value={category._id}>
             {category.name}
           </MenuItem>
         ))}

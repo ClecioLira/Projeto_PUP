@@ -23,16 +23,14 @@ import { deletePlant } from "@/services/Plant";
 import { DialogContent, DialogContentText } from "@mui/material";
 
 interface Plants {
-  id: string;
+  _id: string;
   name: string;
-  image: string;
   price: string;
-  description: string;
   category: string;
 }
 
 interface Category {
-  id: string;
+  _id: string;
   name: string;
 }
 
@@ -69,7 +67,7 @@ export default function AllPlants() {
   }, []);
 
   const filterCategory = (categoryId: string) => {
-    return categories.find((category) => category.id === categoryId)?.name;
+    return categories.find((category) => category._id === categoryId)?.name;
   };
 
   const [open, setOpen] = useState(false);
@@ -90,7 +88,7 @@ export default function AllPlants() {
     try {
       await deletePlant(plantToDelete);
       setPlants((prevData) =>
-        prevData.filter((item) => item.id !== plantToDelete)
+        prevData.filter((item) => item._id !== plantToDelete)
       );
     } catch (error) {
       console.error(error);
@@ -114,7 +112,7 @@ export default function AllPlants() {
   }
 
   return (
-    <section className="bg-green-50">
+    <section className="bg-green-50 pb-28">
       <div className="flex justify-center py-10">
         <TableContainer
           style={{
@@ -148,7 +146,7 @@ export default function AllPlants() {
               {plants
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((plant) => (
-                  <TableRow key={plant.id}>
+                  <TableRow key={plant._id}>
                     <TableCell component="th" scope="row">
                       <span>{plant.name}</span>
                     </TableCell>
@@ -164,7 +162,7 @@ export default function AllPlants() {
                     </TableCell>
 
                     <TableCell align="right">
-                      <Link href={`/editplant/${plant.id}`}>
+                      <Link href={`/editplant/${plant._id}`}>
                         <Button color="success" variant="contained">
                           <span className="hidden md:block pr-2">Editar</span>
                           <FaRegEdit />
@@ -177,37 +175,11 @@ export default function AllPlants() {
                         <Button
                           variant="contained"
                           color="error"
-                          onClick={() => handleClickOpen(plant.id)} // Passa o ID da planta ao abrir o diálogo
+                          onClick={() => handleClickOpen(plant._id)} // Passa o ID da planta ao abrir o diálogo
                         >
                           <span className="hidden md:block pr-2">Apagar</span>
                           <FaRegTrashCan />
                         </Button>
-                        <Dialog
-                          open={open}
-                          onClose={handleClose}
-                          aria-labelledby="responsive-dialog-title"
-                        >
-                          <DialogContent>
-                            <DialogContentText>
-                              Tem certeza que deseja apagar esta planta?
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button
-                              style={{ color: "#000" }}
-                              autoFocus
-                              onClick={handleClose}
-                            >
-                              Cancelar
-                            </Button>
-                            <Button
-                              color="error"
-                              onClick={handleDeletePlant} // Agora usa a planta definida no estado
-                            >
-                              Apagar
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
                       </React.Fragment>
                     </TableCell>
                   </TableRow>
@@ -215,6 +187,28 @@ export default function AllPlants() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogContent>
+            <DialogContentText>
+              Tem certeza que deseja apagar esta planta?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button style={{ color: "#000" }} autoFocus onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button
+              color="error"
+              onClick={handleDeletePlant} // Agora usa a planta definida no estado
+            >
+              Apagar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </section>
   );
