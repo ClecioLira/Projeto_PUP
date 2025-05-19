@@ -15,56 +15,55 @@ import DialogActions from "@mui/material/DialogActions";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 
-import { deleteCategory } from "@/services/Category";
 import Link from "next/link";
-
 import { useState, useEffect } from "react";
-import { getCategories } from "@/services/Category";
+import { getVases } from "@/services/Vase";
+import { deleteVase } from "@/services/Vase";
 import { DialogContent, DialogContentText } from "@mui/material";
 
-interface Category {
+interface Vase {
   _id: string;
   name: string;
 }
 
-export default function AllCategories() {
-  const [categories, setCategories] = useState<Category[]>([]);
+export default function AllVases() {
+  const [vases, setVases] = useState<Vase[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAllCategories() {
+    async function fetchAllVases() {
       try {
-        const categoriesData = await getCategories();
-        setCategories(categoriesData);
+        const vasesData = await getVases();
+        setVases(vasesData);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchAllCategories();
+    fetchAllVases();
   }, []);
 
   const [open, setOpen] = useState(false);
-  const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
+  const [vaseToDelete, setVaseToDelete] = useState<string | null>(null);
 
-  const handleClickOpen = (categoryId: string) => {
-    setCategoryToDelete(categoryId);
+  const handleClickOpen = (vaseId: string) => {
+    setVaseToDelete(vaseId);
     setOpen(true);
   };
 
   const handleClose = () => {
-    setCategoryToDelete(null);
+    setVaseToDelete(null);
     setOpen(false);
   };
 
-  const handleDeleteCategory = async () => {
-    if (!categoryToDelete) return;
+  const handleDeleteVase = async () => {
+    if (!vaseToDelete) return;
     try {
-      await deleteCategory(categoryToDelete);
-      setCategories((prevData) =>
-        prevData.filter((item) => item._id !== categoryToDelete)
+      await deleteVase(vaseToDelete);
+      setVases((prevData) =>
+        prevData.filter((item) => item._id !== vaseToDelete)
       );
     } catch (error) {
       console.error(error);
@@ -84,7 +83,7 @@ export default function AllCategories() {
   }
 
   if (error) {
-    return <p>Erro ao carregar as categorias</p>;
+    return <p>Erro ao carregar os vasos</p>;
   }
 
   return (
@@ -103,11 +102,11 @@ export default function AllCategories() {
           >
             <TableHead>
               <TableRow>
-                <TableCell>Nome da Categoria</TableCell>
+                <TableCell>Nome do Vaso</TableCell>
 
                 <TableCell>
-                  <Link href="/createcategory">
-                    <Button color="success">Criar Nova Categoria</Button>
+                  <Link href="/protected/createvase">
+                    <Button color="success">Criar Novo Vaso</Button>
                   </Link>
                 </TableCell>
 
@@ -116,16 +115,16 @@ export default function AllCategories() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {categories
+              {vases
                 .sort((a, b) => a.name.localeCompare(b.name))
-                .map((category) => (
-                  <TableRow key={category._id}>
+                .map((vase) => (
+                  <TableRow key={vase._id}>
                     <TableCell component="th" scope="row">
-                      <span className="break-all">{category.name}</span>
+                      <span>{vase.name}</span>
                     </TableCell>
 
                     <TableCell align="right">
-                      <Link href={`/editcategory/${category._id}`}>
+                      <Link href={`/protected/editvase/${vase._id}`}>
                         <Button color="success" variant="contained">
                           <span className="hidden md:block pr-2">Editar</span>
                           <FaRegEdit />
@@ -138,7 +137,7 @@ export default function AllCategories() {
                         <Button
                           variant="contained"
                           color="error"
-                          onClick={() => handleClickOpen(category._id)}
+                          onClick={() => handleClickOpen(vase._id)}
                         >
                           <span className="hidden md:block pr-2">Apagar</span>
                           <FaRegTrashCan />
@@ -157,14 +156,14 @@ export default function AllCategories() {
         >
           <DialogContent>
             <DialogContentText>
-              Tem certeza que deseja apagar esta categoria?
+              Tem certeza que deseja apagar este vaso?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button style={{ color: "#000" }} autoFocus onClick={handleClose}>
               Cancelar
             </Button>
-            <Button color="error" onClick={handleDeleteCategory}>
+            <Button color="error" onClick={handleDeleteVase}>
               Apagar
             </Button>
           </DialogActions>

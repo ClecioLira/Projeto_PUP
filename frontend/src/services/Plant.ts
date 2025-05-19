@@ -1,4 +1,5 @@
 const URL_CATEGORY = "https://fake-api-pup.onrender.com/api/plants";
+import Cookies from "js-cookie";
 
 export async function createPlant({
   name,
@@ -17,6 +18,7 @@ export async function createPlant({
   bestSelling: boolean;
   trend: boolean;
 }) {
+  const token = Cookies.get("nextauth.token");
   const formData = new FormData();
   formData.append("name", name);
   formData.append("image", image);
@@ -31,6 +33,9 @@ export async function createPlant({
   }
   const res = await fetch(URL_CATEGORY, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 
@@ -74,6 +79,7 @@ export async function updatePlant({
   bestSelling?: boolean;
   trend?: boolean;
 }) {
+  const token = Cookies.get("nextauth.token");
   const formData = new FormData();
   formData.append("name", name);
   formData.append("image", image);
@@ -92,6 +98,9 @@ export async function updatePlant({
 
   const res = await fetch(`${URL_CATEGORY}/${id}`, {
     method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 
@@ -99,8 +108,12 @@ export async function updatePlant({
 }
 
 export async function deletePlant(id: string) {
+  const token = Cookies.get("nextauth.token");
   const res = await fetch(`${URL_CATEGORY}/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   return res.json();

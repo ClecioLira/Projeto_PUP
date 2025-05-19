@@ -133,7 +133,7 @@ export default function AllPlants() {
                 </TableCell>
 
                 <TableCell>
-                  <Link href="/createplant">
+                  <Link href="/protected/createplant">
                     <Button color="success">Criar Nova Planta</Button>
                   </Link>
                 </TableCell>
@@ -162,7 +162,7 @@ export default function AllPlants() {
                     </TableCell>
 
                     <TableCell align="right">
-                      <Link href={`/editplant/${plant._id}`}>
+                      <Link href={`/protected/editplant/${plant._id}`}>
                         <Button color="success" variant="contained">
                           <span className="hidden md:block pr-2">Editar</span>
                           <FaRegEdit />

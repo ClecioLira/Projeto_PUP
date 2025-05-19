@@ -5,33 +5,28 @@ import {
   Button,
   Card,
   CardContent,
-  Checkbox,
   FormControl,
-  FormControlLabel,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   TextField,
   Typography,
 } from "@mui/material";
-
-import { useState } from "react";
-import { createPlant } from "@/services/Plant";
-import SelectCategory from "@/components/SelectCategory/SelectCategory";
+import { useEffect, useState } from "react";
+import { updateVase, getVase } from "@/services/Vase";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
-export default function CreatePlant() {
+export default function EditVase() {
   const router = useRouter();
+  const { id } = useParams();
   const [name, setName] = useState("");
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File>();
+  const [preview, setPreview] = useState("");
+  const [success, setSuccess] = useState(false);
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [bestSelling, setBestSelling] = useState(false);
-  const [trend, setTrend] = useState(false);
 
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -50,42 +45,48 @@ export default function CreatePlant() {
     setPrice(formattedValue);
   };
 
+  useEffect(() => {
+    const fetchVase = async () => {
+      if (typeof id === "string") {
+        try {
+          const vase = await getVase(id);
+          setName(vase.name);
+          setImage(vase.image);
+          setPrice(vase.price);
+          setDescription(vase.description);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    fetchVase();
+  }, [id]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSuccess(false);
     setError(false);
 
-    if (!image) {
-      setError(true);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("image", image);
-      formData.append("price", price);
-      formData.append("description", description);
-      formData.append("category", category);
-      formData.append("bestSelling", bestSelling.toString());
-      formData.append("trend", trend.toString());
-
-      await createPlant({
-        name,
-        image,
-        price,
-        description,
-        category,
-        bestSelling,
-        trend,
-      });
-      setSuccess(true);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-      router.push("/allplants");
+    if (typeof id === "string") {
+      try {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("name", name);
+        if (image) {
+          formData.append("image", image);
+        }
+        formData.append("price", price);
+        formData.append("description", description);
+        if (image) {
+          await updateVase({ id, name, image, price, description });
+          setSuccess(true);
+        }
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+        router.push("/protected/allvases");
+      }
     }
   };
 
@@ -109,22 +110,35 @@ export default function CreatePlant() {
               align="center"
               gutterBottom
             >
-              Criar Planta
+              Editar Vaso
             </Typography>
 
             <form
+              className="form-container"
               onSubmit={handleSubmit}
               style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
             >
               <TextField
                 required
                 id="outlined"
-                label="Nome da Planta"
+                label="Nome do Vaso"
                 type="text"
                 color="success"
                 value={name || ""}
                 onChange={(e) => setName(e.target.value)}
               />
+
+              {preview && (
+                <img
+                  src={preview}
+                  alt="Preview da imagem atual"
+                  style={{
+                    height: "300px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                  }}
+                />
+              )}
 
               <TextField
                 required
@@ -141,7 +155,7 @@ export default function CreatePlant() {
               <TextField
                 required
                 id="outlined-textarea"
-                label="Descrição da Planta"
+                label="Descrição do Vaso"
                 color="success"
                 value={description || ""}
                 onChange={(e) => setDescription(e.target.value)}
@@ -164,52 +178,33 @@ export default function CreatePlant() {
                 />
               </FormControl>
 
-              <SelectCategory
-                selectedCategory={category || ""}
-                onSelectCategory={(value) => setCategory(value)}
-              />
-
-              <div className="flex justify-around">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="success"
-                      value={bestSelling || ""}
-                      onChange={(e) => setBestSelling(e.target.checked)}
-                    />
-                  }
-                  label="Mais Vendidos"
-                />
-
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="success"
-                      value={trend || ""}
-                      onChange={(e) => setTrend(e.target.checked)}
-                    />
-                  }
-                  label="Trend"
-                />
-              </div>
-
-              <Button type="submit" color="success" variant="outlined">
-                {!loading && <span>Criar</span>}
+              <Button
+                type="submit"
+                className="btn-enter"
+                color="success"
+                variant="outlined"
+              >
+                {!loading && <span>Editar</span>}
                 {loading && <span>Aguarde...</span>}
               </Button>
 
-              <Link href="/allplants">
-                <Button type="submit" variant="outlined" color="success">
+              <Link href="/protected/allvases">
+                <Button
+                  type="submit"
+                  className="btn-enter"
+                  variant="outlined"
+                  color="success"
+                >
                   Voltar
                 </Button>
               </Link>
 
               {success && (
-                <Alert severity="success">Planta criada com sucesso.</Alert>
+                <Alert severity="success">Vaso editado com sucesso.</Alert>
               )}
               {error && (
                 <Alert severity="error">
-                  Erro ao criar planta, tente novamente mais tarde.
+                  Erro ao editar vaso, tente novamente mais tarde.
                 </Alert>
               )}
             </form>

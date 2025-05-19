@@ -64,7 +64,7 @@ export default function EditCategory() {
         setError(true);
       } finally {
         setLoading(false);
-        router.push("/allcategories");
+        router.push("/protected/allcategories");
       }
     }
   };
@@ -134,7 +134,7 @@ export default function EditCategory() {
                 {!loading ? "Editar" : "Aguarde..."}
               </Button>
 
-              <Link href="/allcategories">
+              <Link href="/protected/allcategories">
                 <Button variant="outlined" color="success">
                   Voltar
                 </Button>

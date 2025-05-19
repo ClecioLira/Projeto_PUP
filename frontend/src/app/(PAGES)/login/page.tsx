@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   TextField,
   Button,
@@ -8,16 +8,21 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { AuthContext } from "@/context/AuthContext";
 
 const LoginPage = () => {
+  const { LoginAdmin } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Simule o login aqui, por exemplo, faça uma requisição para a API
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      await LoginAdmin({ email, password });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    }
   };
 
   return (
@@ -29,7 +34,7 @@ const LoginPage = () => {
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
             borderRadius: "12px",
             padding: "1rem 0",
-            margin: "0 0.5rem"
+            margin: "0 0.5rem",
           }}
         >
           <CardContent>
@@ -69,9 +74,29 @@ const LoginPage = () => {
               </Button>
             </form>
 
-            <Typography variant="body2" component="h6" align="center" gutterBottom style={{margin:"1rem 0 0"}}>
-              Ainda não tem uma conta? <Link href="/register" className="hover:text-green-500 underline">Cadastre-se</Link>
+            <Typography
+              variant="body2"
+              component="h6"
+              align="center"
+              gutterBottom
+              style={{ margin: "1rem 0 0" }}
+            >
+              Ainda não tem uma conta?{" "}
+              <Link href="/register" className="hover:text-green-500 underline">
+                Cadastre-se
+              </Link>
             </Typography>
+
+            {error && (
+              <Typography
+                variant="body2"
+                color="error"
+                align="center"
+                style={{ marginTop: "1rem" }}
+              >
+                {error}
+              </Typography>
+            )}
           </CardContent>
         </Card>
       </div>

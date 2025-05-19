@@ -1,4 +1,5 @@
 const URL_VASE = "https://fake-api-pup.onrender.com/api/vases";
+import Cookies from "js-cookie";
 
 export async function createVase({
   name,
@@ -11,6 +12,7 @@ export async function createVase({
   price: string;
   description: string;
 }) {
+  const token = Cookies.get("nextauth.token");
   const formData = new FormData();
   formData.append("name", name);
   formData.append("image", image);
@@ -19,6 +21,9 @@ export async function createVase({
 
   const res = await fetch(URL_VASE, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 
@@ -54,6 +59,7 @@ export async function updateVase({
   price: string;
   description: string;
 }) {
+  const token = Cookies.get("nextauth.token");
   const formData = new FormData();
   formData.append("name", name);
   formData.append("image", image);
@@ -62,6 +68,9 @@ export async function updateVase({
 
   const res = await fetch(`${URL_VASE}/${id}`, {
     method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   });
 
@@ -69,8 +78,12 @@ export async function updateVase({
 }
 
 export async function deleteVase(id: string) {
+  const token = Cookies.get("nextauth.token");
   const res = await fetch(`${URL_VASE}/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   return res.json();

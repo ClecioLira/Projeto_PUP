@@ -5,38 +5,45 @@ import {
   Button,
   Card,
   CardContent,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   TextField,
   Typography,
 } from "@mui/material";
+
 import { useEffect, useState } from "react";
-import { updateVase, getVase } from "@/services/Vase";
+import { updatePlant, getPlant } from "@/services/Plant";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
+import SelectCategory from "@/components/SelectCategory/SelectCategory";
 
-export default function EditVase() {
+export default function EditPlant() {
   const router = useRouter();
   const { id } = useParams();
+
   const [name, setName] = useState("");
   const [image, setImage] = useState<File>();
-  const [preview, setPreview] = useState("");
-  const [success, setSuccess] = useState(false);
   const [price, setPrice] = useState("");
+  const [newPrice, setNewPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [bestSelling, setBestSelling] = useState(false);
+  const [trend, setTrend] = useState(false);
+  const [preview, setPreview] = useState("");
 
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handlePriceChange = (e: any) => {
     let value = e.target.value;
 
-    // Remove caracteres não numéricos
     value = value.replace(/\D/g, "");
 
-    // Formata como número com separadores de milhares e decimais, sem o símbolo da moeda
     const formattedValue = new Intl.NumberFormat("pt-BR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -45,21 +52,38 @@ export default function EditVase() {
     setPrice(formattedValue);
   };
 
+  const handleNewPriceChange = (e: any) => {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, "");
+
+    const formattedValue = new Intl.NumberFormat("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value / 100);
+
+    setNewPrice(formattedValue);
+  };
+
   useEffect(() => {
-    const fetchVase = async () => {
+    const fetchPlant = async () => {
       if (typeof id === "string") {
         try {
-          const vase = await getVase(id);
-          setName(vase.name);
-          setImage(vase.image);
-          setPrice(vase.price);
-          setDescription(vase.description);
+          const plant = await getPlant(id);
+          setName(plant.name);
+          setPreview(plant.image);
+          setPrice(plant.price);
+          setNewPrice(plant.newPrice);
+          setDescription(plant.description);
+          setCategory(plant.category);
+          setBestSelling(plant.bestSelling);
+          setTrend(plant.trend);
         } catch (error) {
           console.error(error);
         }
       }
     };
-    fetchVase();
+    fetchPlant();
   }, [id]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,22 +94,38 @@ export default function EditVase() {
     if (typeof id === "string") {
       try {
         setLoading(true);
+
         const formData = new FormData();
         formData.append("name", name);
         if (image) {
           formData.append("image", image);
         }
         formData.append("price", price);
+        formData.append("newPrice", newPrice);
         formData.append("description", description);
+        formData.append("category", category);
+        formData.append("bestSelling", bestSelling.toString());
+        formData.append("trend", trend.toString());
+
         if (image) {
-          await updateVase({ id, name, image, price, description });
-          setSuccess(true);
+          await updatePlant({
+            id,
+            name,
+            image,
+            price,
+            newPrice,
+            description,
+            category,
+            bestSelling,
+            trend,
+          });
         }
+        setSuccess(true);
+        router.push("/protected/allplants");
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
-        router.push("/allvases");
       }
     }
   };
@@ -110,18 +150,17 @@ export default function EditVase() {
               align="center"
               gutterBottom
             >
-              Editar Vaso
+              Editar Planta
             </Typography>
 
             <form
-              className="form-container"
               onSubmit={handleSubmit}
               style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
             >
               <TextField
                 required
                 id="outlined"
-                label="Nome do Vaso"
+                label="Nome da Planta"
                 type="text"
                 color="success"
                 value={name || ""}
@@ -155,7 +194,7 @@ export default function EditVase() {
               <TextField
                 required
                 id="outlined-textarea"
-                label="Descrição do Vaso"
+                label="Descrição da Planta"
                 color="success"
                 value={description || ""}
                 onChange={(e) => setDescription(e.target.value)}
@@ -178,33 +217,68 @@ export default function EditVase() {
                 />
               </FormControl>
 
-              <Button
-                type="submit"
-                className="btn-enter"
-                color="success"
-                variant="outlined"
-              >
+              <FormControl>
+                <InputLabel htmlFor="outlined-adornment-amount" color="success">
+                  Preço Promocional
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  startAdornment={
+                    <InputAdornment position="start">R$</InputAdornment>
+                  }
+                  label="Preço Promocional"
+                  value={newPrice || ""}
+                  onChange={handleNewPriceChange}
+                  color="success"
+                />
+              </FormControl>
+
+              <SelectCategory
+                selectedCategory={category || ""}
+                onSelectCategory={(value) => setCategory(value)}
+              />
+
+              <div className="flex justify-around">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="success"
+                      value={bestSelling || ""}
+                      onChange={(e) => setBestSelling(e.target.checked)}
+                    />
+                  }
+                  label="Mais Vendidos"
+                />
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="success"
+                      value={trend || ""}
+                      onChange={(e) => setTrend(e.target.checked)}
+                    />
+                  }
+                  label="Trend"
+                />
+              </div>
+
+              <Button type="submit" color="success" variant="outlined">
                 {!loading && <span>Editar</span>}
                 {loading && <span>Aguarde...</span>}
               </Button>
 
-              <Link href="/allvases">
-                <Button
-                  type="submit"
-                  className="btn-enter"
-                  variant="outlined"
-                  color="success"
-                >
+              <Link href="/protected/allplants">
+                <Button type="submit" variant="outlined" color="success">
                   Voltar
                 </Button>
               </Link>
 
               {success && (
-                <Alert severity="success">Vaso editado com sucesso.</Alert>
+                <Alert severity="success">Planta editada com sucesso.</Alert>
               )}
               {error && (
                 <Alert severity="error">
-                  Erro ao editar vaso, tente novamente mais tarde.
+                  Erro ao editar planta, tente novamente mais tarde.
                 </Alert>
               )}
             </form>
