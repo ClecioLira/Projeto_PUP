@@ -47,8 +47,8 @@ export default function VaseDetail() {
     if (vase) {
       addProduct({
         ...vase, quantity: 1,
-        _id: "",
-        imageUrl: ""
+        _id: vase._id,
+        imageUrl: vase.imageUrl,
       });
     }
   };
