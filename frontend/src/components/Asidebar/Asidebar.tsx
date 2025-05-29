@@ -23,6 +23,8 @@ const Asidebar = () => {
     setOpen(newOpen);
   };
 
+  console.log(products)
+
   const DrawerList = (
     <Box sx={{ width: 250, color: "green" }} role="presentation">
       <List>

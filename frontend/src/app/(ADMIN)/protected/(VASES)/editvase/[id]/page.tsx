@@ -91,7 +91,7 @@ export default function EditVase() {
   };
 
   return (
-    <section className="h-screen pt-10 bg-green-50">
+    <section className="pt-10 pb-20 bg-green-50">
       <div className="flex justify-center pt-10">
         <Card
           style={{

@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 type Product = {
   _id: string;
   name: string;
-  imageUrl: string; // Idealmente, deve ser uma URL da imagem, não base64
+  imageUrl: string;
   price: string;
   quantity: number;
 };
@@ -12,9 +12,9 @@ type Product = {
 type ProductStore = {
   products: Product[];
   addProduct: (product: Product) => void;
-  removeProduct: (id: string) => void;
-  incrementQuantity: (id: string) => void;
-  decrementQuantity: (id: string) => void;
+  removeProduct: (_id: string) => void;
+  incrementQuantity: (_id: string) => void;
+  decrementQuantity: (_id: string) => void;
   calculateTotal: () => number;
 };
 
@@ -41,8 +41,7 @@ export const useProductStore = create<ProductStore>()(
               {
                 _id: product._id,
                 name: product.name,
-                imageUrl:
-                  typeof product.imageUrl === "string" ? product.imageUrl : "",
+                imageUrl: product.imageUrl,
                 price: product.price,
                 quantity: 1,
               },
@@ -51,22 +50,22 @@ export const useProductStore = create<ProductStore>()(
           return { products: updatedProducts };
         }),
 
-      removeProduct: (id) =>
+      removeProduct: (_id) =>
         set((state) => ({
-          products: state.products.filter((product) => product._id !== id),
+          products: state.products.filter((product) => product._id !== _id),
         })),
 
-      incrementQuantity: (id) =>
+      incrementQuantity: (_id) =>
         set((state) => ({
           products: state.products.map((p) =>
-            p._id === id ? { ...p, quantity: p.quantity + 1 } : p
+            p._id === _id ? { ...p, quantity: p.quantity + 1 } : p
           ),
         })),
 
-      decrementQuantity: (id) =>
+      decrementQuantity: (_id) =>
         set((state) => ({
           products: state.products.map((p) =>
-            p._id === id && p.quantity > 1
+            p._id === _id && p.quantity > 1
               ? { ...p, quantity: p.quantity - 1 }
               : p
           ),

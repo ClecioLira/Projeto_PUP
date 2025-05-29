@@ -14,44 +14,51 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { getPlants } from "@/services/Plant";
 
 interface Category {
-  _id: number;
+  _id: string;
+  name: string;
+}
+
+interface Plants {
+  _id: string;
   name: string;
   imageUrl: string;
-  plants: [
-    {
-      _id: string;
-      name: string;
-      imageUrl: string;
-      price: string;
-      newPrice: string;
-      description: string;
-      category: string;
-    }
-  ];
+  price: number;
+  newPrice?: number;
+  category: string;
 }
 
 export default function Plants() {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [plants, setPlants] = useState<Plants[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
-    async function fetchAllCategories() {
+    async function fetchAllPlants() {
       try {
         const categoriesData = await getCategories();
         setCategories(
-          categoriesData.filter((category: Category) => category._id === Number(id))
+          categoriesData.filter(
+            (category: Category) => String(category._id) === String(id)
+          )
         );
+
+        const plantsData = await getPlants();
+        const filteredPlants = plantsData.filter(
+          (plant: Plants) => String(plant.category) === String(id)
+        );
+        setPlants(filteredPlants);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchAllCategories();
+    fetchAllPlants();
   }, []);
 
   if (loading) {
@@ -81,38 +88,39 @@ export default function Plants() {
       </h2>
 
       <div className="flex flex-wrap gap-4 justify-center text-center mb-8">
-        {categories &&
-          categories.map((category) =>
-            category.plants.map((plant) => (
-              <Card sx={{ maxWidth: 200 }} key={plant._id} className="shadow-md shadow-gray-400 hover:scale-105 transition">
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    image={plant.imageUrl}
-                    alt={plant.name}
-                    style={{height: '150px', width: '200px'}}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="body2" component="div">
-                      {plant.name}
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="div">
-                      R$ {plant.price}
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="div">
-                      {plant.newPrice}
-                    </Typography>
+        {plants.map((plant) => (
+          <Card
+            sx={{ maxWidth: 200 }}
+            key={plant._id}
+            className="shadow-md shadow-gray-400 hover:scale-105 transition"
+          >
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                image={plant.imageUrl}
+                alt={plant.name}
+                style={{ height: "150px", width: "200px" }}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="body2" component="div">
+                  {plant.name}
+                </Typography>
+                <Typography gutterBottom variant="body2" component="div">
+                  R$ {plant.price}
+                </Typography>
+                <Typography gutterBottom variant="body2" component="div">
+                  {plant.newPrice}
+                </Typography>
 
-                    <Link href={`/plantdetail/${plant._id}`}>
-                      <Button variant="contained" color="success">
-                        Comprar
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            ))
-          )}
+                <Link href={`/plantdetail/${plant._id}`}>
+                  <Button variant="contained" color="success">
+                    Comprar
+                  </Button>
+                </Link>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
       </div>
     </main>
   );

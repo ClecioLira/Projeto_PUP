@@ -12,7 +12,7 @@ import { Box, Button, CircularProgress } from "@mui/material";
 import Link from "next/link";
 
 interface Category {
-  id: string;
+  _id: string;
   name: string;
   imageUrl: string;
 }
@@ -79,7 +79,7 @@ const CategoriesCarousel = () => {
         >
           {categories.map((category, index) => (
             <SwiperSlide
-              key={`${category.id}-${index}`}
+              key={`${category._id}-${index}`}
               className="flex justify-center items-center px-20 md:px-14 mb-4"
             >
               <div className="rounded-lg shadow-md shadow-gray-500 overflow-hidden p-2 bg-white">
@@ -95,7 +95,7 @@ const CategoriesCarousel = () => {
                   style={{ width: "100%", marginTop: "0.5rem" }}
                 >
                   <Link
-                    href={`/products/${category.id}`}
+                    href={`/products/${category._id}`}
                     className="flex justify-center w-full"
                   >
                     {category.name}
