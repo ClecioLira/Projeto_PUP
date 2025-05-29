@@ -31,7 +31,7 @@ export default function VaseDetail() {
           setVase(vaseData);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setError(true);
       } finally {
         setLoading(false);

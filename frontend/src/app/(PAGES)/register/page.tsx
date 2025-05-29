@@ -16,10 +16,6 @@ const RegisterPage = () => {
 
   const handleRegister = (e: any) => {
     e.preventDefault();
-    // Simule o registro aqui, por exemplo, faça uma requisição para a API
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
   };
 
   return (

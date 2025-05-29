@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsAuthenticated(true);
       router.push("/protected/allcategories");
     } catch (error: any) {
-      console.log("Erro ao fazer login:", error.message);
+      console.error("Erro ao fazer login:", error.message);
       throw error;
     }
   }

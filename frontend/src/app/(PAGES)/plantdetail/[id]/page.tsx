@@ -33,7 +33,7 @@ export default function PlantDetail() {
           setPlant(plantData);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setError(true);
       } finally {
         setLoading(false);
