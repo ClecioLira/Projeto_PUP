@@ -8,13 +8,13 @@ export default function CustomizeGarden() {
         <div className="md:w-1/2">
           <h2 className="font-semibold text-2xl mb-4">Customize seu Jardim.</h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa nihil
-            odio dolor numquam accusantium, vitae reprehenderit nam veniam
-            incidunt quibusdam sint harum in hic quae, temporibus praesentium
-            iusto. Sapiente, impedit. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Culpa nihil odio dolor numquam accusantium, vitae
-            reprehenderit nam veniam incidunt quibusdam sint harum in hic quae,
-            temporibus praesentium iusto. Sapiente, impedit.
+            Cada jardim é único e especial, assim como cada pessoa. Por isso,
+            oferecemos uma seleção de plantas e acessórios que permitem que você
+            crie um espaço que reflita seu estilo e necessidades. Desde plantas
+            tropicais exuberantes a vasinhos minimalistas e suportes elegantes,
+            aqui você encontra tudo para dar aquele toque de charme e
+            praticidade. Explore nossa coleção e transforme seu jardim em um
+            lugar cheio de vida, cor e inspiração!
           </p>
         </div>
         <Image
