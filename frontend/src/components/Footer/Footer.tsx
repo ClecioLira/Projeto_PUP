@@ -7,10 +7,10 @@ import { Typography } from "@mui/material";
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: "white", mt: 1 }}>
-      {"Copyright © "}
       <Link className="hover:underline" href="https://www.linkedin.com/in/cleciolira/" target="_blank">
         Clécio Lira
       </Link>
+      {" ©, todos os direitos reservados."}
       &nbsp;
       {new Date().getFullYear()}
     </Typography>
@@ -36,12 +36,12 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href={""} className="hover:underline">
+              <Link href={"/contacts"} className="hover:underline">
                 Contatos
               </Link>
             </li>
             <li>
-              <Link href={""} className="hover:underline">
+              <Link href={"/politic"} className="hover:underline">
                 Politica de privacidade
               </Link>
             </li>

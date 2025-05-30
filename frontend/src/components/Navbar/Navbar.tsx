@@ -17,6 +17,10 @@ export default function Navbar() {
         <Link href="/about" className="hover:text-green-500 transition">
           Sobre
         </Link>
+
+        <Link href="/contacts" className="hover:text-green-500 transition">
+          Contatos
+        </Link>
       </div>
 
       <div className="hidden space-x-4 md:flex items-center">

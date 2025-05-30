@@ -8,7 +8,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Link from "next/link";
-import { Divider } from "@mui/material";
 
 export default function DrawerNavbar() {
   const [open, setOpen] = React.useState(false);
@@ -23,9 +22,7 @@ export default function DrawerNavbar() {
         <ListItem style={{display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '3rem'}}>
           <ListItemText><Link href="/">Início</Link></ListItemText>
           <ListItemText><Link href="/about">Sobre</Link></ListItemText>
-
-          <Divider></Divider>
-
+          <ListItemText><Link href="/contacts">Contatos</Link></ListItemText>
           <ListItemButton><Link href="/register">Cadastrar</Link></ListItemButton>
           <ListItemButton><Link href="/login">Entrar</Link></ListItemButton>
         </ListItem>
