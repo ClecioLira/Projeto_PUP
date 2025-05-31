@@ -1,5 +1,9 @@
-const URL_CATEGORY = "https://fake-api-pup.onrender.com/api/plants";
+import dotenv from "dotenv";
+dotenv.config();
 import Cookies from "js-cookie";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}/plants`;
 
 export async function createPlant({
   name,
@@ -31,7 +35,7 @@ export async function createPlant({
   if (trend) {
     formData.append("trend", trend.toString());
   }
-  const res = await fetch(URL_CATEGORY, {
+  const res = await fetch(URL, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -43,7 +47,7 @@ export async function createPlant({
 }
 
 export async function getPlants() {
-  const res = await fetch(URL_CATEGORY, {
+  const res = await fetch(URL, {
     method: "GET",
   });
 
@@ -51,7 +55,7 @@ export async function getPlants() {
 }
 
 export async function getPlant(id: string) {
-  const res = await fetch(`${URL_CATEGORY}/${id}`, {
+  const res = await fetch(`${URL}/${id}`, {
     method: "GET",
   });
 
@@ -96,7 +100,7 @@ export async function updatePlant({
     formData.append("trend", trend.toString());
   }
 
-  const res = await fetch(`${URL_CATEGORY}/${id}`, {
+  const res = await fetch(`${URL}/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -109,7 +113,7 @@ export async function updatePlant({
 
 export async function deletePlant(id: string) {
   const token = Cookies.get("nextauth.token");
-  const res = await fetch(`${URL_CATEGORY}/${id}`, {
+  const res = await fetch(`${URL}/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

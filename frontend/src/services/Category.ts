@@ -1,5 +1,9 @@
-const URL_CATEGORY = "https://fake-api-pup.onrender.com/api/categories";
+import dotenv from "dotenv";
+dotenv.config();
 import Cookies from "js-cookie";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}/categories`;
 
 export async function createCategory({
   name,
@@ -13,7 +17,7 @@ export async function createCategory({
   formData.append("name", name);
   formData.append("image", image);
 
-  const res = await fetch(URL_CATEGORY!, {
+  const res = await fetch(URL!, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -25,7 +29,7 @@ export async function createCategory({
 }
 
 export async function getCategories() {
-  const res = await fetch(URL_CATEGORY, {
+  const res = await fetch(URL, {
     method: "GET",
   });
 
@@ -33,7 +37,7 @@ export async function getCategories() {
 }
 
 export async function getCategory(id: string) {
-  const res = await fetch(`${URL_CATEGORY!}/${id}`, {
+  const res = await fetch(`${URL!}/${id}`, {
     method: "GET",
   });
 
@@ -54,7 +58,7 @@ export async function updateCategory({
   formData.append("name", name);
   formData.append("image", image);
 
-  const res = await fetch(`${URL_CATEGORY!}/${id}`, {
+  const res = await fetch(`${URL!}/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -67,7 +71,7 @@ export async function updateCategory({
 
 export async function deleteCategory(id: string) {
   const token = Cookies.get("nextauth.token");
-  const res = await fetch(`${URL_CATEGORY!}/${id}`, {
+  const res = await fetch(`${URL!}/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -1,5 +1,9 @@
-const URL_VASE = "https://fake-api-pup.onrender.com/api/vases";
+import dotenv from "dotenv";
+dotenv.config();
 import Cookies from "js-cookie";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}/vases`;
 
 export async function createVase({
   name,
@@ -19,7 +23,7 @@ export async function createVase({
   formData.append("price", price);
   formData.append("description", description);
 
-  const res = await fetch(URL_VASE, {
+  const res = await fetch(URL, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -31,7 +35,7 @@ export async function createVase({
 }
 
 export async function getVases() {
-  const res = await fetch(URL_VASE, {
+  const res = await fetch(URL, {
     method: "GET",
   });
 
@@ -39,7 +43,7 @@ export async function getVases() {
 }
 
 export async function getVase(id: string) {
-  const res = await fetch(`${URL_VASE}/${id}`, {
+  const res = await fetch(`${URL}/${id}`, {
     method: "GET",
   });
 
@@ -66,7 +70,7 @@ export async function updateVase({
   formData.append("price", price);
   formData.append("description", description);
 
-  const res = await fetch(`${URL_VASE}/${id}`, {
+  const res = await fetch(`${URL}/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -79,7 +83,7 @@ export async function updateVase({
 
 export async function deleteVase(id: string) {
   const token = Cookies.get("nextauth.token");
-  const res = await fetch(`${URL_VASE}/${id}`, {
+  const res = await fetch(`${URL}/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

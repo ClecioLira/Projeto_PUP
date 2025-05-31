@@ -1,5 +1,6 @@
 "use client";
-
+import dotenv from "dotenv";
+dotenv.config();
 import React from "react";
 import { createContext, useState } from "react";
 import { setCookie } from "nookies";
@@ -14,7 +15,8 @@ export const AuthContext = createContext<AuthContextProps>(
   {} as AuthContextProps
 );
 
-const URL_CATEGORY = "https://fake-api-pup.onrender.com/api/login";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}/login`;
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,7 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string;
   }) {
     try {
-      const response = await fetch(URL_CATEGORY, {
+      const response = await fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
